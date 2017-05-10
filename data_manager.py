@@ -1,5 +1,9 @@
 """Data manager functions"""
 import base64
+import os
+
+
+current_file_path = os.path.dirname(os.path.abspath(__file__))+"/data/"
 
 
 def encode_string(field):
@@ -17,7 +21,7 @@ def decode_string(field):
 def get_table_from_file(filename):
     """Read data from file
     """
-    with open(filename, "r") as file:
+    with open(current_file_path+filename, "r") as file:
         lines = file.readlines()
     table = [element.replace("\n", "").split(",") for element in lines]
     return table
@@ -26,7 +30,7 @@ def get_table_from_file(filename):
 def write_table_to_file(table, filename):
     """Write data to file
     """
-    with open(filename, "w") as file:
+    with open(current_file_path+filename, "w") as file:
         for record in table:
             row = ','.join(record)
             file.write(row + "\n")
@@ -34,10 +38,14 @@ def write_table_to_file(table, filename):
 
 def get_dict(table_type, filename):
     """Create dict from files\n
-    accept parameters: 'answer' or 'question'\n
+    accepted table_type: 'answer' or 'question'\n
     return list of dict of strings key and values
     """
     table = get_table_from_file(filename)
+    return create_dict(table, table_type)
+
+
+def create_dict(table, table_type):
     dict_table = []
     if table_type == "answer":
         for row in table:
@@ -63,8 +71,40 @@ def get_dict(table_type, filename):
     return dict_table
 
 
+def save_dict(table, table_type, filename):
+    """Save list to file\n
+    accepted table_type: 'answer' or 'question'\n
+    converts dict list to string list, encode and write to file.
+    """
+    work_table = []
+    if table_type == "answer":
+        for row in table:
+            table_line = []
+            table_line.append(row["answer_id"])
+            table_line.append(row["submisson_time"])
+            table_line.append(row["vote_number"])
+            table_line.append(row["question_id"])
+            table_line.append(encode_string(row["message"]))
+            table_line.append(encode_string(row["image"]))
+            work_table.append(table_line)
+    if table_type == "question":
+        for row in table:
+            table_line = []
+            table_line.append(row["question_id"])
+            table_line.append(row["submisson_time"])
+            table_line.append(row["view_number"])
+            table_line.append(row["vote_number"])
+            table_line.append(decode_string(row["title"]))
+            table_line.append(decode_string(row["message"]))
+            table_line.append(decode_string(row["image"]))
+            work_table.append(table_line)
+    write_table_to_file(work_table, filename)
+
+
 def main():
-    print(get_dict("answer", "question.csv"))
+    table = get_dict("answer", "question.csv")
+    print(table)
+    save_dict(table, "answer", "question.csv")
 
 
 if __name__ == '__main__':
