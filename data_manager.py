@@ -42,6 +42,10 @@ def get_dict(table_type, filename):
     return list of dict of strings key and values
     """
     table = get_table_from_file(filename)
+    return create_dict(table, table_type)
+
+
+def create_dict(table, table_type):
     dict_table = []
     if table_type == "answer":
         for row in table:
