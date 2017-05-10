@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ask Mate</title>
+</head>
+
+<body>
+
+<h1>Ask Mate</h1>
+
+<h3>Questions</h3>
+
+<form action="/new-question"><input type="submit" name="addnew" id ="addnew" value="Ask new Question"/></form>
+
+<table border="1">
+    {% for col in ['ID', 'Question', 'Number of Views','Votes'] %}
+        <th>
+            {{row}} 
+            <a href="/extend?idx={{loop.index}};order=">
+                <img src="/static/sort.png" width="20"></img>
+            </a>
+        </th>
+    {% endfor %}
+        <th>Image</th>
+    </tr>
+    {% for question in questions%}
+        <tr>
+            <td>{{question.question_id}}.</td>
+            <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
+            <td>{{question.submisson_time}}</td>
+            <td>{{question.view_number}}</td>
+            <td>{{question.vote_number}}</td>
+            <td>{{question.image}}</td>
+        </tr>
+    {% endfor %}
+
+    </tr>
+</table>
+
+</body>
+
+</html>
