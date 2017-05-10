@@ -1,5 +1,9 @@
 """Data manager functions"""
 import base64
+import os
+
+
+current_file_path = os.path.dirname(os.path.abspath(__file__))+"/data/"
 
 
 def encode_string(field):
@@ -17,7 +21,7 @@ def decode_string(field):
 def get_table_from_file(filename):
     """Read data from file
     """
-    with open(filename, "r") as file:
+    with open(current_file_path+filename, "r") as file:
         lines = file.readlines()
     table = [element.replace("\n", "").split(",") for element in lines]
     return table
@@ -26,7 +30,7 @@ def get_table_from_file(filename):
 def write_table_to_file(table, filename):
     """Write data to file
     """
-    with open(filename, "w") as file:
+    with open(current_file_path+filename, "w") as file:
         for record in table:
             row = ','.join(record)
             file.write(row + "\n")
