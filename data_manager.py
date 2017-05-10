@@ -66,7 +66,7 @@ def create_dict(table, table_type):
             dict_line["vote_number"] = row[3]
             dict_line["title"] = decode_string(row[4])
             dict_line["message"] = decode_string(row[5])
-            dict_line["image"] = decode_string(row[5])
+            dict_line["image"] = decode_string(row[6])
             dict_table.append(dict_line)
     return dict_table
 
@@ -103,8 +103,15 @@ def save_dict(table, table_type, filename):
 
 def main():
     table = get_dict("question", "question.csv")
-    print(table)
-    save_dict(table, "question", "question.csv")
+    for line in table:
+        print("question_id", line["question_id"])
+        print("submisson_time", line["submisson_time"])
+        print("view_number", line["view_number"])
+        print("vote_number", line["vote_number"])
+        print("title", line["title"])
+        print("message", line["message"])
+        print("image", line["image"])
+        print("\n")
 
 
 if __name__ == '__main__':
