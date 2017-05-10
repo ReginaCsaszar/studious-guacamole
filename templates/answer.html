@@ -14,7 +14,10 @@
                 <label for="answer">Your answer:</label>
             </h2>
         </p>
-        <textarea name="answer" id="answer" rows="4" cols="50" placeholder="The answer is always 42, but could yuo be abit more specific? ;)" autofocus></textarea>
+        {% if error == "10 char":%}
+        Answer must be at least 10 characters long! <br>
+        {% endif %}
+        <textarea name="answer" id="answer" rows="4" cols="50" placeholder="Although 42 is the aswer to life, the Universe and everithing, you can be a bit more specigic, and write at least 10 characters long answer." autofocus></textarea>
         <p>
             <h2>
                 <label for="image">Upload picture:</label>

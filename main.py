@@ -15,6 +15,9 @@ app = Flask(__name__)
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def new_answer(question_id):
     if request.method == "POST":
+        if len(request.form["answer"]) < 10:
+            question = common.get_question(question_id)
+            return render_template("answer.html", question=question, error="10 char")
         answers_list = data_manager.get_dict("answer", "answer.csv")
         answer = {}
         answer["answer_id"] = str(common.get_max_id(answers_list) + 1)
@@ -28,7 +31,7 @@ def new_answer(question_id):
         return redirect("/", code=302)
     else:
         question = common.get_question(question_id)
-        return render_template("answer.html", question=question)
+        return render_template("answer.html", question=question, error="")
 
 
 
