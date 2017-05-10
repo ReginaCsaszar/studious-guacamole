@@ -102,9 +102,9 @@ def save_dict(table, table_type, filename):
 
 
 def main():
-    table = get_dict("answer", "question.csv")
+    table = get_dict("question", "question.csv")
     print(table)
-    save_dict(table, "answer", "question.csv")
+    save_dict(table, "question", "question.csv")
 
 
 if __name__ == '__main__':
