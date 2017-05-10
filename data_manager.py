@@ -1,21 +1,8 @@
 """Data manager functions"""
-import base64
 import os
 
 
 current_file_path = os.path.dirname(os.path.abspath(__file__))+"/data/"
-
-
-def encode_string(field):
-    """ Encode field, return b64.
-    """
-    return base64.b64encode(str.encode(field)).decode()
-
-
-def decode_string(field):
-    """ Decode field, return string
-    """
-    return base64.b64decode(str.encode(field)).decode()
 
 
 def get_table_from_file(filename):
@@ -54,8 +41,8 @@ def create_dict(table, table_type):
             dict_line["submisson_time"] = row[1]
             dict_line["vote_number"] = row[2]
             dict_line["question_id"] = row[3]
-            dict_line["message"] = decode_string(row[4])
-            dict_line["image"] = decode_string(row[5])
+            dict_line["message"] = row[4]
+            dict_line["image"] = row[5]
             dict_table.append(dict_line)
     if table_type == "question":
         for row in table:
@@ -64,9 +51,9 @@ def create_dict(table, table_type):
             dict_line["submisson_time"] = row[1]
             dict_line["view_number"] = row[2]
             dict_line["vote_number"] = row[3]
-            dict_line["title"] = decode_string(row[4])
-            dict_line["message"] = decode_string(row[5])
-            dict_line["image"] = decode_string(row[6])
+            dict_line["title"] = row[4]
+            dict_line["message"] = row[5]
+            dict_line["image"] = row[6]
             dict_table.append(dict_line)
     return dict_table
 
@@ -84,8 +71,8 @@ def save_dict(table, table_type, filename):
             table_line.append(row["submisson_time"])
             table_line.append(row["vote_number"])
             table_line.append(row["question_id"])
-            table_line.append(encode_string(row["message"]))
-            table_line.append(encode_string(row["image"]))
+            table_line.append(row["message"])
+            table_line.append(row["image"])
             work_table.append(table_line)
     if table_type == "question":
         for row in table:
@@ -94,9 +81,9 @@ def save_dict(table, table_type, filename):
             table_line.append(row["submisson_time"])
             table_line.append(row["view_number"])
             table_line.append(row["vote_number"])
-            table_line.append(decode_string(row["title"]))
-            table_line.append(decode_string(row["message"]))
-            table_line.append(decode_string(row["image"]))
+            table_line.append(row["title"])
+            table_line.append(row["message"])
+            table_line.append(row["image"])
             work_table.append(table_line)
     write_table_to_file(work_table, filename)
 

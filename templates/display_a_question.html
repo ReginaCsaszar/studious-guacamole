@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://use.fontawesome.com/51dda53a19.js"></script>
+    <link rel="stylesheet" href="/static/test.css">
+</head>
+<body>
+
+{{ question_with_answers.answers[question_with_answers.list_of_key_of_answer[0]] }}
+
+    <h1>
+        Quesion with Answers
+    </h1>
+    <table border="1" >
+        <tr >
+            <td colspan="2" class="title">Quesion</td>
+            <td colspan="5" class="title class">Programing Languages</td>
+        </tr>  
+        <tr>
+            {% for name_title in question_with_answers.list_of_key_and_title_of_question %}
+                <td>
+                    {{ name_title[1] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <tr>
+                {% for key in question_with_answers.list_of_key_of_question %}
+                <td>
+                    {% if key == "vote_number" %}
+                        <a href="/question/{{ question_with_answers.question_id }}/vote-up">
+                            <i class="fa fa-angle-up" aria-hidden="true"></i>
+                        </a>
+                           {{ question_with_answers.question[key] }}
+                        <a href="/question/{{ question_with_answers.question_id }}/vote-down">
+                             <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                    {% else %}
+                        {{ question_with_answers.question[key] }}
+                    {% endif %}
+                </td>
+                {% endfor %}
+           
+            </tr>
+    </table>
+    <table border="1">
+        <tr >
+            <td colspan="2">Answers</td>
+            <td colspan="4">Programing Languages</td>
+        </tr>
+        <tr>
+            {% for name_title in question_with_answers.list_of_key_and_title_of_answers %}
+                <td><a href="/question/{{ question_with_answers.question_id }}?sort_by={{ name_title[0] }}&direction=up">  {{name_title[1]}} <a></td>
+            {% endfor %}
+        </tr>
+        {% for row in question_with_answers.answers %}
+            <tr>
+                {% for name in question_with_answers.list_of_key_of_answer %}
+                <td>
+                    {% if name == "vote_number" %}
+                        <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-up">
+                            <i class="fa fa-angle-up" aria-hidden="true"></i>
+                        </a>
+                           {{  row[name] }}
+                        <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-down">
+                             <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                    {% else %}
+
+                        {{ row[name] }} 
+                    {% endif %}
+                </td>
+                {% endfor%}
+            {% endfor %}
+            </tr>
+    </table>
+</body>
+
+</html>
