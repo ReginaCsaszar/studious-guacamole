@@ -11,6 +11,16 @@ app = Flask(__name__)
 
 # @app.route("/question/<question_id>")
 
+@app.route("/answer/<answer_id>/delete", methods=["GET", "POST"])
+def delete_answer(answer_id):
+    if request.method == "POST":
+        return "Mindent törölni!!"
+    else:
+        answer = common.get_answer(answer_id)
+        question = common.get_question(answer["question_id"])
+        date_time = datetime.datetime.fromtimestamp(int(float(answer["submisson_time"]))).strftime('%Y-%m-%d %H:%M:%S')
+        return render_template("del_answer.html", answer=answer, question=question, date_time=date_time)
+
 
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
 def new_answer(question_id):
