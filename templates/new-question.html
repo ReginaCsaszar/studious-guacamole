@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head>
+    <title>New question</title>
+    <!-- New question template -->
+</head>
+
+<body>
+    <p><h1>Add new question</h1></p>
+
+    <form action="/newpost" method="post">
+        <p>
+          <label for="title">Question Title</label><br>
+          <input name="title" id="title" required>
+        </p>
+        <p>
+          <label for="message">Question</label><br>
+          <textarea name="message" id="message" col="100" minlength="10" required></textarea>
+        </p>
+        <p>
+          <label for="image">Picture</label><br>
+          <input name="image" id="image">
+        </p>
+        <p><input type="submit"  id="send" value="Send"></p>
+    </form>
+
+</body>
+
+</html>
