@@ -14,10 +14,10 @@
 <form action="/new-question"><input type="submit" name="addnew" id ="addnew" value="Ask new Question"/></form>
 
 <table border="1">
-    {% for col in ['ID', 'Question', 'Number of Views','Votes'] %}
+    {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
         <th>
-            {{row}} 
-            <a href="/extend?idx={{loop.index}};order=">
+            {{col}} 
+            <a href="/extend/{{col}}?{{url}}">
                 <img src="/static/sort.png" width="20"></img>
             </a>
         </th>
