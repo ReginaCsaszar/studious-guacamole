@@ -34,7 +34,7 @@ def write_table_to_file(table, filename):
 
 def get_dict(table_type, filename):
     """Create dict from files\n
-    accept parameters: 'answer' or 'question'\n
+    accepted table_type: 'answer' or 'question'\n
     return list of dict of strings key and values
     """
     table = get_table_from_file(filename)
@@ -63,8 +63,40 @@ def get_dict(table_type, filename):
     return dict_table
 
 
+def save_dict(table, table_type, filename):
+    """Save list to file\n
+    accepted table_type: 'answer' or 'question'\n
+    converts dict list to string list, encode and write to file.
+    """
+    work_table = []
+    if table_type == "answer":
+        for row in table:
+            table_line = []
+            table_line.append(row["answer_id"])
+            table_line.append(row["submisson_time"])
+            table_line.append(row["vote_number"])
+            table_line.append(row["question_id"])
+            table_line.append(encode_string(row["message"]))
+            table_line.append(encode_string(row["image"]))
+            work_table.append(table_line)
+    if table_type == "question":
+        for row in table:
+            table_line = []
+            table_line.append(row["question_id"])
+            table_line.append(row["submisson_time"])
+            table_line.append(row["view_number"])
+            table_line.append(row["vote_number"])
+            table_line.append(decode_string(row["title"]))
+            table_line.append(decode_string(row["message"]))
+            table_line.append(decode_string(row["image"]))
+            work_table.append(table_line)
+    write_table_to_file(work_table, filename)
+
+
 def main():
-    print(get_dict("answer", "question.csv"))
+    table = get_dict("answer", "question.csv")
+    print(table)
+    save_dict(table, "answer", "question.csv")
 
 
 if __name__ == '__main__':
