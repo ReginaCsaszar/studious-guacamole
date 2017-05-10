@@ -7,14 +7,23 @@
 <body>
     <h1>Question</h1>
     <h2>{{question["title"]}}:</h2>
-    <textarea rows="4" cols="50" readonly>{{question["message"]}}</textarea>
-    <form method="POST" action='/question/{{ question["id"] }}/new-answer'>
-        <p><h2><label for="answer">Your answer:</label></h2></p>
-        <textarea rows="4" cols="50" name="answer" id="answer">
-        </textarea>
-        <p><h2><label for="image">Upload picture:</label></h2></p>
+    <p>{{question["message"]}}</p>
+    <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
+        <p>
+            <h2>
+                <label for="answer">Your answer:</label>
+            </h2>
+        </p>
+        <textarea name="answer" id="answer" rows="4" cols="50" placeholder="The answer is always 42, but could yuo be abit more specific? ;)" autofocus></textarea>
+        <p>
+            <h2>
+                <label for="image">Upload picture:</label>
+            </h2>
+        </p>
         <input type="file" accept="image/*" name="image" id="image">
-        <p><input type="submit" value="Send my answer"></p>
+        <p>
+            <input type="submit" value="Send my answer">
+        </p>
     </form>
 </body>
 </html>
