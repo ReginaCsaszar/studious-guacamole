@@ -3,10 +3,6 @@ import data_manager
 import datetime
 
 
-app = Flask(__name__)
-
-
-@app.route('/new-question')
 def new_question_route():
     """Show new question page"""
     title = "Add new question"
@@ -14,7 +10,6 @@ def new_question_route():
     return render_template("new-question.html", action=action, title=title)
 
 
-@app.route('/newpost', methods=["POST"])
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
     questions = data_manager.get_dict("question", "question.csv")
@@ -32,7 +27,6 @@ def add_new_question():
     return redirect("/question/<ident>")
 
 
-@app.route('/question/<question_id>/edit')
 def edit_question_route(question_id):
     title = "Modify question"
     action = "/modify/" + question_id
@@ -40,7 +34,6 @@ def edit_question_route(question_id):
     return render_template("new-question.html", title=title, data=data)
 
 
-@app.route('/modify/<question_id>')
 def edit_question(question_id):
     questions = data_manager.get_dict("question", "question.csv")
     for question in questions:

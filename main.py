@@ -3,6 +3,7 @@ import data_manager
 import common
 import displays_a_question
 import listpage
+import handle_question
 from flask import Flask, request, render_template, redirect
 from displays_a_question import sort
 from displays_a_question import vote
@@ -28,24 +29,28 @@ def print_table():
 @app.route('/new-question')
 def new_question():
     """Show new question page"""
-    return render_template("new-question.html")
+    return handle_question.new_question_route()
 
 
 @app.route('/newpost', methods=["POST"])
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
-    questions = data_manager.get_dict("question", "question.csv")
-    row = {}
-    row["question_id"] = str(len(questions))
-    row["submisson_time"] = str(datetime.datetime.timestamp(datetime.datetime.now()))
-    row["view_number"] = "0"
-    row["vote_number"] = "0"
-    row["title"] = request.form["title"]
-    row["message"] = request.form["message"]
-    row["image"] = ""
-    questions.append(row)
-    data_manager.save_dict(questions, "question", "question.csv")
-    return redirect("/list")
+    return handle_question.add_new_question()
+
+
+@app.route('/question/<question_id>/edit')
+def edit_question_route(question_id):
+    return handle_question.edit_question_route(question_id)
+
+
+@app.route('/modify/<question_id>')
+def edit_question(question_id):
+    return handle_question.edit_question(question_id)
+
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id):
+    return handle_question.delete_question(question_id)
 
 
 @app.route("/question/<int:question_id>/vote-up")
