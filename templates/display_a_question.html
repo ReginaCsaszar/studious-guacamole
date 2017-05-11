@@ -73,10 +73,15 @@
                     {% endif %}
                 </td>
                 {% endfor%}
+                <td>
+                <a href="/question/{{ question_with_answers.question_id }}/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/edit" ><input type="button" value="Edit"></a>
+                <a href="/question/{{ question_with_answers.question_id }}/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/delete" ><input type="button" value="Delete"></a>
+                </td>
             {% endfor %}
+
             </tr>
     </table>
-    <a href="/"> <input type="button" value="Back to Questions"></a>
+    <a href="/"> <input type="button" value="Back to Questions"></a> <a href="/question/{{ question_with_answers.question_id }}/new-answer"> <input type="button" value="New Answer"></a>
 </body>
 
 </html>
