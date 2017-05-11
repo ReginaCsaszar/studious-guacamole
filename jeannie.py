@@ -17,7 +17,8 @@ def add_new_question():
     """Add new story to list, then redirect to /list page"""
     questions = data_manager.get_dict("question", "question.csv")
     row = {}
-    row["question_id"] = str(len(questions))
+    ident = len(questions)
+    row["question_id"] = str(ident)
     row["submisson_time"] = str(datetime.datetime.timestamp(datetime.datetime.now()))
     row["view_number"] = "0"
     row["vote_number"] = "0"
@@ -26,7 +27,7 @@ def add_new_question():
     row["image"] = ""
     questions.append(row)
     data_manager.save_dict(questions, "question", "question.csv")
-    return redirect("/list")
+    return redirect("/question/<int:ident>")
 
 
 # @app.route("/question/<question_id>")
