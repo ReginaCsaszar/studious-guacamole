@@ -9,11 +9,11 @@
 <body>
 
 <h1>Ask Mate</h1>
-
+<div class="ask_new_question">
 <h3>Questions</h3>
 
-<form action="/new-question"><input type="submit" name="addnew" id ="addnew" value="Ask new Question"/></form>
-
+<form action="/new-question"><input class="button" type="submit" name="addnew" id ="addnew" value="Ask new Question"/></form>
+</div>
 <table border="1">
     {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
         <th>

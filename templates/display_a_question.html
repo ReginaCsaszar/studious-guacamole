@@ -3,11 +3,10 @@
 
 <head>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/answer.css">
+    <link rel="stylesheet" href="/static/display_a_question.css">
 </head>
 <body>
 
-{{ question_with_answers.answers[question_with_answers.list_of_key_of_answer[0]] }}
 
     <h1>
         Quesion with Answers
@@ -24,8 +23,8 @@
                     {{ name_title[1] }}
                 </th>
             {% endfor %}
-            <td>
-                <a href="/question/{{ question_with_answers.question_id }}/delete"> <input type="button" value="delete"></a>
+            <td class="action_button">
+                <a href="/question/{{ question_with_answers.question_id }}/delete"> <input class="btn" type="button" value="delete"></a>
             </td>
         </tr>
         <tr>
@@ -90,7 +89,7 @@
             </tr>
     </table>
     <div class="add_new">
-    <a href="/"> <input  type="button" value="Back to Questions"></a> <a href="/question/{{ question_with_answers.question_id }}/new-answer"> <input type="button" value="New Answer"></a>
+    <input class="button"  type="button" value="New Answer"><a href="/"> <input  class="button" type="button" value="Back to Questions"></a> <a href="/question/{{ question_with_answers.question_id }}/new-answer"></a>
     </div>
 </body>
 

@@ -30,8 +30,8 @@
         <textarea name="answer" id="answer" rows="4" cols="50" autofocus>{{ answer["message"] }}</textarea>
         {% endif %}
         <p>
-            <input type="submit" value="{{ mode }}">
-            <a href="/question/{ question["question_id"] }"><input type="button" value="Back to question" ></a>
+            <input class="button" type="submit" value="{{ mode }}">
+            <a href="/question/{{ question["question_id"] }}"><input class="button" type="button" value="Back to question" ></a>
         </p>
     </form>
     </div>
