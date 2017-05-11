@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 
 <head>
-    <title>New question</title>
+    <title>{{ title }}</title>
     <!-- New question template -->
 </head>
 
 <body>
-    <p><h1>Add new question</h1></p>
+    <p><h1>{{ title }}</h1></p>
 
-    <form action="/newpost" method='POST'>
+    <form action="{{ action }}" method="POST">
         <p>
           <label for="title">Question Title</label><br>
-          <input   type="text" name="title" id="title" required>
+          <input type="text" name="title" id="title" value="{{ data['title''] }}" required>
         </p>
         <p>
           <label for="message">Question</label><br>
-          <input type="text" name="message" id="message" col="100" minlength="10" required/>
+          <input type="text" name="message" id="message" col="100" minlength="10" value="{{ data['message'] }}" required/>
         </p>
-        <p><input type="submit"  id="send" value="Send"></p>
+        <p>
+            <input type="submit"  id="send" value="Send"> 
+            <a href="/title"><input type="button" id="back" value="Back"></a>
+        </p>
     </form>
 
 </body>
