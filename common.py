@@ -2,6 +2,11 @@ import data_manager
 
 
 def get_max_id(answers_list):
+    """
+    Return the the greatest id for answers.
+    In case of empty list, return -1
+    @answer_list: list of dictionaries (with answer_id key)
+    """
     id_list = [int(answer["answer_id"]) for answer in answers_list]
     if len(id_list) == 0:
         return -1
@@ -10,6 +15,9 @@ def get_max_id(answers_list):
 
 
 def get_question(id):
+    """
+    Return a single question (dict) by its ID
+    """
     questions_list = data_manager.get_dict("question", "question.csv")
     for question in questions_list:
         if question["question_id"] == id:
@@ -17,6 +25,9 @@ def get_question(id):
 
 
 def get_answer(id):
+    """
+    Return a single answer (dict) by its ID
+    """
     answers_list = data_manager.get_dict("answer", "answer.csv")
     for answer in answers_list:
         if answer["answer_id"] == id:
