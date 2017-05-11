@@ -12,7 +12,7 @@ html{
     border-width: 30px;
     color: whitesmoke;
     font-size: 90%;
-    margin: 1cm 1cm 1cm 1cm;
+    margin: 0cm 1cm 1cm 1cm;
     
 }
 .button:hover {
@@ -36,7 +36,7 @@ h1{
     text-align: center;
 }
 table{
-    margin: 1cm 2cm 2cm 0.5cm;
+    margin: 0.5cm 2cm 2cm 0.5cm;
     border-image: url("bambo_empty.png") 30 round;
     border-width: 30px;
     margin: 2cm 0cm 0cm 0cm 2cm;
