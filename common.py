@@ -29,6 +29,18 @@ def get_index_from_id(list, id):
             return i
 
 
+def type_converter(dicts_in_list, keys, func):
+    """
+    This mapping function expects a list of dictionaries
+    returns same data structure but func() is called on all key values with keys matching key param
+    """
+    for row in dicts_in_list:
+        for key in row:
+            if key in keys:
+                row[key] = func(row[key])
+    return dicts_in_list
+
+
 def main():
     pass
 
