@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <head>
+<<<<<<< HEAD
     <title>New question</title>
     <link rel="stylesheet" href="/static/question.css">
 </head>
@@ -16,8 +17,28 @@
         <p>
           <label for="message">Question</label><br>
           <input class="text_box" type="text" name="message" id="message" col="100" minlength="10" required/>
+=======
+    <title>{{ title }}</title>
+    <!-- New question template -->
+</head>
+
+<body>
+    <p><h1>{{ title }}</h1></p>
+
+    <form action="{{ action }}" method="POST">
+        <p>
+          <label for="title">Question Title</label><br>
+          <input type="text" name="title" id="title" value="{{ data['title''] }}" required>
         </p>
-        <p><input type="submit"  id="send" value="Send"></p>
+        <p>
+          <label for="message">Question</label><br>
+          <input type="text" name="message" id="message" col="100" minlength="10" value="{{ data['message'] }}" required/>
+        </p>
+        <p>
+            <input type="submit"  id="send" value="Send"> 
+            <a href="/title"><input type="button" id="back" value="Back"></a>
+>>>>>>> 8ed40d6b53514d62b07be6e7b1969f27035482d4
+        </p>
     </form>
     </div>
 
