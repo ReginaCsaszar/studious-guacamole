@@ -141,25 +141,6 @@ def new_answer_post(question_id):
     return redirect("/", code=302))
 
 
-@app.route("/question/<int:question_id>/answer/<int:answer_id>/edit")
-def edit_answer(question_id, answer_id):
-    answers = data_manager.get_dict("answers", "answer.csv")
-
-    data_manager.save_dict(answers, "answers", "answer.csv")
-    return redirect("/question/question_id")
-
-
-@app.route("/question/<int:question_id>/answer/<int:answer_id>/delete")
-def delete_an_answer(question_id, answer_id):
-    answers = data_manager.get_dict("answers", "answer.csv")
-    for index, row in enumerate(answers):
-        if row['question_id'] == question_id and row['answer_id'] == answer_id:
-            answers.remove(answers[index])
-            break
-    data_manager.save_dict(answers, "answers", "answer.csv")
-    return redirect("/question/{0}".format(question_id))
-
-
 def main():
     app.run(debug=True)
 
