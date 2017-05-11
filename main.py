@@ -107,9 +107,9 @@ def delete_answer(answer_id):
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
         answers_list = data_manager.get_dict("answer", "answer.csv")
-        answers_list.pop(common.get_index_from_id(answers_list, answer_id))
-        data_manager.save_dict(answers_list, "answer", "answer.csv")        
-        return redirect("/", code=302)
+        answer = answers_list.pop(common.get_index_from_id(answers_list, answer_id))
+        data_manager.save_dict(answers_list, "answer", "answer.csv")
+        return redirect("/question/{}".format(answer["question_id"]), code=302)
 
 
 @app.route("/question/<question_id>/new-answer")

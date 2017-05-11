@@ -3,7 +3,11 @@ import data_manager
 
 def get_max_id(answers_list):
     id_list = [int(answer["answer_id"]) for answer in answers_list]
-    return max(id_list)
+    if len(id_list) == 0:
+        return -1
+    else:
+        return max(id_list)
+
 
 
 def get_question(id):
