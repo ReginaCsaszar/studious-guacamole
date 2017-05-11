@@ -8,21 +8,22 @@
 
 <body>
     <p><h1>{{ title }}</h1></p>
-
+    <div id=question_table>
     <form action="{{ action }}" method="POST">
         <p>
           <label for="title">Question Title</label><br>
-          <input type="text" name="title" id="title" value="{{ data['title'] }}" required>
+          <textarea class="text_box" id="user_story" name="user_story" type="text" required>{{ data['title'] }}</textarea>
         </p>
         <p>
           <label for="message">Question</label><br>
-          <input type="text" name="message" id="message" col="100" minlength="10" value="{{ data['message'] }}" required/>
+          <textarea class="text_box" id="user_story" name="user_story" type="text" required>{{ data['message'] }}</textarea>
         </p>
         <p>
-            <input type="submit"  id="send" value="Send"> 
-            <a href="/list"><input type="button" id="back" value="Back"></a>
+            <input class ="button_atti" type="submit"  id="send" value="Send"> 
+            <a href="/list"><input class ="button_atti" type="button" id="back" value="Back"></a>
         </p>
     </form>
+    </div>
 
 </body>
 
