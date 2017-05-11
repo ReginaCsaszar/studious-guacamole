@@ -138,7 +138,7 @@ def new_answer_post(question_id):
     answer["image"] = ""
     answers_list.append(answer)
     data_manager.save_dict(answers_list, "answer", "answer.csv")
-    return redirect("/", code=302))
+    return redirect("/", code=302)
 
 
 def main():
