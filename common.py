@@ -9,7 +9,6 @@ def get_max_id(answers_list):
         return max(id_list)
 
 
-
 def get_question(id):
     questions_list = data_manager.get_dict("question", "question.csv")
     for question in questions_list:
