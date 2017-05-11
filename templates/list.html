@@ -18,7 +18,13 @@
         <th>
             {{col}} 
             <a href="/extend/{{col}}?{{url}}">
-                <img src="/static/sort.png" width="20"></img>
+                {% if col + '=asc' in url %}
+                    <img src="/static/up.png" width="20"></img>
+                {% elif col + '=desc' in url %}
+                    <img src="/static/down.png" width="20"></img>
+                {% else %}
+                    <img src="/static/sort.png" width="20"></img>
+                {% endif %}
             </a>
         </th>
     {% endfor %}
