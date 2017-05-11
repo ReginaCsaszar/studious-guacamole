@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New answer</title>
+    <title>{{mode}} answer</title>
 </head>
 
 <body>
     <h1>Question</h1>
     <h2>{{question["title"]}}:</h2>
     <p>{{question["message"]}}</p>
+    {% if mode == "Edit" %}
+    <form method="POST" action='/answer/{{ answer["answer_id"] }}/edit'>
+    {% elif mode == "Send new" %}
     <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
+    {% endif %}
         <p>
             <h2>
                 <label for="answer">Your answer:</label>
@@ -17,15 +21,13 @@
         {% if error == "10 char":%}
         Answer must be at least 10 characters long! <br>
         {% endif %}
+        {% if mode == "Send new" %}
         <textarea name="answer" id="answer" rows="4" cols="50" placeholder="Although 42 is the aswer to life, the Universe and everything, you can be a bit more specific, and write at least 10 characters long answer." autofocus></textarea>
+        {% elif mode == "Edit"%}
+        <textarea name="answer" id="answer" rows="4" cols="50" autofocus>{{ answer["message"] }}</textarea>
+        {% endif %}
         <p>
-            <h2>
-                <label for="image">Upload picture:</label>
-            </h2>
-        </p>
-        <input type="file" accept="image/*" name="image" id="image">
-        <p>
-            <input type="submit" value="Send my answer">
+            <input type="submit" value="{{ mode }}">
         </p>
     </form>
 </body>
