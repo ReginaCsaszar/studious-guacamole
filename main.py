@@ -77,6 +77,8 @@ def displays_a_single_question_A(question_id):
     question_with_answers = displays_a_question.displays_a_single_question(question_id)
     sort_by = request.args.get("sort_by", "answer_id")
     direction = request.args.get("direction", "up")
+    question_with_answers["sort_by"] = sort_by
+    question_with_answers["direction"] = direction
     question_with_answers["answers"] = sort(question_with_answers["answers"], sort_by, direction)
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
 
