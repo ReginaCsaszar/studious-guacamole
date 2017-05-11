@@ -29,6 +29,7 @@
         </th>
     {% endfor %}
         <th>Image</th>
+        <th>Edit</th>
     </tr>
     {% for question in questions%}
         <tr>
@@ -38,6 +39,11 @@
             <td>{{question.view_number}}</td>
             <td>{{question.vote_number}}</td>
             <td>{{question.image}}</td>
+            <td>
+                <a href="/question/{{question.question_id}}/edit">
+                    <img src="/static/edit.png" width="20"></img>
+                </a>
+            </td>
         </tr>
     {% endfor %}
 
