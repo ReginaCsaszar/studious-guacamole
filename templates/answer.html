@@ -2,10 +2,13 @@
 <html>
 <head>
     <title>{{mode}} answer</title>
+    <link rel="stylesheet" href="/static/answer.css">
 </head>
 
 <body>
+
     <h1>Question</h1>
+    <div>
     <h2>{{question["title"]}}:</h2>
     <p>{{question["message"]}}</p>
     {% if mode == "Edit" %}
@@ -30,5 +33,6 @@
             <input type="submit" value="{{ mode }}">
         </p>
     </form>
+    </div>
 </body>
 </html>

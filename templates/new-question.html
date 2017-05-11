@@ -2,23 +2,24 @@
 
 <head>
     <title>New question</title>
-    <!-- New question template -->
+    <link rel="stylesheet" href="/static/question.css">
 </head>
 
 <body>
     <p><h1>Add new question</h1></p>
-
+    <div>
     <form action="/newpost" method='POST'>
         <p>
           <label for="title">Question Title</label><br>
-          <input   type="text" name="title" id="title" required>
+          <input  class="text_box" type="text" name="title" id="title" required>
         </p>
         <p>
           <label for="message">Question</label><br>
-          <input type="text" name="message" id="message" col="100" minlength="10" required/>
+          <input class="text_box" type="text" name="message" id="message" col="100" minlength="10" required/>
         </p>
         <p><input type="submit"  id="send" value="Send"></p>
     </form>
+    </div>
 
 </body>
 
