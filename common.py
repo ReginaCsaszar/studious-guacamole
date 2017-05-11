@@ -20,6 +20,15 @@ def get_answer(id):
             return answer
 
 
+def get_index_from_id(list, id):
+    """
+    Return the index of an answer record by its id
+    """
+    for i in range(len(list)):
+        if list[i]["answer_id"] == id:
+            return i
+
+
 def main():
     pass
 
