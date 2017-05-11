@@ -53,7 +53,9 @@ def delete_question(question_id):
     questions = data_manager.get_dict("question", "question.csv")
     updated_questions = [row for row in questions if row["question_id"] != question_id]
     answers = data_manager.get_dict("answer", "answer.csv")
-    updated_answers = [row for row in questions if row["question_id"] != question_id]
+    updated_answers = [row for row in answers if row["question_id"] != question_id]
+    data_manager.save_dict(updated_questions, "question", "question.csv")
+    data_manager.save_dict(updated_answers, "answer", "answer.csv")
     return redirect("/list")
 
 
