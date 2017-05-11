@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect
 import data_manager
 import common
 import datetime
+import os
 
 
 app = Flask(__name__)
@@ -18,14 +19,22 @@ def new_question_route():
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
     questions = data_manager.get_dict("question", "question.csv")
+    max_id = max([int(question['question_id']) for question in questions])
     row = {}
-    row["question_id"] = str(len(questions))
+    target_path = os.path.dirname(os.path.abspath(__file__))
+    for file in request.files.getlist('file'):
+        filesrc = ""
+        if file:
+            filesrc = '/static/question' + str(max_id+1) + '.png'
+            filename = target_path + filesrc
+            file.save(filename)
+    row["question_id"] = str(max_id + 1)
     row["submisson_time"] = str(datetime.datetime.timestamp(datetime.datetime.now()))
     row["view_number"] = "0"
     row["vote_number"] = "0"
     row["title"] = request.form["title"]
     row["message"] = request.form["message"]
-    row["image"] = ""
+    row["image"] = filesrc
     questions.append(row)
     data_manager.save_dict(questions, "question", "question.csv")
     return redirect("/question/"+row["question_id"])

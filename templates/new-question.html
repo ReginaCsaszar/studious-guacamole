@@ -9,14 +9,17 @@
 <body>
     <p><h1>{{ title }}</h1></p>
     <div id=question_table>
-    <form action="{{ action }}" method="POST">
+    <form action="{{ action }}" method="POST" enctype="multipart/form-data">
         <p>
           <label for="title">Question Title</label><br>
-          <textarea class="text_box" id="user_story" name="user_story" type="text" required>{{ data['title'] }}</textarea>
+          <textarea class="text_box" id="title" name="title" type="text" required>{{ data['title'] }}</textarea>
         </p>
         <p>
           <label for="message">Question</label><br>
           <textarea class="text_box" id="message" name="message" type="text" rows="6" cols="50" minlength="10" required>{{ data['message'] }}</textarea>
+        </p>
+        <p>
+            <input type="file" name="file">
         </p>
         <p>
             <input class ="button_atti" type="submit"  id="send" value="Send"> 
