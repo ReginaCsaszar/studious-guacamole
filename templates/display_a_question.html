@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="/static/answer.css">
 </head>
 <body>
 
@@ -24,6 +24,9 @@
                     {{ name_title[1] }}
                 </th>
             {% endfor %}
+            <td>
+                <a href="/question/{{ question_with_answers.question_id }}/delete"> <input type="button" value="delete"></a>
+            </td>
         </tr>
         <tr>
             <tr>
