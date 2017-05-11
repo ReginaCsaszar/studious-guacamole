@@ -31,12 +31,24 @@ table{
     box-shadow: inset -6px -1px 50px 200px rgba(0,0,0,0.38);
     
 }
-.action_button{
-    border-color: transparent;
-}
-.btn{
-    border-color: transparent;
+
+.button{
     background-color: transparent;
+    border-image: url("bambo_empty.png") 30 round;
+    border-width: 30px;
+    color: whitesmoke;
+    font-size: 90%;
+    margin: 1cm 1cm 1cm 1cm;
+    
+}
+.button:hover {
+-webkit-box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
+box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
+    border-width: 30px;
+  text-decoration: none;
+  font-size: 120%;
+  
 }
 
 *{
@@ -57,8 +69,9 @@ div{
     color: black;
 
 }
-#answer{
-    color: black;
-    text-align: left;
-}
+    #answer{
+        color: black;
+        text-align: left;
+    }
+
 

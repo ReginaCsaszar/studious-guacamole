@@ -12,18 +12,27 @@
     <form action="{{ action }}" method="POST" enctype="multipart/form-data">
         <p>
           <label for="title">Question Title</label><br>
+<<<<<<< HEAD
           <textarea class="text_box" id="title" name="title" type="text" required>{{ data['title'] }}</textarea>
+=======
+          <textarea class="text_box" id="title" name="title" type="text" rows="6" cols="50" minlength="10" required>{{ data['title'] }}</textarea>
+>>>>>>> bebbc760e1aaaa54802de8a68ba2d6935203fb45
         </p>
         <p>
           <label for="message">Question</label><br>
           <textarea class="text_box" id="message" name="message" type="text" rows="6" cols="50" minlength="10" required>{{ data['message'] }}</textarea>
         </p>
         <p>
+<<<<<<< HEAD
             <input type="file" name="file">
         </p>
         <p>
             <input class ="button_atti" type="submit"  id="send" value="Send"> 
             <a href="/list"><input class ="button_atti" type="button" id="back" value="Back"></a>
+=======
+            <input class ="button_atti button" type="submit"  id="send" value="Send"> 
+            <a href="/list"><input class ="button_atti button" type="button" id="back" value="Back"></a>
+>>>>>>> bebbc760e1aaaa54802de8a68ba2d6935203fb45
         </p>
     </form>
     </div>
