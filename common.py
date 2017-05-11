@@ -55,6 +55,12 @@ def type_converter(dicts_in_list, keys, func):
     return dicts_in_list
 
 
+def get_file_extension(string):
+    dot_index = string[::-1].index('.')
+    extension = string[::-1][:dot_index][::-1]
+    return extension
+
+
 def main():
     pass
 
