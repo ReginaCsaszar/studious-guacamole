@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template, redirect
 import datetime
 import data_manager
 import common
 import displays_a_question
+import listpage
+from flask import Flask, request, render_template, redirect
 from displays_a_question import sort
 from displays_a_question import vote
 
@@ -14,30 +15,14 @@ def index():
     return redirect("/list")
 
 
-@app.route('/extend/<idx>')
-def extend_url(idx):
-    order = {key: request.args[key] for key in request.args}
-    if idx not in order:
-        order[idx] = 'desc'
-    elif order[idx] == 'desc':
-        order[idx] = 'asc'
-    else:
-        order.pop(idx)
-    url = '&'.join([key + '=' + order[key] for key in order])
-    url = '/list?' + url
-    print(url)
-    return redirect(url)
+@app.route('/extend/<col_idx>')
+def extend_url(col_idx):
+    return listpage.extend_url(col_idx)
 
 
 @app.route("/list")
 def print_table():
-    pairs = {'ID': 'question_id', 'Question': 'title', 'Date': 'submisson_time', 'Number of Views': 'view_number','Votes': 'vote_number'}
-    questions = data_manager.get_dict('question', 'question.csv')
-    order = request.args
-    for key in order.keys():
-        questions = sorted(questions, key=lambda x: x[pairs[key]], reverse=True if order[key] == 'desc' else False)
-    url = '&'.join([key + '=' + order[key] for key in order])
-    return render_template('list.html', questions=questions, url=url)
+    return listpage.print_table()
 
 
 @app.route('/new-question')
