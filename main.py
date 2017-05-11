@@ -43,7 +43,7 @@ def edit_question_route(question_id):
     return handle_question.edit_question_route(question_id)
 
 
-@app.route('/modify/<question_id>')
+@app.route('/modify/<question_id>', methods=["POST"])
 def edit_question(question_id):
     return handle_question.edit_question(question_id)
 
