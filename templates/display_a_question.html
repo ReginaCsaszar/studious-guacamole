@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/test.css">
+    <link rel="stylesheet" href="/static/display_a_question.css">
 </head>
 <body>
 
@@ -15,14 +15,14 @@
     
     <table border="1" >
         <tr >
-            <td colspan="2" class="title">Quesion</td>
-            <td colspan="5" class="title class">Programing Languages <a href="/question/{{ question_with_answers.question_id }}/new-answer"> New Answers</a></td>
+            <th colspan="2" class="title">Quesion</th>
+            <th colspan="5" class="title class">Programing Languages</th>
         </tr>  
         <tr>
             {% for name_title in question_with_answers.list_of_key_and_title_of_question %}
-                <td>
+                <th>
                     {{ name_title[1] }}
-                </td>
+                </th>
             {% endfor %}
         </tr>
         <tr>
@@ -45,10 +45,11 @@
            
             </tr>
     </table>
+     <a href="/question/{{ question_with_answers.question_id }}/new-answer"> New Answers</a>
     <table border="1">
         <tr >
-            <td colspan="2">Answers</td>
-            <td colspan="4">Programing Languages</td>
+            <th colspan="2">Answers</th>
+            <th colspan="4">Programing Languages</th>
         </tr>
         <tr>
             {% for name_title in question_with_answers.list_of_key_and_title_of_answers %}
@@ -73,15 +74,17 @@
                     {% endif %}
                 </td>
                 {% endfor%}
-                <td>
-                <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/edit" ><input type="button" value="Edit"></a>
-                <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/delete" ><input type="button" value="Delete"></a>
+                <td class="action_button">
+                <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/edit" ><input class="btn" type="button" value="Edit"></a>
+                <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/delete" ><input class="btn" type="button" value="Delete"></a>
                 </td>
             {% endfor %}
 
             </tr>
     </table>
-    <a href="/"> <input type="button" value="Back to Questions"></a> <a href="/question/{{ question_with_answers.question_id }}/new-answer"> <input type="button" value="New Answer"></a>
+    <div class="add_new">
+    <a href="/"> <input  type="button" value="Back to Questions"></a> <a href="/question/{{ question_with_answers.question_id }}/new-answer"> <input type="button" value="New Answer"></a>
+    </div>
 </body>
 
 </html>
