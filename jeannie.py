@@ -6,7 +6,6 @@ import datetime
 app = Flask(__name__)
 
 
-@app.route('/')
 @app.route('/new-question')
 def new_question():
     """Show new question page"""
@@ -24,7 +23,7 @@ def add_new_question():
     row["vote_number"] = "0"
     row["title"] = request.form["title"]
     row["message"] = request.form["message"]
-    row["image"] = request.form["image"]
+    row["image"] = ""
     questions.append(row)
     data_manager.save_dict(questions, "question", "question.csv")
     return redirect("/list")
