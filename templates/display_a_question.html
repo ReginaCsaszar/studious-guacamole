@@ -39,6 +39,8 @@
                         <a href="/question/{{ question_with_answers.question_id }}/vote-down">
                              <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
+                    {% elif key == "image" %}
+                        <img src="{{ question_with_answers.question[key] }}" width="40"</img>
                     {% else %}
                         {{ question_with_answers.question[key] }}
                     {% endif %}
@@ -74,8 +76,9 @@
                         <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-down">
                              <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
+                    {% elif name == "image" %}
+                        <img src="{{ name }}" width="40"</img>
                     {% else %}
-
                         {{ row[name] }} 
                     {% endif %}
                 </td>
