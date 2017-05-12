@@ -101,6 +101,10 @@ def save_dict(table, table_type, filename):
     write_table_to_file(work_table, filename)
 
 
+def delete_file(path):
+    os.remove(path)
+
+
 def main():
     pass
 

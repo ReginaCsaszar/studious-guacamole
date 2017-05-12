@@ -66,6 +66,11 @@ def delete_question(question_id):
     updated_answers = [row for row in answers if row["question_id"] != question_id]
     data_manager.save_dict(updated_questions, "question", "question.csv")
     data_manager.save_dict(updated_answers, "answer", "answer.csv")
+    deleted_question = [row for row in questions if row["question_id"] == question_id]
+    image = deleted_question[0]['image']
+    if image:
+        target_path = os.path.dirname(os.path.abspath(__file__)) +image
+        data_manager.delete_file(target_path)
     return redirect("/list")
 
 
