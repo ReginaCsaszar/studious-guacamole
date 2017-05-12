@@ -23,12 +23,13 @@ def add_new_question():
     row = {}
     target_path = os.path.dirname(os.path.abspath(__file__))
     for file in request.files.getlist('file'):
-        extension = common.get_file_extension(file.filename)
         filesrc = ""
-        if file and extension in ['png', 'gif', 'jpeg', 'jpg']:
-            filesrc = '/static/question' + str(max_id+1) + '.' + extension
-            filename = target_path + filesrc
-            file.save(filename)
+        if file:
+            extension = common.get_file_extension(file.filename)
+            if extension in ['png', 'gif', 'jpeg', 'jpg']:
+                filesrc = '/static/question' + str(max_id+1) + '.' + extension
+                filename = target_path + filesrc
+                file.save(filename)
     row["question_id"] = str(max_id + 1)
     row["submisson_time"] = str(datetime.datetime.timestamp(datetime.datetime.now()))
     row["view_number"] = "0"
