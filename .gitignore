@@ -2,7 +2,7 @@
 peter.py
 
 # psql passwords etc
-private_sql_settings.py
+private_psql_settings.py
 
 # Created by https://www.gitignore.io/api/python,pycharm,visualstudiocode
 
