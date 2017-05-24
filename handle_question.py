@@ -26,30 +26,31 @@ def add_new_question():
     query = "SELECT id FROM question WHERE title='new'"
     question_id = data_manager.run_query(query)
     print(question_id)
-    return redirect("/question/" + question_id)
+    return redirect("/question/" + str(question_id[0][0]))
 
 
 def edit_question_route(question_id):
     title = "Modify question"
     action = "/modify/" + question_id
-    query = "SELECT title, message FROM question WHERE id = " + question_id
+    query = "SELECT title, message FROM question WHERE id = '{0}';".format(question_id)
     table = data_manager.run_query(query)
     titles = "title", "message",
-    data = data_manager.build_dict(data, titles)
+    data = data_manager.build_dict(table, titles)[0]
     return render_template("new-question.html", title=title, data=data, action=action)
 
 
 def edit_question(question_id):
     title = request.form["title"]
     message = request.form["message"]
-    query = "UPDATE question SET title = '{0}', message = '{1}', WHERE id = {2}".format(title, message, question_id)
+    print(title, message, question_id)
+    query = "UPDATE question SET title = '{0}', message = '{1}' WHERE id = '{2}';".format(title, message, question_id)
     data_manager.run_query(query)
     return redirect("/question/"+question_id)
 
 
 def delete_question(question_id):
     """ Delete question from database"""
-    query = "DELETE FROM question WHERE id = " + question_id
+    query = "DELETE FROM question WHERE id = '{}'".format(question_id)
     data_manager.run_query(query)
     return redirect("/list")
 
