@@ -87,25 +87,24 @@ def displays_a_single_question_A(question_id):
     question_with_answers["answers"] = sort(question_with_answers["answers"], sort_by, direction)
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
 
-
+# v2.0
 @app.route("/answer/<answer_id>/edit")
 def edit_answer(answer_id):
     answer = common.get_answer(answer_id)
     question = common.get_question(answer["question_id"])
     return render_template("answer.html", question=question, answer=answer, mode="Edit", error="")
 
-
+# v2.0
 @app.route("/answer/<answer_id>/edit", methods=["POST"])
 def edit_answer_post(answer_id):
     if len(request.form["answer"]) < 10:
         answer = common.get_answer(answer_id)
         question = common.get_question(answer["question_id"])
         return render_template("answer.html", question=question, answer=answer, mode="Edit", error="10 char")
-    answers_list = data_manager.get_dict("answer", "answer.csv")
-    answers_list[common.get_index_from_id(answers_list, answer_id)]["message"] = request.form["answer"]
-    data_manager.save_dict(answers_list, "answer", "answer.csv")
-    question_id = answers_list[common.get_index_from_id(answers_list, answer_id)]["question_id"]
-    return redirect("/question/{}".format(question_id), code=302)
+    answer = common.get_answer(answer_id)
+    answer["message"] = request.form["answer"]
+    common.update("answer", answer_id, "message", answer["message"])
+    return redirect("/question/{}".format(answer["question_id"]), code=302)
 
 
 @app.route("/answer/<answer_id>/delete")
@@ -150,6 +149,7 @@ def new_answer_post(question_id):
 
 def main():
     app.run(debug=True)
+
 
 if __name__ == '__main__':
     main()

@@ -32,6 +32,16 @@ def get_answer(id):
     return answer[0]
 
 
+def update(table, id, column, value):
+    """
+    Build an update sql query in the format:
+    UPDATE {table} SET {column}='{value}' WHERE id='{id}';
+    and call it.
+    """
+    query = "UPDATE {0} SET {1}='{2}' WHERE id='{3}';".format(table, column, value, id)
+    data_manager.run_query(query)
+
+
 def get_index_from_id(list, id):
     """
     Return the index of an answer record by its id
