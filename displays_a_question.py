@@ -25,7 +25,8 @@ def vote_answer_down(question_id, answer_id):
 
 
 def vote(type_, filename, direction, id, key):
-    data = data_manager.get_dict(type_, filename)
+    query = "SELECT * FROM question WHERE id= '%'" % (id)
+    data = data_manager.run_query(query)
     for row in data:
         if int(row[key]) == id:
             if direction == "up":
@@ -37,28 +38,32 @@ def vote(type_, filename, direction, id, key):
 
 def displays_a_single_question(question_id):
 
-    list_of_key_of_question = ["question_id", "submisson_time", "view_number", "vote_number", "title", "message", "image"]
-    title_of_question = ["ID", "Submisson time", "View number", "Vote number", "Title", "Message", "Image"]
+    list_of_key_of_question = ["question_id", "submisson_time", "view_number", "vote_number", "title", "message"]
+    title_of_question = ["ID", "Submisson time", "View number", "Vote number", "Title", "Message"]
     list_of_key_and_title_of_question = list(zip(list_of_key_of_question, title_of_question))
 
-    list_of_key_of_answer = ["answer_id", "submisson_time", "vote_number", "question_id", "message", "image"]
-    title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message", "Image"]
+    list_of_key_of_answer = ["answer_id", "submisson_time", "vote_number", "question_id", "message"]
+    title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message"]
     list_of_key_and_title_of_answers = list(zip(list_of_key_of_answer, title_of_answer))
 
-    data_question = data_manager.get_dict("question", "question.csv")
-    question = {}
-    for row in data_question:
-        if int(row["question_id"]) == question_id:
-            row["submisson_time"] = datetime.datetime.fromtimestamp(int(float(row["submisson_time"]))).strftime('%Y-%m-%d %H:%M:%S')
-            question = row
+    query = "SELECT * FROM question"
+    rows = data_manager.run_query(query)
+    list_of_names = ["question_id", "submisson_time", "view_number", "vote_number", "title", "message"]
+    all_question = data_manager.build_dict(rows, list_of_names)
+    for question_ in all_question:
+        if question_id == question_["question_id"]:
+            question = question_
             break
 
-    data_answers = data_manager.get_dict("answer", "answer.csv")
+    query = "SELECT * FROM answer"
+    rows = data_manager.run_query(query)
+    list_of_names = ["answer_id", "submisson_time", "vote_number", "question_id", "message", "image"]
+    all_answers = data_manager.build_dict(rows, list_of_names)
     answers = []
-    for row in data_answers:
-        if int(row["question_id"]) == question_id:
-            row["submisson_time"] = datetime.datetime.fromtimestamp(int(float(row["submisson_time"]))).strftime('%Y-%m-%d %H:%M:%S')
-            answers.append(row)
+    for answer in all_answers:
+        if question_id == answer["question_id"]:
+            answers.append(answer)
+
     question_with_answers = {"question_id": question_id,
                              "question": question,
                              "answers": answers,
@@ -82,6 +87,7 @@ def sort(data, sort_by, direction):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
