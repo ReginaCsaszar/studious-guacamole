@@ -18,14 +18,14 @@ def new_question_route():
 
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
-    time = datetime.datetime.now()
+    time = "2017-04-24 16:04:00" # datetime.datetime.now()
     title = request.form["title"]
     message = request.form["message"]
-    query = "INSERT INTO question (view_number, vote_number, title, message) VALUES (0, 0, 'new', 'same')"
+    query = """INSERT INTO question (submission_time, view_number, vote_number, title, message) 
+        VALUES ('{0}', 0, 0, '{1}', '{2}');""".format(time, title, message)
     data_manager.run_query(query)
-    query = "SELECT id FROM question WHERE title='new'"
+    query = "SELECT id FROM question WHERE title='{0}';".format(title)
     question_id = data_manager.run_query(query)
-    print(question_id)
     return redirect("/question/" + str(question_id[0][0]))
 
 
