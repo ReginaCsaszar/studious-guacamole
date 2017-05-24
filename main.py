@@ -84,8 +84,8 @@ def displays_a_single_question_A(question_id):
     direction = request.args.get("direction", "up")
     question_with_answers["sort_by"] = sort_by
     question_with_answers["direction"] = direction
-    question_with_answers["answers"] = sort(question_with_answers["answers"], sort_by, direction)
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
+
 
 # v2.0
 @app.route("/answer/<answer_id>/edit")
@@ -93,6 +93,7 @@ def edit_answer(answer_id):
     answer = common.get_answer(answer_id)
     question = common.get_question(answer["question_id"])
     return render_template("answer.html", question=question, answer=answer, mode="Edit", error="")
+
 
 # v2.0
 @app.route("/answer/<answer_id>/edit", methods=["POST"])
