@@ -1,11 +1,6 @@
 from flask import Flask, request, render_template, redirect
 import data_manager
-import common
 import datetime
-import os
-
-
-app = Flask(__name__)
 
 
 def new_question_route():
@@ -30,6 +25,7 @@ def add_new_question():
 
 
 def edit_question_route(question_id):
+    """Find question details from id and redirect with the data to /new_question page"""
     title = "Modify question"
     action = "/modify/" + question_id
     query = "SELECT title, message FROM question WHERE id = '{0}';".format(question_id)
@@ -40,6 +36,7 @@ def edit_question_route(question_id):
 
 
 def edit_question(question_id):
+    """Update question in the database, then go back to question's page"""
     title = request.form["title"]
     message = request.form["message"]
     print(title, message, question_id)
@@ -49,14 +46,14 @@ def edit_question(question_id):
 
 
 def delete_question(question_id):
-    """ Delete question from database"""
+    """ Delete question from database then redirect to /list page"""
     query = "DELETE FROM question WHERE id = '{0}';".format(question_id)
     data_manager.run_query(query)
     return redirect("/list")
 
 
 def main():
-    app.run(debug=True)
+    pass
 
 if __name__ == '__main__':
     main()
