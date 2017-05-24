@@ -18,7 +18,7 @@ def new_question_route():
 
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
-    time = "2017-04-24 16:04:00" # datetime.datetime.now()
+    time = str(datetime.datetime.now())[:16]
     title = request.form["title"]
     message = request.form["message"]
     query = """INSERT INTO question (submission_time, view_number, vote_number, title, message) 
@@ -50,7 +50,7 @@ def edit_question(question_id):
 
 def delete_question(question_id):
     """ Delete question from database"""
-    query = "DELETE FROM question WHERE id = '{}'".format(question_id)
+    query = "DELETE FROM question WHERE id = '{0}';".format(question_id)
     data_manager.run_query(query)
     return redirect("/list")
 
