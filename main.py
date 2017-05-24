@@ -107,20 +107,19 @@ def edit_answer_post(answer_id):
     common.update("answer", answer_id, "message", answer["message"])
     return redirect("/question/{}".format(answer["question_id"]), code=302)
 
-
+# v2.0
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
     answer = common.get_answer(answer_id)
     question = common.get_question(answer["question_id"])
-    date_time = datetime.datetime.fromtimestamp(int(float(answer["submisson_time"]))).strftime('%Y-%m-%d %H:%M:%S')
+    date_time = answer["submission_time"]
     return render_template("del_answer.html", answer=answer, question=question, date_time=date_time)
 
 
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
-        answers_list = data_manager.get_dict("answer", "answer.csv")
-        answer = answers_list.pop(common.get_index_from_id(answers_list, answer_id))
-        data_manager.save_dict(answers_list, "answer", "answer.csv")
+        answer = common.get_answer(answer_id)
+        common.delete("answer", answer_id)
         return redirect("/question/{}".format(answer["question_id"]), code=302)
 
 

@@ -42,6 +42,16 @@ def update(table, id, column, value):
     data_manager.run_query(query)
 
 
+def delete(table, id):
+    """
+    Build a delete sql query in the format:
+    DELETE FROM {table} WHERE id={id};
+    and call it.
+    """
+    query = "DELETE FROM {0} WHERE id={1};".format(table, id)
+    data_manager.run_query(query)
+
+
 def get_index_from_id(list, id):
     """
     Return the index of an answer record by its id
