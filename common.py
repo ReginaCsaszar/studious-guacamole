@@ -18,20 +18,18 @@ def get_question(id):
     """
     Return a single question (dict) by its ID
     """
-    questions_list = data_manager.get_dict("question", "question.csv")
-    for question in questions_list:
-        if question["question_id"] == id:
-            return question
+    question = data_manager.run_query("SELECT * FROM question WHERE id={};".format(id))
+    question = data_manager.build_dict(question, ["question_id", "submission_time", "view_number", "vote_number", "title", "message", "image"])
+    return question[0]
 
 
 def get_answer(id):
     """
     Return a single answer (dict) by its ID
     """
-    answers_list = data_manager.get_dict("answer", "answer.csv")
-    for answer in answers_list:
-        if answer["answer_id"] == id:
-            return answer
+    answer = data_manager.run_query("SELECT * FROM answer WHERE id={};".format(id))
+    answer = data_manager.build_dict(answer, ["answer_id", "submission_time", "vote_number", "question_id", "message", "image"])
+    return answer[0]
 
 
 def get_index_from_id(list, id):
