@@ -118,6 +118,7 @@ SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
 INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
 INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
+SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
 INSERT INTO tag VALUES (1, 'python');
 INSERT INTO tag VALUES (2, 'sql');
