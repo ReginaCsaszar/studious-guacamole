@@ -4,6 +4,7 @@ import common
 import displays_a_question
 import listpage
 import handle_question
+import search
 from flask import Flask, request, render_template, redirect
 from displays_a_question import question_up
 from displays_a_question import question_down
@@ -160,6 +161,10 @@ def edit_comment(comment_id):
 @app.route('/comments/<comment_id>/delete')
 def delete_comment(comment_id):
     return handle_comments.delete_comment(comment_id)
+
+@app.route('/search?q=<search phrase>')
+def search_questions_route(term):
+    return search.search_questions(term)
 
 
 def main():
