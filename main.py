@@ -89,15 +89,7 @@ def vote_answer_down(question_id, answer_id):
 def displays_a_single_question_A(question_id):
     sort_by = request.args.get("sort_by", "id")
     direction = request.args.get("direction", "ASC")
-
-    query = "SELECT * FROM answer ORDER BY {0} {1};".format(sort_by, direction)
-    rows = data_manager.run_query(query)
-    list_of_names = ["id", "submission_time", "vote_number", "question_id", "message"]
-    all_answers = data_manager.build_dict(rows, list_of_names)
-    answers = []
-    for answer in all_answers:
-        if question_id == answer["question_id"]:
-            answers.append(answer)
+    answers = displays_a_question.get_answers_for_question(question_id, sort_by, direction)
     question_with_answers = displays_a_question.displays_a_single_question(question_id)
     question_with_answers["answers"] = answers
     question_with_answers["sort_by"] = sort_by

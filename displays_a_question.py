@@ -4,6 +4,14 @@ import datetime
 app = Flask(__name__)
 
 
+def get_answers_for_question(question_id, sort_by, direction):
+    query = "SELECT * FROM answer WHERE question_id={0} ORDER BY {1} {2};".format(question_id, sort_by, direction)
+    rows = data_manager.run_query(query)
+    list_of_names = ["id", "submission_time", "vote_number", "question_id", "message"]
+    answers = data_manager.build_dict(rows, list_of_names)
+    return answers
+
+
 def question_up(direction, question_id):
     vote("question", direction, question_id)
 
