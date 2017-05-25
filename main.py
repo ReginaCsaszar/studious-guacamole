@@ -10,6 +10,7 @@ from displays_a_question import question_up
 from displays_a_question import question_down
 from displays_a_question import answer_up
 from displays_a_question import answer_down
+import data_manager
 
 app = Flask(__name__)
 
@@ -175,6 +176,12 @@ def edit_comment(comment_id):
     return handle_comments.edit_comment(comment_id)
 
 
+@app.route('/update_comment/<comment_id>')
+def update_comment_in_db(comment_id):
+    comment = request.args['comment']
+    return handle_comments.update_comment_in_db(comment_id, comment)
+
+
 @app.route('/comments/<comment_id>/delete')
 def delete_comment(comment_id):
     return handle_comments.delete_comment(comment_id)
@@ -189,6 +196,46 @@ def search_route():
 def search_questions_route():
     search_phrase = request.args['q']
     return search.search_questions(search_phrase)
+
+
+def read_tags():
+    list_of_keys_of_tag = ["tag_id", "name", "question_id"]
+    query_tag = """SELECT tag.id, tag.name, question_tag.question_id FROM tag JOIN question_tag
+                ON tag.id = question_tag.tag_id ORDER BY tag_id"""
+
+    data = data_manager.run_query(query_tag)
+    tags = data_manager.build_dict(data, list_of_keys_of_tag)
+
+    return tags
+
+
+def show_tags_type():
+    list_of_keys_of_tag = ["id", "name"]
+    query_tag = "SELECT id,name FROM tag ORDER BY id"
+    data = data_manager.run_query(query_tag)
+    tags_type = data_manager.build_dict(data, list_of_keys_of_tag)
+    return tags_type
+
+
+@app.route("/question/add_new_tag", methods=['POST'])
+def add_new_tag():
+    question_ids = []
+    selected = request.form["selected_tag"]
+    for id in request.form:
+        try:
+            question_ids.append(int(id))
+        except ValueError:
+            pass
+    all_tag = show_tags_type()
+    tag_id = 1
+    for tag in all_tag:
+        if tag['name'] == selected:
+            tag_id = tag["id"]
+            break
+    for question_id in question_ids:
+        query_tag = "UPDATE question_tag SET tag_id = {0} WHERE question_id={1}".format(tag_id,question_id)
+        data_manager.run_query(query_tag)
+    return redirect("/")
 
 
 def main():

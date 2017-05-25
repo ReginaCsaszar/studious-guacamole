@@ -79,3 +79,8 @@ table{
 margin-left: 150px;
 width: 50%;
 }
+
+mark {
+    color: black;
+    background-color: white;
+}

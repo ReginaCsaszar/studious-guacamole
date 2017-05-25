@@ -6,10 +6,19 @@ import data_manager
 
 
 def make_query_conditions(items):
+    """create a condition for query from given list"""
     result = ""
     for elem in set(items):
         result = result + " OR id=" + str(elem[0])
     return result
+
+
+def make_fancy(term, table, key):
+    """insert html tag into string for jinja formatting"""
+    new = "<mark>" + term + "</mark>"
+    for row in table:
+        row[key] = row[key].replace(term, new)
+    return table
 
 
 def search_questions(term):
@@ -25,6 +34,7 @@ def search_questions(term):
     if table:
         keys = ("question_id", "title", "message", "submission_time")
         questions = data_manager.build_dict(table, keys)
+        fancy_questions = make_fancy(term, questions, "title")
     else:
         return render_template('search_results.html', questions=[], answers=[])
     # select related answers
@@ -36,7 +46,8 @@ def search_questions(term):
     table = data_manager.run_query(answer_query)
     keys = ("answer_id", "message", "question_id")
     answers = data_manager.build_dict(table, keys)
-    return render_template('search_results.html', questions=questions, answers=answers)
+    fancy_answers = make_fancy(term, answers, "message")
+    return render_template('search_results.html', questions=fancy_questions, answers=fancy_answers)
 
 
 def main():

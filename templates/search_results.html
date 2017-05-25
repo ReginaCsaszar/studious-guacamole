@@ -21,7 +21,7 @@
         {% endfor %}
             <tr>
                 <td>{{question.question_id}}.</td>
-                <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
+                <td>{{question.title|safe}}</td>
                 <td>{{question.submission_time}}</td>
             </tr>
             <tr>
@@ -36,7 +36,7 @@
         <table class="answer" border="1">
                 <th>{{answer.answer_id}}</th>
                 <tr>
-                    <td colspan="3">{{answer.message}}</td>
+                    <td colspan="3">{{answer.message|safe}}</td>
                 </tr>
         </table>
 
