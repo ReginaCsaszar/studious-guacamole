@@ -49,6 +49,9 @@
            
             </tr>
     </table>
+    <p>
+        <a href="/question/{{ question_with_answers.question_id }}/new-comment"> <input class="button" type="button" value="Add comment"></a>
+    </p>
 
     <table border="1">
         <tr >
@@ -86,6 +89,7 @@
                 <td class="action_button">
                 <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/edit" ><input class="btn" type="button" value="Edit"></a>
                 <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/delete" ><input class="btn" type="button" value="Delete"></a>
+                <a href="/answer/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/new-comment"><input class="btn" type="button" value="New comment"></a>
                 </td>
             {% endfor %}
 
