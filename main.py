@@ -173,7 +173,8 @@ def edit_comment(comment_id):
 
 @app.route('/update_comment/<comment_id>')
 def update_comment_in_db(comment_id):
-    return handle_comments.update_comment_in_db(comment_id)
+    comment = request.args['comment']
+    return handle_comments.update_comment_in_db(comment_id, comment)
 
 
 @app.route('/comments/<comment_id>/delete')
