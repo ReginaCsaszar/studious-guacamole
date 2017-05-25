@@ -20,11 +20,7 @@
         <form action=/update_comment/{{comment_id}}>
     {%endif%}}
         <label for="comment"><h3>Your comment:</h3></label>
-        <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>
-            {%if basis == 'comment'%}
-                {{content}}
-            {%endif%}
-        </textarea>
+        <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
         <p>
             <input class="button" type="submit" value="{{button}}">
             <a href="/question/{{question_id}}"><input class="button" type="button" value="Back to question" ></a>
