@@ -151,12 +151,16 @@
                     
                 {% for comment in a_comments %}
 
-                    {% if comment["id"] == row["id"] %}
+                    {% if comment["answer_id"] == row["id"] %}
 
                         <tr>
                             <td>{{comment["message"]}}</td>
                             <td>{{comment["submission_time"]}}</td>
                             <td>{{comment["edited_count"]}}</td>
+                            <td class="action_button">
+                                <a href="/comments/{{ comment['id'] }}/edit" ><input class="btn" type="button" value="Edit"></a>
+                                <a href="/comments/{{ comment['id'] }}/delete" ><input class="btn" type="button" value="Delete"></a>
+                            </td>
                         </tr>
 
                     {% endif %}
