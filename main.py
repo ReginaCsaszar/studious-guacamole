@@ -105,8 +105,6 @@ def displays_a_single_question_A(question_id):
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
 
 
-
-# v2.0
 @app.route("/answer/<answer_id>/edit")
 def edit_answer(answer_id):
     answer = common.get_answer(answer_id)
@@ -114,7 +112,6 @@ def edit_answer(answer_id):
     return render_template("answer.html", question=question, answer=answer, mode="Edit", error="")
 
 
-# v2.0
 @app.route("/answer/<answer_id>/edit", methods=["POST"])
 def edit_answer_post(answer_id):
     if len(request.form["answer"]) < 10:
@@ -126,7 +123,7 @@ def edit_answer_post(answer_id):
     common.update("answer", answer_id, "message", answer["message"])
     return redirect("/question/{}".format(answer["question_id"]), code=302)
 
-# v2.0
+
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
     answer = common.get_answer(answer_id)
@@ -134,20 +131,20 @@ def delete_answer(answer_id):
     date_time = answer["submission_time"]
     return render_template("del_answer.html", answer=answer, question=question, date_time=date_time)
 
-# v2.0
+
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
         answer = common.get_answer(answer_id)
         common.delete("answer", answer_id)
         return redirect("/question/{}".format(answer["question_id"]), code=302)
 
-# v2.0
+
 @app.route("/question/<question_id>/new-answer")
 def new_answer(question_id):
     question = common.get_question(question_id)
     return render_template("answer.html", question=question, mode="Send new", error="")
 
-# v2.0
+
 @app.route("/question/<question_id>/new-answer", methods=["POST"])
 def new_answer_post(question_id):
     answer = {}
