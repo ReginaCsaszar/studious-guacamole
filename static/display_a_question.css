@@ -2,6 +2,8 @@ html{
     background-image: url("four_kyu_background.jpg");
     background-color: #cccccc;
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     width: 100%;
     height: 100%;
 }
@@ -22,10 +24,6 @@ box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
     border-width: 30px;
   text-decoration: none;
   font-size: 120%;
-  
-}
-.ask_new_question{
-   
 }
 
 h1{
@@ -35,6 +33,7 @@ h1{
     width: 20%;
     text-align: center;
 }
+
 table{
     margin: 0.5cm 2cm 2cm 0.5cm;
     border-image: url("bambo_empty.png") 30 round;
@@ -63,10 +62,6 @@ table{
     
 }
 
-*{
-    color: whitesmoke;
-    text-align: center; 
-}
 .add_new{
     border-color: transparent;
 }
