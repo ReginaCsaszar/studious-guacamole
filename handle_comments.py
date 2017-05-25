@@ -41,9 +41,24 @@ def add_new_answer_comment(answer_id):
         )
 
 
-
 def edit_comment(comment_id):
-    return handle_comments.edit_comment(comment_id)
+    sql_query = """SELECT message FROM comment WHERE id={}""".format(comment_id)
+    content = data_manager.run_query(sql_query)[0][0]
+    return render_template(
+        'comment.html', basis='comment', mode='Edit', button='Update',
+        content=content, question_id='', answer_id='', comment_id=comment_id, title='Edit'
+        )
+
+
+def update_comment_in_db(comment_id):
+    question_id = data_manager.run_query("""SELECT question_id FROM answer WHERE id={}""".format(answer_id))[0][0]
+    sql_query = """SELECT message FROM answer WHERE id={}""".format(answer_id)
+    answer_content = data_manager.run_query(sql_query)[0][0]
+    return render_template(
+        'comment.html', basis='answer', mode='Add_new', button='Create',
+        content=answer_content, question_id=str(question_id), answer_id=str(answer_id), title='Add a'
+        )
+
 
 
 def delete_comment(comment_id):

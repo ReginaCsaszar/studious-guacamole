@@ -170,6 +170,11 @@ def edit_comment(comment_id):
     return handle_comments.edit_comment(comment_id)
 
 
+@app_route('/update_comment/<comment_id>')
+def update_comment_in_db(comment_id):
+    return handle_comments.update_comment_in_db(comment_id)
+
+    
 @app.route('/comments/<comment_id>/delete')
 def delete_comment(comment_id):
     return handle_comments.delete_comment(comment_id)
