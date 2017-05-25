@@ -83,11 +83,3 @@ def build_dict(table, key_words):
             record[key] = value
         result.append(record)
     return result
-
-
-def main():
-    safe_insert("answer", ["message", "question_id"], ["kasdjhksdfg", "1"])
-
-if __name__ == '__main__':
-    main()
-
