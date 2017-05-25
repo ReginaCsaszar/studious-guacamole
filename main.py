@@ -93,6 +93,8 @@ def displays_a_single_question_A(question_id):
     question_with_answers["answers"] = answers
     question_with_answers["sort_by"] = sort_by
     question_with_answers["direction"] = direction
+    question_comments = common.get_comments("question", question_id)
+    answer_comments = common.get_comments("answer", question_id)
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
 
 

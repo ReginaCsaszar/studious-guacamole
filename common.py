@@ -14,6 +14,24 @@ import data_manager
 #         return max(id_list)
 
 
+def get_comments(comment_type, question_id):
+    if comment_type == "question":
+        query = """SELECT * 
+                FROM comment
+                WHERE question_id = {};
+                """.format(question_id)
+    elif comment_type == "answer":
+        query = """SELECT comment.id, comment.question_id, comment.answer_id, comment.message, comment.submission_time, comment.edited_count
+                FROM comment
+                LEFT JOIN answer ON answer_id = answer.id
+                WHERE answer.question_id = {};
+                """.format(question_id)
+    rows = data_manager.run_query(query)
+    columns = ["id", "question_id", "answer_id", "message", "submission_time", "edited_count"]
+    comments = data_manager.build_dict(rows, columns)
+    return comments
+
+
 def get_question(id):
     """
     Return a single question (dict) by its ID
@@ -91,10 +109,3 @@ def get_file_extension(string):
     dot_index = string[::-1].index('.')
     extension = string[::-1][:dot_index][::-1]
     return extension
-
-
-def main():
-    pass
-
-if __name__ == '__main__':
-    main()

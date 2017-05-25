@@ -18,7 +18,7 @@ def safe_insert(table, column_list, value_list):
         connection.autocommit = True
         cursor = connection.cursor()
 
-        placeholder = ", ".join(["%%s" for _ in value_list])
+        placeholder = ", ".join(["%%s" for _ in range(len(value_list))])
         query = "INSERT INTO %s ({0}) VALUES ({1})".format(", ".join(column_list), placeholder)
         cursor.execute(query % table, value_list)
 
