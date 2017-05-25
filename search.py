@@ -22,15 +22,18 @@ def search_questions(term):
     # slect questions with search term in their title and for those which id given by previous answers
     question_query = """SELECT id, title, message, submission_time FROM question WHERE title LIKE '%{0}%'{1};""".format(term, filters)
     table = data_manager.run_query(question_query)
-    keys = ("question_id", "title", "message", "submission_time")
-    questions = data_manager.build_dict(table, keys)
+    if table:
+        keys = ("question_id", "title", "message", "submission_time")
+        questions = data_manager.build_dict(table, keys)
+    else:
+        return render_template('search_results.html', questions=[], answers=[])
     # select related answers
     ids = []
     for row in questions:
         ids.append(str(row["question_id"]))
     filters = make_query_conditions(ids)[4:]
     answer_query = """SELECT id, message, question_id FROM answer WHERE {0};""".format(filters)
-    table = data_manager.run_query(question_query)
+    table = data_manager.run_query(answer_query)
     keys = ("answer_id", "message", "question_id")
     answers = data_manager.build_dict(table, keys)
     return render_template('search_results.html', questions=questions, answers=answers)

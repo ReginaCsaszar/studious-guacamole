@@ -29,7 +29,9 @@
             </tr>
     </table>
 
-    {% for answer in answers %} "answer_id", "message", "question_id"
+    {% for answer in answers %}
+
+        {% if question.question_id == answer.question_id %}
 
         <table class="answer" border="1">
                 <th>{{answer.answer_id}}</th>
@@ -37,6 +39,8 @@
                     <td colspan="3">{{answer.message}}</td>
                 </tr>
         </table>
+
+        {% endif %}
 
     {% endfor %}
 
