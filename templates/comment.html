@@ -8,13 +8,17 @@
 <body>
     <h1>{{title}} Comment</h1>
 
-    <h2>The {{basis}} you write this comment upon</h2>
+    <h2>The {{basis}} you write this comment upon:</h2>
     
     <p>{{content}}</p>
     
-    <form action='/question/{{question_id}}'>
+    {%if basis=='question' %}
+        <form action='/add_comment_to_db/question/{{question_id}}'
+    {% else %}
+        <form action='/add_comment_to_db/answer/{{answer_id}}'
+    {%end if%}}
         
-        <h2><label for="comment">Your comment:</label></h2>
+        <h3><label for="comment">Your comment:</label></h3>
         <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus></textarea>
         <p>
             <input class="button" type="submit" value="{{button}}">
