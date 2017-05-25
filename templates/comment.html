@@ -12,16 +12,13 @@
     
     <p>{{content}}</p>
     
-    <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
-           <p>
-            <h2>
-                <label for="answer">Your answer:</label>
-            </h2>
-            </p>
-        <textarea name="answer" id="answer" rows="4" cols="46" minlength="10" autofocus>{{ answer["message"] }}</textarea>
+    <form action='/question/{{question_id}}'>
+        
+        <h2><label for="comment">Your comment:</label></h2>
+        <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus></textarea>
         <p>
-            <input class="button" type="submit" value="{{ mode }}">
-            <a href="/question/{{ question["question_id"] }}"><input class="button" type="button" value="Back to question" ></a>
+            <input class="button" type="submit" value="{{button}}">
+            <a href="/question/{{question_id}}"><input class="button" type="button" value="Back to question" ></a>
         </p>
     </form>
         
