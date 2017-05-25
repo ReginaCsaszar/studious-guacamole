@@ -47,17 +47,17 @@ def vote(type_, direction, id, answer_id=0):
 
 def displays_a_single_question(question_id):
 
-    list_of_key_of_question = ["id", "submisson_time", "view_number", "vote_number", "title", "message"]
+    list_of_key_of_question = ["id", "submission_time", "view_number", "vote_number", "title", "message"]
     title_of_question = ["ID", "Submisson time", "View number", "Vote number", "Title", "Message"]
     list_of_key_and_title_of_question = list(zip(list_of_key_of_question, title_of_question))
 
-    list_of_key_of_answer = ["id", "submisson_time", "vote_number", "question_id", "message"]
+    list_of_key_of_answer = ["id", "submission_time", "vote_number", "question_id", "message"]
     title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message"]
     list_of_key_and_title_of_answers = list(zip(list_of_key_of_answer, title_of_answer))
 
     query = "SELECT * FROM question"
     rows = data_manager.run_query(query)
-    list_of_names = ["id", "submisson_time", "view_number", "vote_number", "title", "message"]
+    list_of_names = ["id", "submission_time", "view_number", "vote_number", "title", "message"]
     all_question = data_manager.build_dict(rows, list_of_names)
     for question_ in all_question:
         if question_id == question_["id"]:
@@ -66,7 +66,7 @@ def displays_a_single_question(question_id):
 
     query = "SELECT * FROM answer"
     rows = data_manager.run_query(query)
-    list_of_names = ["id", "submisson_time", "vote_number", "question_id", "message"]
+    list_of_names = ["id", "submission_time", "vote_number", "question_id", "message"]
     all_answers = data_manager.build_dict(rows, list_of_names)
     answers = []
     for answer in all_answers:

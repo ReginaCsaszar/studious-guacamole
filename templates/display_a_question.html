@@ -57,10 +57,10 @@
         </tr>
         <tr>
             {% for name_title in question_with_answers.list_of_key_and_title_of_answers %}
-                {% if question_with_answers.direction == "down" %}
-                <td><a href="/question/{{ question_with_answers.question_id }}?sort_by={{ name_title[0] }}&direction=up">  {{name_title[1]}} <a></td>
+                {% if question_with_answers.direction == "DESC" %}
+                <td><a href="/question/{{ question_with_answers.question_id }}?sort_by={{ name_title[0] }}&direction=ASC">  {{name_title[1]}} <a></td>
                 {% else %}
-                <td><a href="/question/{{ question_with_answers.question_id }}?sort_by={{ name_title[0] }}&direction=down">  {{name_title[1]}} <a></td>
+                <td><a href="/question/{{ question_with_answers.question_id }}?sort_by={{ name_title[0] }}&direction=DESC">  {{name_title[1]}} <a></td>
             {% endif %}
             {% endfor %}
         </tr>

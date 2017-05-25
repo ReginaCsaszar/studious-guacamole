@@ -86,8 +86,23 @@ def vote_answer_down(question_id, answer_id):
 
 @app.route("/question/<int:question_id>")
 def displays_a_single_question_A(question_id):
+    sort_by = request.args.get("sort_by", "id")
+    direction = request.args.get("direction", "ASC")
+
+    query = "SELECT * FROM answer ORDER BY {0} {1};".format(sort_by, direction)
+    rows = data_manager.run_query(query)
+    list_of_names = ["id", "submission_time", "vote_number", "question_id", "message"]
+    all_answers = data_manager.build_dict(rows, list_of_names)
+    answers = []
+    for answer in all_answers:
+        if question_id == answer["question_id"]:
+            answers.append(answer)
     question_with_answers = displays_a_question.displays_a_single_question(question_id)
+    question_with_answers["answers"] = answers
+    question_with_answers["sort_by"] = sort_by
+    question_with_answers["direction"] = direction
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
+
 
 
 # v2.0
