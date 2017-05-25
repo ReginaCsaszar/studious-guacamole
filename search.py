@@ -16,7 +16,7 @@ def search_questions(term):
     table = data_manager.run_query(question_query)
     keys = ("question_id", "title", "submission_time", "view_number", "vote_number")
     questions = data_manager.build_dict(table, keys)
-    return render_template('list.html', questions=questions, url="")
+    return render_template('search_results.html', questions=questions)
 
 
 def main():
