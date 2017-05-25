@@ -60,8 +60,9 @@ def insert_answer(record):
     INSERT INTO answer (vote_number, question_id, message) VALUES ({values});
     @record: dictionary keys = column name, values = values
     """
-    query = "INSERT INTO answer (vote_number, question_id, message, submission_time) VALUES ({0}, {1}, '{2}', '{3}');".format(record["vote_number"], record["question_id"], record["message"], record["submission_time"])
-    data_manager.run_query(query)
+    columns = ["vote_number", "question_id", "message", "submission_time"]
+    values = [record["vote_number"], record["question_id"], record["message"], record["submission_time"]]
+    data_manager.safe_insert("answer", columns, values)
     return
 
 
