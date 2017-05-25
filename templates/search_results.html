@@ -12,22 +12,35 @@
 <div class="ask_new_question">
 <h3>Search results</h3>
 </div>
-<table border="1">
-    {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
-        <th>{{col}}</th>
+
+{% for question in questions %}
+
+    <table border="1">
+        {% for col in ['ID', 'Question', 'Date'] %}
+            <th>{{col}}</th>
+        {% endfor %}
+            <tr>
+                <td>{{question.question_id}}.</td>
+                <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
+                <td>{{question.submission_time}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">{{question.message}}</td>
+            </tr>
+    </table>
+
+    {% for answer in answers %} "answer_id", "message", "question_id"
+
+        <table class="answer" border="1">
+                <th>{{answer.answer_id}}</th>
+                <tr>
+                    <td colspan="3">{{answer.message}}</td>
+                </tr>
+        </table>
+
     {% endfor %}
-    <tr>
-    {% for question in questions %}
-        <tr>
-            <td>{{question.question_id}}.</td>
-            <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
-            <td>{{question.submission_time}}</td>
-            <td>{{question.view_number}}</td>
-            <td>{{question.vote_number}}</td>
-        </tr>
-    {% endfor %}
-    </tr>
-</table>
+
+{% endfor %}
 <p>
     <form action='/'>
         <input class='button' type='submit' value='Back'>
