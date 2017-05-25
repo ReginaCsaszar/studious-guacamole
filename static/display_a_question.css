@@ -66,3 +66,11 @@ table{
     border-color: transparent;
 }
 
+*{
+     color: whitesmoke;
+     text-align: center; 
+ }
+
+#search {
+    color: black
+}
