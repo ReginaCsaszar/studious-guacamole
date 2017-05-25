@@ -115,35 +115,28 @@ def delete_answer(answer_id):
     date_time = answer["submission_time"]
     return render_template("del_answer.html", answer=answer, question=question, date_time=date_time)
 
-
+# v2.0
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
         answer = common.get_answer(answer_id)
         common.delete("answer", answer_id)
         return redirect("/question/{}".format(answer["question_id"]), code=302)
 
-
+# v2.0
 @app.route("/question/<question_id>/new-answer")
 def new_answer(question_id):
     question = common.get_question(question_id)
     return render_template("answer.html", question=question, mode="Send new", error="")
 
-
+# v2.0
 @app.route("/question/<question_id>/new-answer", methods=["POST"])
 def new_answer_post(question_id):
-    if len(request.form["answer"]) < 10:
-        question = common.get_question(question_id)
-        return render_template("answer.html", question=question, mode="Send new", error="")
-    answers_list = data_manager.get_dict("answer", "answer.csv")
     answer = {}
-    answer["answer_id"] = str(common.get_max_id(answers_list) + 1)
-    answer["submisson_time"] = str(datetime.datetime.timestamp(datetime.datetime.now()))
-    answer["vote_number"] = "0"
+    answer["submission_time"] = str(datetime.datetime.now())[:16]
+    answer["vote_number"] = 0
     answer["question_id"] = question_id
     answer["message"] = request.form["answer"]
-    answer["image"] = ""
-    answers_list.append(answer)
-    data_manager.save_dict(answers_list, "answer", "answer.csv")
+    common.insert_answer(answer)
     return redirect("/", code=302)
 
 

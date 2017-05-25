@@ -40,6 +40,7 @@ def update(table, id, column, value):
     """
     query = "UPDATE {0} SET {1}='{2}' WHERE id='{3}';".format(table, column, value, id)
     data_manager.run_query(query)
+    return
 
 
 def delete(table, id):
@@ -50,6 +51,18 @@ def delete(table, id):
     """
     query = "DELETE FROM {0} WHERE id={1};".format(table, id)
     data_manager.run_query(query)
+    return
+
+
+def insert_answer(record):
+    """
+    Build an insert into sql query in the format:
+    INSERT INTO answer (vote_number, question_id, message) VALUES ({values});
+    @record: dictionary keys = column name, values = values
+    """
+    query = "INSERT INTO answer (vote_number, question_id, message, submission_time) VALUES ({0}, {1}, '{2}', '{3}');".format(record["vote_number"], record["question_id"], record["message"], record["submission_time"])
+    data_manager.run_query(query)
+    return
 
 
 def get_index_from_id(list, id):
