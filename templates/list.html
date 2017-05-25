@@ -18,7 +18,7 @@
     {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
         <th>
             {{col}} 
-            <a href="/extend/{{col}}?{{url}}">
+            <a href="/extendurl/{{col}}?{{url}}">
                 {% if col + '=asc' in url %}
                     <img src="/static/up.png" width="20"></img>
                 {% elif col + '=desc' in url %}
