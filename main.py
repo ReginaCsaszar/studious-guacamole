@@ -5,8 +5,10 @@ import displays_a_question
 import listpage
 import handle_question
 from flask import Flask, request, render_template, redirect
-from displays_a_question import sort
-from displays_a_question import vote
+from displays_a_question import question_up
+from displays_a_question import question_down
+from displays_a_question import answer_up
+from displays_a_question import answer_down
 
 app = Flask(__name__)
 
@@ -55,35 +57,35 @@ def delete_question(question_id):
 
 @app.route("/question/<int:question_id>/vote-up")
 def vote_question_up(question_id):
-    vote("question", "question.csv", "up", question_id, "question_id")
+    direction = "vote-up"
+    question_up(direction, question_id)
     return redirect("/question/{0}".format(question_id))
 
 
 @app.route("/question/<int:question_id>/vote-down")
 def vote_question_down(question_id):
-    vote("question", "question.csv", "down", question_id, "question_id")
+    direction = "vote-down"
+    question_down(direction, question_id)
     return redirect("/question/{0}".format(question_id))
 
 
 @app.route("/question/<int:question_id>/<int:answer_id>/vote-up")
 def vote_answer_up(question_id, answer_id):
-    vote("answer", "answer.csv", "up", answer_id, "answer_id")
+    direction = "vote-up"
+    answer_up(direction, question_id, answer_id)
     return redirect("/question/{0}".format(question_id))
 
 
 @app.route("/question/<int:question_id>/<int:answer_id>/vote-down")
 def vote_answer_down(question_id, answer_id):
-    vote("answer", "answer.csv", "down", answer_id, "answer_id")
+    direction = "vote-down"
+    answer_down(direction, question_id, answer_id)
     return redirect("/question/{0}".format(question_id))
 
 
 @app.route("/question/<int:question_id>")
 def displays_a_single_question_A(question_id):
     question_with_answers = displays_a_question.displays_a_single_question(question_id)
-    sort_by = request.args.get("sort_by", "answer_id")
-    direction = request.args.get("direction", "up")
-    question_with_answers["sort_by"] = sort_by
-    question_with_answers["direction"] = direction
     return render_template("display_a_question.html", question_with_answers=question_with_answers)
 
 

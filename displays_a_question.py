@@ -4,34 +4,45 @@ import datetime
 app = Flask(__name__)
 
 
-def vote_question_up(question_id):
-    vote("question", "question.csv", "up", question_id, "question_id")
-    return redirect("/question/{0}".format(question_id))
+def question_up(direction, question_id):
+    vote("question", direction, question_id)
 
 
-def vote_question_down(question_id):
-    vote("question", "question.csv", "down", question_id, "question_id")
-    return redirect("/question/{0}".format(question_id))
+def question_down(direction, question_id):
+    vote("question", direction, question_id)
 
 
-def vote_answer_up(question_id, answer_id):
-    vote("answer", "answer.csv", "up", answer_id, "answer_id")
-    return redirect("/question/{0}".format(question_id))
+def answer_up(direction, question_id, answer_id):
+    vote("answer", direction, question_id, answer_id)
 
 
-def vote_answer_down(question_id, answer_id):
-    vote("answer", "answer.csv", "down", answer_id, "answer_id")
-    return redirect("/question/{0}".format(question_id))
+def answer_down(direction, question_id, answer_id):
+    vote("answer", direction, question_id, answer_id)
 
 
-def vote(type_, list_of_key, direction, id):
-    query = "SELECT * FROM {0} WHERE id={1}".format(type_, id)
-    data = data_manager.run_query(query)
-    type_ = data_manager.build_dict(data, list_of_key)
-    if direction == 'up':
-        type_[0]["vote_number"] += 1
+def vote(type_, direction, id, answer_id=0):
+    if type_ == "question":
+        query = "SELECT vote_number FROM {0} WHERE id={1}".format(type_, id)
+    elif type_ == "answer":
+        query = "SELECT vote_number FROM {0} WHERE id={2} AND question_id = {1}".format(type_, id, answer_id)
     else:
-        type_[0]["vote_number"] -= 1
+        pass
+    updated_number = 0
+    vote_num = data_manager.run_query(query)
+    if direction == "vote-up" and vote_num:
+        updated_number = vote_num[0][0] + 1
+    elif direction == "vote-down" and vote_num:
+        updated_number = vote_num[0][0] - 1
+    else:
+        pass
+    if type_ == "question":
+        update_query = """UPDATE {0} SET vote_number = {1} WHERE id = {2}""".format(type_, updated_number, id)
+    elif type_ == "answer":
+        update_query = """UPDATE {0} SET vote_number = {1} WHERE id = {3}
+                       AND question_id = {2}""".format(type_, updated_number, id, answer_id)
+    else:
+        pass
+    data_manager.run_query(update_query)
 
 
 def displays_a_single_question(question_id):
@@ -75,20 +86,10 @@ def displays_a_single_question(question_id):
     return question_with_answers
 
 
-def sort(data, sort_by, direction):
-    try:
-        sorted_data = sorted(data, key=lambda x: int(x[sort_by]), reverse=direction == "down")
-    except:
-        sorted_data = sorted(data, key=lambda x: x[sort_by], reverse=direction == "down")
-
-    return sorted_data
-
-
 if __name__ == "__main__":
     app.run(debug=True)
-    """
-    list_of_key = ["question_id", "submisson_time", "view_number", "vote_number", "title", "message"]
-    print(vote('answer', list_of_key, 'down', 1))"""
+
+
 
 
 
