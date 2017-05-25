@@ -1,5 +1,4 @@
 import datetime
-import data_manager
 import common
 import displays_a_question
 import listpage
