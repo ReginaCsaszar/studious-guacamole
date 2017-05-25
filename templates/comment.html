@@ -12,19 +12,23 @@
         <h2>The {{basis}} you write to comment upon:</h2>
         <p>{{content}}</p>
     {%endif%}
+    
     {%if basis=='question' %}
         <form action='/add_comment_to_db/question/{{question_id}}'>
     {%elif basis=='answer' %}
         <form action='/add_comment_to_db/answer/{{answer_id}}'>
     {%elif basis=='comment' %}
         <form action=/update_comment/{{comment_id}}>
-    {%endif%}}
+    {%endif%}
+
         <label for="comment"><h3>Your comment:</h3></label>
         <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
+        
         <p>
             <input class="button" type="submit" value="{{button}}">
             <a href="/question/{{question_id}}"><input class="button" type="button" value="Back to question" ></a>
         </p>
+    
     </form>
         
 </body>

@@ -59,9 +59,10 @@ def edit_comment(comment_id):
     """
     sql_query = """SELECT message FROM comment WHERE id={}""".format(comment_id)
     comment = data_manager.run_query(sql_query)[0][0]
+    question_id = get_question_for_comment(comment_id)
     return render_template(
         'comment.html', basis='comment', mode='Edit', button='Update', comment=comment,
-        content='', question_id='', answer_id='', comment_id=comment_id, title='Edit'
+        content='', question_id=question_id, answer_id='', comment_id=comment_id, title='Edit'
         )
 
 
