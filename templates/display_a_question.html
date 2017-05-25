@@ -157,6 +157,8 @@
                             <td>{{comment["message"]}}</td>
                             <td>{{comment["submission_time"]}}</td>
                             <td>{{comment["edited_count"]}}</td>
+                            <td><a href="/comments/{{comment['id']}}/edit">Edit</a></td>
+                            <td><a href="/comments/{{comment['id']}}/delete" >Delete</a></td>
                         </tr>
 
                     {% endif %}
