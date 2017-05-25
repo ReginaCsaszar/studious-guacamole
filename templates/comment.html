@@ -2,11 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Comment</title>
+    <title>{{title}} Comment</title>
 </head>
 <body>
+    <h1>{{title}} Comment</h1>
+
+    <h2>The {{basis}} you write this comment upon</h2>
     
+    <p>{{content}}</p>
+    
+    <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
+           <p>
+            <h2>
+                <label for="answer">Your answer:</label>
+            </h2>
+            </p>
+        <textarea name="answer" id="answer" rows="4" cols="46" minlength="10" autofocus>{{ answer["message"] }}</textarea>
+        <p>
+            <input class="button" type="submit" value="{{ mode }}">
+            <a href="/question/{{ question["question_id"] }}"><input class="button" type="button" value="Back to question" ></a>
+        </p>
+    </form>
+        
 </body>
 </html>
