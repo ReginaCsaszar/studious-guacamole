@@ -2,6 +2,7 @@ import datetime
 import common
 import displays_a_question
 import listpage
+import random
 import handle_question
 import handle_comments
 import search
@@ -198,20 +199,21 @@ def search_questions_route():
     return search.search_questions(search_phrase)
 
 
+
 def read_tags():
-    list_of_keys_of_tag = ["tag_id", "name", "question_id"]
-    query_tag = """SELECT tag.id, tag.name, question_tag.question_id FROM tag JOIN question_tag
+    list_of_keys_of_tag = ["tag_id", "name", "question_id","color"]
+    query_tag = """SELECT tag.id, tag.name, question_tag.question_id, tag.color FROM tag JOIN question_tag
                 ON tag.id = question_tag.tag_id ORDER BY tag_id"""
 
     data = data_manager.run_query(query_tag)
     tags = data_manager.build_dict(data, list_of_keys_of_tag)
-
+    print(tags)
     return tags
 
 
 def show_tags_type():
-    list_of_keys_of_tag = ["id", "name"]
-    query_tag = "SELECT id,name FROM tag ORDER BY id"
+    list_of_keys_of_tag = ["id", "name", "color"]
+    query_tag = "SELECT id,name,color FROM tag ORDER BY id"
     data = data_manager.run_query(query_tag)
     tags_type = data_manager.build_dict(data, list_of_keys_of_tag)
     return tags_type
@@ -236,6 +238,43 @@ def add_new_tag():
         query_tag = "UPDATE question_tag SET tag_id = {0} WHERE question_id={1}".format(tag_id,question_id)
         data_manager.run_query(query_tag)
     return redirect("/")
+
+
+@app.route("/question/create_new_tag")
+def create_new_tag():
+    rgb_color = random_color()
+    return render_template("create_new_tag.html", rgb_color=rgb_color)
+
+
+@app.route("/question/save_new_tag/<random_color>", methods=['POST'])
+def save_new_tag_and_color(random_color):
+    new_tag_name = request.form["new_tag_name"]
+    red_color = request.form["red_color"]
+    green_color = request.form["green_color"]
+    blue_color = request.form["blue_color"]
+    rgb_color = "rgb({0},{1},{2})".format(red_color, green_color, blue_color)
+    random_color = random_color.replace("<", "")
+    random_color = random_color.replace(">", "")
+    color = ""
+    if rgb_color == "rgb(,,)":
+        color = random_color
+    else:
+        color = rgb_color
+    if new_tag_name != "":
+        query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(new_tag_name, color)
+        data_manager.run_query(query)
+    else:
+        pass
+    return redirect("/")
+
+
+def random_color():
+    list_of_number = list(range(0, 256))
+    red = random.choice(list_of_number)
+    green = random.choice(list_of_number)
+    blue = random.choice(list_of_number)
+    rgb_color = "rgb({0},{1},{2})".format(red, green, blue)
+    return rgb_color
 
 
 def main():
