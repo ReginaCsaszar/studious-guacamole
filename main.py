@@ -177,7 +177,8 @@ def edit_comment(comment_id):
 def delete_comment(comment_id):
     return handle_comments.delete_comment(comment_id)
 
-@app.route('/search?q=<search phrase>')
+
+@app.route('/search?q=<search_phrase>')
 def search_questions_route(term):
     return search.search_questions(term)
 
