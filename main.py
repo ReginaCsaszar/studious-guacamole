@@ -16,7 +16,7 @@ def index():
     return redirect("/list")
 
 
-@app.route('/extend/<col_idx>')
+@app.route('/extendurl/<col_idx>')
 def extend_url(col_idx):
     return listpage.extend_url(col_idx)
 
@@ -145,6 +145,26 @@ def new_answer_post(question_id):
     answers_list.append(answer)
     data_manager.save_dict(answers_list, "answer", "answer.csv")
     return redirect("/", code=302)
+
+
+@app.route('/question/<question_id>/new-comment')
+def add_new_question_comment(question_id):
+    return handle_comments.add_new_question_comment(question_id)
+
+
+@app.route('/answer/<answer_id>/new-comment')
+def add_new_answer_comment(answer_id):
+    return handle_comments.add_new_answer_comment(answer_id)
+
+
+@app.route('/comments/<comment_id>/edit')
+def edit_comment(comment_id):
+    return handle_comments.edit_comment(comment_id)
+
+
+@app.route('/comments/<comment_id>/delete')
+def delete_comment(comment_id):
+    return handle_comments.delete_comment(comment_id)
 
 
 def main():
