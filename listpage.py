@@ -31,7 +31,7 @@ def print_table():
         'Number of Views': 'view_number', 'Votes': 'vote_number'
         }
     sortingcols = request.args
-    order = ','.join([pairs[col] + ' ' + sortingcols[col] for col in sortingcols])
+    order = ','.join([pairs[col] + ' ' + sortingcols[col] for col in sortingcols][::-1])
     sql_query = """SELECT id, title, submission_time, view_number, vote_number, image FROM question"""
     if order:
         sql_query += '\nORDER BY ' + order + ';'
