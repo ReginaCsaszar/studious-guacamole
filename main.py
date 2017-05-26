@@ -215,8 +215,7 @@ def add_new_tag():
             tag_id = tag["id"]
             break
     for question_id in question_ids:
-        query_tag = "UPDATE question_tag SET tag_id = {0} WHERE question_id={1}".format(tag_id,question_id)
-        data_manager.run_query(query_tag)
+        common.update_tag(tag_id, question_id)
     return redirect("/")
 
 
@@ -241,8 +240,7 @@ def save_new_tag_and_color(random_color):
     else:
         color = rgb_color
     if new_tag_name != "":
-        query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(new_tag_name, color)
-        data_manager.run_query(query)
+        common.insert_tag(new_tag_name, color)
     else:
         pass
     return redirect("/")
