@@ -2,7 +2,7 @@ import data_manager
 
 
 def insert_tag(color, new_tag_name):
-    query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(new_tag_name, color)
+    query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
     return
 

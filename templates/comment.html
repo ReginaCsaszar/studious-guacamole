@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}} Comment</title>
+    <link rel="stylesheet" href="/static/display_a_question.css">
 </head>
 <body>
     <h1>{{title}} Comment</h1>
@@ -22,7 +23,7 @@
     {%endif%}
 
         <label for="comment"><h3>Your comment:</h3></label>
-        <textarea name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
+        <textarea class="text-box"" name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
         
         <p>
             <input class="button" type="submit" value="{{button}}">
