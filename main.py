@@ -199,26 +199,6 @@ def search_questions_route():
     return search.search_questions(search_phrase)
 
 
-
-def read_tags():
-    list_of_keys_of_tag = ["tag_id", "name", "question_id","color"]
-    query_tag = """SELECT tag.id, tag.name, question_tag.question_id, tag.color FROM tag JOIN question_tag
-                ON tag.id = question_tag.tag_id ORDER BY tag_id"""
-
-    data = data_manager.run_query(query_tag)
-    tags = data_manager.build_dict(data, list_of_keys_of_tag)
-    print(tags)
-    return tags
-
-
-def show_tags_type():
-    list_of_keys_of_tag = ["id", "name", "color"]
-    query_tag = "SELECT id,name,color FROM tag ORDER BY id"
-    data = data_manager.run_query(query_tag)
-    tags_type = data_manager.build_dict(data, list_of_keys_of_tag)
-    return tags_type
-
-
 @app.route("/question/add_new_tag", methods=['POST'])
 def add_new_tag():
     question_ids = []
@@ -228,15 +208,14 @@ def add_new_tag():
             question_ids.append(int(id))
         except ValueError:
             pass
-    all_tag = show_tags_type()
+    all_tag = common.show_tags_type()
     tag_id = 1
     for tag in all_tag:
         if tag['name'] == selected:
             tag_id = tag["id"]
             break
     for question_id in question_ids:
-        query_tag = "UPDATE question_tag SET tag_id = {0} WHERE question_id={1}".format(tag_id,question_id)
-        data_manager.run_query(query_tag)
+        common.update_tag(tag_id, question_id)
     return redirect("/")
 
 
@@ -261,8 +240,7 @@ def save_new_tag_and_color(random_color):
     else:
         color = rgb_color
     if new_tag_name != "":
-        query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(new_tag_name, color)
-        data_manager.run_query(query)
+        common.insert_tag(new_tag_name, color)
     else:
         pass
     return redirect("/")

@@ -4,8 +4,6 @@ import common
 import displays_a_question
 import listpage
 from flask import request, render_template, redirect
-from main import read_tags
-from main import show_tags_type
 
 
 def extend_url(idx):
@@ -42,7 +40,7 @@ def print_table():
     headers = ['question_id', 'title', 'submission_time', 'view_number', 'vote_number', 'image']
     questions = data_manager.build_dict(questions, headers)
     url = '&'.join([key + '=' + sortingcols[key] for key in sortingcols])
-    tags = read_tags()
-    tags_type = show_tags_type()
+    tags = common.read_tags()
+    tags_type = common.show_tags_type()
     return render_template('list.html', questions=questions, url=url,
                            tags=tags, tags_type=tags_type)
