@@ -1,6 +1,25 @@
 import data_manager
 
 
+def show_tags_type():
+    list_of_keys_of_tag = ["id", "name", "color"]
+    query_tag = "SELECT id,name,color FROM tag ORDER BY id"
+    data = data_manager.run_query(query_tag)
+    tags_type = data_manager.build_dict(data, list_of_keys_of_tag)
+    return tags_type
+
+
+def read_tags():
+    list_of_keys_of_tag = ["tag_id", "name", "question_id","color"]
+    query_tag = """SELECT tag.id, tag.name, question_tag.question_id, tag.color FROM tag JOIN question_tag
+                ON tag.id = question_tag.tag_id ORDER BY tag_id"""
+
+    data = data_manager.run_query(query_tag)
+    tags = data_manager.build_dict(data, list_of_keys_of_tag)
+    print(tags)
+    return tags
+
+
 def get_comments(comment_type, question_id):
     if comment_type == "question":
         query = """SELECT * 
