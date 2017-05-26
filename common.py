@@ -1,19 +1,6 @@
 import data_manager
 
 
-# def get_max_id(answers_list):
-#     """
-#     Return the the greatest id for answers.
-#     In case of empty list, return -1
-#     @answer_list: list of dictionaries (with answer_id key)
-#     """
-#     id_list = [int(answer["answer_id"]) for answer in answers_list]
-#     if len(id_list) == 0:
-#         return -1
-#     else:
-#         return max(id_list)
-
-
 def get_comments(comment_type, question_id):
     if comment_type == "question":
         query = """SELECT * 
@@ -82,27 +69,6 @@ def insert_answer(record):
     values = [record["vote_number"], record["question_id"], record["message"], record["submission_time"]]
     data_manager.safe_insert("answer", columns, values)
     return
-
-
-# def get_index_from_id(list, id):
-#     """
-#     Return the index of an answer record by its id
-#     """
-#     for i in range(len(list)):
-#         if list[i]["answer_id"] == id:
-#             return i
-
-
-# def type_converter(dicts_in_list, keys, func):
-#     """
-#     This mapping function expects a list of dictionaries
-#     returns same data structure but func() is called on all key values with keys matching key param
-#     """
-#     for row in dicts_in_list:
-#         for key in row:
-#             if key in keys:
-#                 row[key] = func(row[key])
-#     return dicts_in_list
 
 
 def get_file_extension(string):
