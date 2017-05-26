@@ -7,7 +7,7 @@ def insert_tag(color, new_tag_name):
     return
 
 
-def common.update_tag(tag_id, question_id):
+def update_tag(tag_id, question_id):
     query_tag = "UPDATE question_tag SET tag_id = {0} WHERE question_id={1}".format(tag_id, question_id)
     data_manager.run_query(query_tag)
     return
