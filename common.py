@@ -22,6 +22,24 @@ def update_tag(tag_id, question_id):
     return
 
 
+def id_of_tag_where_name_is(name):
+    query = """SELECT id FROM tag WHERE name='{0}'""".format(name)
+    id = data_manager.run_query(query)
+    return id
+
+
+def tag_id():
+    query_tag = """SELECT tag.id FROM tag"""
+    tag_id = data_manager.run_query(query_tag)
+    return tag_id
+
+
+def tag_names():
+    query_tag = """SELECT tag.name FROM tag"""
+    tag_names = data_manager.run_query(query_tag)
+    return tag_names
+
+
 def show_tags_type():
     list_of_keys_of_tag = ["id", "name", "color"]
     query_tag = "SELECT id,name,color FROM tag ORDER BY id"
@@ -30,10 +48,10 @@ def show_tags_type():
     return tags_type
 
 
-def read_tags():
+def read_tags(question_id):
     list_of_keys_of_tag = ["tag_id", "name", "question_id", "color"]
     query_tag = """SELECT tag.id, tag.name, question_tag.question_id, tag.color FROM tag JOIN question_tag
-                ON tag.id = question_tag.tag_id ORDER BY tag_id"""
+                ON tag.id = question_tag.tag_id WHERE question_tag.question_id={0} ORDER BY tag_id""".format(question_id)
 
     data = data_manager.run_query(query_tag)
     tags = data_manager.build_dict(data, list_of_keys_of_tag)

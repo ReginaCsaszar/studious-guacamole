@@ -24,6 +24,21 @@ def add_new_question():
     data_manager.run_query(query)
     query = "SELECT id FROM question WHERE title='{0}';".format(title)
     question_id = data_manager.run_query(query)
+
+    selected_tag_name = []
+    tag_names = common.tag_names()
+    lit_of_tag_names = [i[0] for i in tag_names]
+    for request_string in request.form:
+        if request_string in lit_of_tag_names:
+            selected_tag_name.append(request_string)
+
+    ids = []
+    for name in selected_tag_name:
+        ids.append(common.id_of_tag_where_name_is(name)[0][0])
+
+    for tag_id in ids:
+        common.update_tag(tag_id, question_id[0][0])
+
     return redirect("/question/" + str(question_id[0][0]))
 
 

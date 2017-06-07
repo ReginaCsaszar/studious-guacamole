@@ -199,26 +199,6 @@ def search_questions_route():
     return search.search_questions(search_phrase)
 
 
-@app.route("/question/add_new_tag", methods=['POST'])
-def add_new_tag():
-    question_ids = []
-    selected = request.form["selected_tag"]
-    for id in request.form:
-        try:
-            question_ids.append(int(id))
-        except ValueError:
-            pass
-    all_tag = common.show_tags_type()
-    tag_id = 1
-    for tag in all_tag:
-        if tag['name'] == selected:
-            tag_id = tag["id"]
-            break
-    for question_id in question_ids:
-        common.update_tag(tag_id, question_id)
-    return redirect("/")
-
-
 @app.route("/question/create_new_tag")
 def create_new_tag():
     rgb_color = random_color()
