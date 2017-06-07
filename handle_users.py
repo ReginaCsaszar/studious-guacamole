@@ -20,5 +20,4 @@ def list_users():
     ORDER BY u.submission_time;"""
     header = ('Username', 'Join Date', 'Number of Questions', 'Number of Answers')
     table = data_manager.run_query(sql_query)
-    print(table)
     return render_template('print_users.html', title='List of Users', table=table, header=header)
