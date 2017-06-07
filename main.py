@@ -98,11 +98,11 @@ def displays_a_single_question_A(question_id):
     q_comments = common.get_comments("question", question_id)  # comments for the question
     a_comments = common.get_comments("answer", question_id)  # comments for the question's answers
     return render_template(
-                            "display_a_question.html",
-                            question_with_answers=question_with_answers,
-                            q_comments=q_comments,
-                            a_comments=a_comments
-                            )
+        "display_a_question.html",
+        question_with_answers=question_with_answers,
+        q_comments=q_comments,
+        a_comments=a_comments
+    )
 
 
 @app.route("/answer/<answer_id>/edit")
@@ -134,9 +134,9 @@ def delete_answer(answer_id):
 
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
-        answer = common.get_answer(answer_id)
-        common.delete("answer", answer_id)
-        return redirect("/question/{}".format(answer["question_id"]), code=302)
+    answer = common.get_answer(answer_id)
+    common.delete("answer", answer_id)
+    return redirect("/question/{}".format(answer["question_id"]), code=302)
 
 
 @app.route("/question/<question_id>/new-answer")
@@ -203,6 +203,12 @@ def search_questions_route():
 def create_new_tag():
     rgb_color = random_color()
     return render_template("create_new_tag.html", rgb_color=rgb_color)
+
+
+@app.route("/question/<int:question_id>/<int:tag_id>/delete")
+def delete_tag(question_id, tag_id):
+    common.delete_tag(tag_id, question_id)
+    return displays_a_single_question_A(question_id)
 
 
 @app.route("/question/save_new_tag/<random_color>", methods=['POST'])

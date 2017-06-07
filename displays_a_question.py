@@ -82,7 +82,6 @@ def displays_a_single_question(question_id):
         if question_id == answer["question_id"]:
             answers.append(answer)
     tags = common.read_tags(question_id)
-
     question_with_answers = {"tags": tags,
                              "question_id": question_id,
                              "question": question,

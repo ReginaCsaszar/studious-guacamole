@@ -10,6 +10,13 @@ def random_color():
     return rgb_color
 
 
+def delete_tag(tag_id, question_id):
+    query_tag = """DELETE FROM question_tag WHERE tag_id={0} AND question_id={1};""".format(tag_id, question_id)
+    data_manager.run_query(query_tag)
+
+    return
+
+
 def insert_tag(color, new_tag_name):
     query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
@@ -60,7 +67,7 @@ def read_tags(question_id):
 
 def get_comments(comment_type, question_id):
     if comment_type == "question":
-        query = """SELECT * 
+        query = """SELECT *
                 FROM comment
                 WHERE question_id = {};
                 """.format(question_id)
