@@ -26,7 +26,7 @@ CREATE TABLE question (
     title text,
     message text,
     image text,
-    user_id integer
+    users_id integer
 );
 
 DROP TABLE IF EXISTS public.answer;
@@ -39,7 +39,7 @@ CREATE TABLE answer (
     message text,
     image text,
     accepted boolean default FALSE,
-    user_id integer
+    users_id integer
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -51,17 +51,17 @@ CREATE TABLE comment (
     message text,
     submission_time timestamp without time zone DEFAULT NOW(),
     edited_count integer,
-    user_id integer
+    users_id integer
 );
 
-DROP TABLE IF EXISTS public.user;
-DROP SEQUENCE IF EXISTS public.user_id_seq;
-CREATE TABLE user (
+DROP TABLE IF EXISTS public.users;
+DROP SEQUENCE IF EXISTS public.users_id_seq;
+CREATE TABLE users (
     id serial NOT NULL,
     name text NOT NULL UNIQUE,
     password text default '123456',
     rank integer default 0,
-    submission_time timestamp without time zone DEFAULT NOW(),
+    submission_time timestamp without time zone DEFAULT NOW()
 );
 
 
@@ -95,21 +95,21 @@ ALTER TABLE ONLY question_tag
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
 
-ALTER TABLE ONLY user
-    ADD CONSTRAINT pk_user_id PRIMARY KEY (id);
+ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id)
     ON DELETE CASCADE;
 
 ALTER TABLE ONLY answer
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user(id)
+    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id)
     ON DELETE CASCADE;
 
 ALTER TABLE ONLY question
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user(id)
+    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id)
     ON DELETE CASCADE;
-l
+
 ALTER TABLE ONLY answer
     ADD CONSTRAINT fk_question_id FOREIGN KEY (question_id) REFERENCES question(id)
     ON DELETE CASCADE;
@@ -123,7 +123,7 @@ ALTER TABLE ONLY comment
     ON DELETE CASCADE;
 
 ALTER TABLE ONLY comment
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user(id)
+    ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES users(id)
     ON DELETE CASCADE;
 
 ALTER TABLE ONLY question_tag
