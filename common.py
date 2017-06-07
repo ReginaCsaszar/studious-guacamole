@@ -1,6 +1,15 @@
 import data_manager
 
 
+def random_color():
+    list_of_number = list(range(0, 256))
+    red = random.choice(list_of_number)
+    green = random.choice(list_of_number)
+    blue = random.choice(list_of_number)
+    rgb_color = "rgb({0},{1},{2})".format(red, green, blue)
+    return rgb_color
+
+
 def insert_tag(color, new_tag_name):
     query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
@@ -28,7 +37,6 @@ def read_tags():
 
     data = data_manager.run_query(query_tag)
     tags = data_manager.build_dict(data, list_of_keys_of_tag)
-    print(tags)
     return tags
 
 

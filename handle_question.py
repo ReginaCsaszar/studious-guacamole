@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect
 import data_manager
 import datetime
+import common
 
 
 def new_question_route():
@@ -8,7 +9,9 @@ def new_question_route():
     title = "Add new question"
     action = "/newpost"
     data = {}
-    return render_template("new-question.html", action=action, title=title, data=data)
+    tags = common.show_tags_type()
+    return render_template("new-question.html", action=action, title=title, data=data,
+                           tags=tags)
 
 
 def add_new_question():
@@ -42,7 +45,7 @@ def edit_question(question_id):
     print(title, message, question_id)
     query = "UPDATE question SET title = '{0}', message = '{1}' WHERE id = '{2}';".format(title, message, question_id)
     data_manager.run_query(query)
-    return redirect("/question/"+question_id)
+    return redirect("/question/" + question_id)
 
 
 def delete_question(question_id):
@@ -53,7 +56,8 @@ def delete_question(question_id):
 
 
 def main():
-    pass
+    new_question_route()
+
 
 if __name__ == '__main__':
     main()

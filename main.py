@@ -246,15 +246,6 @@ def save_new_tag_and_color(random_color):
     return redirect("/")
 
 
-def random_color():
-    list_of_number = list(range(0, 256))
-    red = random.choice(list_of_number)
-    green = random.choice(list_of_number)
-    blue = random.choice(list_of_number)
-    rgb_color = "rgb({0},{1},{2})".format(red, green, blue)
-    return rgb_color
-
-
 def main():
     app.run(debug=True)
 
