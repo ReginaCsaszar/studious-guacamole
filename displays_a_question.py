@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import data_manager
 import datetime
+import common
 app = Flask(__name__)
 
 
@@ -80,8 +81,10 @@ def displays_a_single_question(question_id):
     for answer in all_answers:
         if question_id == answer["question_id"]:
             answers.append(answer)
+    tags = common.read_tags(question_id)
 
-    question_with_answers = {"question_id": question_id,
+    question_with_answers = {"tags": tags,
+                             "question_id": question_id,
                              "question": question,
                              "answers": answers,
                              "list_of_key_of_question": list_of_key_of_question,
@@ -96,11 +99,3 @@ def displays_a_single_question(question_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
-
-

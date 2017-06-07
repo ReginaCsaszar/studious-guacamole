@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="/static/display_a_question.css">
+    <script src="https://use.fontawesome.com/51dda53a19.js"></script>
 </head>
 
 <body>
@@ -47,6 +48,14 @@
            
             </tr>
         </tr>
+        <tr>
+            <td colspan="6">
+                {% for tag in question_with_answers.tags %}
+                    <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};" ></i>{{ tag.name }}
+                {% endfor%}
+            
+            </td>
+        </tr>
     </table>
 
     <!-- this displays the comments for the question -->
@@ -83,8 +92,8 @@
         <a href="/question/{{ question_with_answers.question_id }}/new-comment"> <input class="button" type="button" value="Add comment"></a>
     </p>
 
-    <!-- Answers -->
 
+    <!-- Answers -->
     {% for row in question_with_answers.answers %}
 
         <p><h2>Answer</h2><p>
