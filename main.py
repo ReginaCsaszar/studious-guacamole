@@ -33,6 +33,11 @@ def save_user_registration():
     return handle_users.save_user_registration(username)
 
 
+@app.route('/list-users')
+def list_users():
+    return handle_users.list_users()
+
+
 @app.route('/extendurl/<col_idx>')
 def extend_url(col_idx):
     return listpage.extend_url(col_idx)
