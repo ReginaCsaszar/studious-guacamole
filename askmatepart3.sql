@@ -152,9 +152,25 @@ INSERT INTO question VALUES (2, '2017-05-01 16:24', 4, 0, 'PostgreSQL: Differenc
 
 According to the documentation: If character varying is used without length specifier, the type accepts strings of any size. The latter is a PostgreSQL extension.
 and in addition, PostgreSQL provides the text type, which stores strings of any length. Although the type text is not in the SQL standard, several other SQL database management systems have it as well.
-So what's the difference?', NULL, 2);
-INSERT INTO question VALUES (3, '2017-05-01 1:01', 36, 0, '', '', NULL, 1);
-INSERT INTO question VALUES (4, '2017-05-01 04:34', 14, 0, '', '', NULL, 3);
+So what''s the difference?', NULL, 2);
+INSERT INTO question VALUES (3, '2017-05-01 1:01', 36, 0, 'PostgreSQL digit matching regex strange behavior
+
+', 'So I''m having this problem where a PostgreSQL regular expression doesn''t behave the same way in two different contexts - as a CONSTRAINT and with a regex_matches() function.
+
+I want the regex to work as it does demonstrated with SELECT statements below but as a table CONSTRAINT, which for some reason it doesn''t.
+
+Has anyone else experienced this kind of behavior or does anyone have any insight on this?
+
+Thanks!', NULL, 1);
+INSERT INTO question VALUES (4, '2017-05-01 04:34', 14, 0, 'Show tables in PostgreSQL
+
+', 'From the psql command line interface:
+
+\dt
+Programmatically (or from the psql interface too, of course):
+
+SELECT * FROM pg_catalog.pg_tables
+The system tables live in the pg_catalog database.', NULL, 3);
 
 SELECT pg_catalog.setval('question_id_seq', 4, true);
 
