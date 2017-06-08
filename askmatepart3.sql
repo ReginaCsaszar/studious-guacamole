@@ -198,7 +198,8 @@ SELECT pg_catalog.setval('comment_id_seq', 4, true);
 INSERT INTO tag VALUES (1, 'python', 'rgb(0, 128, 255)');
 INSERT INTO tag VALUES (2, 'sql', 'rgb(0, 255, 64)');
 INSERT INTO tag VALUES (3, 'css', 'rgb(255, 128, 0)');
-SELECT pg_catalog.setval('tag_id_seq', 3, true);
+INSERT INTO tag VALUES (4, 'BIOHAZARD', 'rgb(255, 255, 0)');
+SELECT pg_catalog.setval('tag_id_seq', 4, true);
 
 INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
