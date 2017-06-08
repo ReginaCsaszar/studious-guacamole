@@ -1,4 +1,5 @@
 import data_manager
+import random
 
 
 def get_users():
@@ -42,6 +43,17 @@ def insert_tag(color, new_tag_name):
     query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
     return
+
+
+def delete_edit_tag(question_id):
+    delete_tag = """DELETE FROM question_tag WHERE question_id='{0}'""".format(question_id)
+    data_manager.run_query(delete_tag)
+
+
+def delete_tag_from_database(tag_id):
+    delete_tag = """DELETE FROM tag WHERE id='{0}'""".format(tag_id)
+    data_manager.run_query(delete_tag)
+
 
 
 def update_tag(tag_id, question_id):
@@ -109,7 +121,8 @@ def get_question(id):
     Return a single question (dict) by its ID
     """
     question = data_manager.run_query("SELECT * FROM question WHERE id={};".format(id))
-    question = data_manager.build_dict(question, ["question_id", "submission_time", "view_number", "vote_number", "title", "message", "image"])
+    question = data_manager.build_dict(
+        question, ["question_id", "submission_time", "view_number", "vote_number", "title", "message", "image"])
     return question[0]
 
 
@@ -136,7 +149,7 @@ def get_answer(id):
         "user_id",
         "user_name"
         ])
-    return answer[0]
+   return answer[0]
 
 
 def update(table, id, column, value):

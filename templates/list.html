@@ -38,6 +38,7 @@
                 </th>
             {% endfor %}
                 <th>Image</th>
+                <th>Author</th>
             </tr>
             {% for question in questions%}
                 <tr>
@@ -47,6 +48,7 @@
                     <td>{{question.view_number}}</td>
                     <td>{{question.vote_number}}</td>
                     <td><img src="{{question.image}}" width="40"</img></td>
+                    <td>{{question.user_name}}</td>
                 </tr>
             {% endfor %}
 
