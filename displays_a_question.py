@@ -76,7 +76,7 @@ def displays_a_single_question(question_id):
     title_of_question = ["ID", "Submisson time", "View number", "Vote number", "Title", "Message"]
     list_of_key_and_title_of_question = list(zip(list_of_key_of_question, title_of_question))
 
-    list_of_key_of_answer = ["id", "submission_time", "vote_number", "question_id", "message", "user_name"]
+    list_of_key_of_answer = ["answer_id", "submission_time", "vote_number", "question_id", "message", "user_name"]
     title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message", "Author"]
     list_of_key_and_title_of_answers = list(zip(list_of_key_of_answer, title_of_answer))
 

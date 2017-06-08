@@ -40,7 +40,6 @@ def add_comment_to_db(q_or_a, id, comment, user):
     """
     sql_query = ("""SELECT id FROM users WHERE name='{}';""".format(user))
     user_id = data_manager.run_query(sql_query)[0][0]
-    print(user_id)
     if q_or_a == 'question':
         sql_query = (
             """INSERT INTO comment (question_id, message, users_id)

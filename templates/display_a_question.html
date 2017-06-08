@@ -160,7 +160,8 @@
                                                 <th></th>
                                             </tr>
 
-                                            {% for comment in a_comments %} {% if comment["answer_id"] == row["id"] %}
+                                            {% for comment in a_comments %}
+                                            {% if comment["answer_id"] == row["answer_id"] %}
 
                                             <tr>
                                                 <td>{{comment["message"]}}</td>
