@@ -20,9 +20,11 @@ def add_new_question():
     title = request.form["title"]
     message = request.form["message"]
     username = request.form["username"]
-    query = """INSERT INTO question (view_number, vote_number, title, message, users_id)
-        VALUES (0, 0, '{}', '{}', (SELECT name From users WHERE id={}));""".format(title, message, username)
-    data_manager.run_query(query)
+    query = """SELECT id From users WHERE name='{}';""".format(username,)
+    users_id = data_manager.run_query(query)[0][0]
+    columns = ('title', 'message', 'users_id')
+    values = (title, message, users_id)
+    data_manager.safe_insert('question', columns, values)
     query = "SELECT id FROM question WHERE title='{0}';".format(title)
     question_id = data_manager.run_query(query)
 
@@ -47,9 +49,11 @@ def edit_question_route(question_id):
     """Find question details from id and redirect with the data to /new_question page"""
     title = "Modify question"
     action = "/modify/" + question_id
-    query = "SELECT title, message FROM question WHERE id = '{0}';".format(question_id)
+    query = """SELECT q.title, q.message, u.name FROM question q JOIN users u
+    ON (q.users_id = u.id)
+    WHERE q.id = '{}';""".format(question_id)
     table = data_manager.run_query(query)
-    titles = "title", "message",
+    titles = "title", "message", "username"
     data = data_manager.build_dict(table, titles)[0]
     return render_template("new-question.html", title=title, data=data, action=action)
 

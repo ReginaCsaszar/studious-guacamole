@@ -11,11 +11,6 @@
     <p>
         <h1>{{ title }}</h1>
     </p>
-    {% if action != /newpost %}
-        <p>
-            Question author:{{username}}
-        </p>
-    {% endif %}
     
     <div id=question_table>
         <form action="{{ action }}" method="POST" enctype="multipart/form-data">
@@ -37,13 +32,15 @@
                     {% endfor %}
                 </select>
             </p>
-        {% endif %}
-            
             <p>
                 <input type="file" name="file">
             </p>
-
-                
+        {% else %}
+            <p>
+                Question author: {{data.username}}
+            </p>
+        {% endif %}
+                        
             {% for tag in tags %}
                 <input type="checkbox" name="{{ tag['name'] }}" value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
                 
