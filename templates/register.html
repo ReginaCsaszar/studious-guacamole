@@ -2,21 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Register user</title>
+    <script src="https://use.fontawesome.com/51dda53a19.js"></script>
+    <link rel="stylesheet" href="/static/display_a_question.css">
 </head>
 
 <body>
-    
+    <h1>Ask Mate</h1>
     <form action='/registration/save_user' method='POST'>
         
-        <p><label for='username'>Account name</label></p>
+        <label for='username'><h3>Name</h3></label>
         <p><input type='text' name='username' id='username' required></p>
         
-        <p><input type='submit' value='Register'></p>
-    </orm>
+        <p><input type='submit' class="button" value='Register'>
+        <a href='/list' name='returnbutton'><input type='button' class="button" value='Return to Questions'></a></p>
+    </form>
 
 </body>
 

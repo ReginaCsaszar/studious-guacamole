@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{{mode}} answer</title>
-    <link rel="stylesheet" href="/static/answer.css">
+    <link rel="stylesheet" href="/static/display_a_question.css">
 </head>
 
 <body>
@@ -10,8 +10,8 @@
     <h1>Question</h1>
     <div>
     <h2>{{question["title"]}}:</h2>
-    <p>{{question["message"]}}</p>
-    {% if mode == "Edit" %}
+    <table border="1"><tr><td>{{question["message"]}}<td></tr></table>
+    {% if mode == "Edit" %}>
     <form method="POST" action='/answer/{{ answer["answer_id"] }}/edit'>
     {% elif mode == "Send new" %}
     <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
