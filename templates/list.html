@@ -23,7 +23,7 @@
     
     <form action="/question/add_new_tag" method="POST">
         <table border="1">
-            {% for col in ['Select','ID', 'Question', 'Date', 'Number of Views','Votes'] %}
+            {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
                 <th>
                     {{col}} 
                     <a href="/extendurl/{{col}}?{{url}}">
@@ -38,45 +38,21 @@
                 </th>
             {% endfor %}
                 <th>Image</th>
-                <th>Edit</th>
             </tr>
             {% for question in questions%}
                 <tr>
-                    <td>
-                        <input type="checkbox" name="{{question.question_id}}" value="{{question.question_id}}">
-                    </td>
                     <td>{{question.question_id}}.</td>
                     <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
                     <td>{{question.submission_time}}</td>
                     <td>{{question.view_number}}</td>
                     <td>{{question.vote_number}}</td>
                     <td><img src="{{question.image}}" width="40"</img></td>
-                    <td>
-                        <a href="/question/{{question.question_id}}/edit">
-                            <img src="/static/edit.png" width="20"></img>
-                        </a>
-                    </td>
-                    <td>
-                        {% for tag in tags %}
-                            {% if tag['question_id'] == question.question_id %}
-                            <i class="fa fa-square" aria-hidden="true" style="color:{{ tag['color'] }};" ></i>{{ tag['name'] }}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
                 </tr>
             {% endfor %}
 
             </tr>
         </table>
 
-        <select name="selected_tag">
-            {% for type in tags_type %}
-                <option >
-                    {{ type['name'] }}
-                </option>
-            {% endfor %}
-            <input type="submit" value="Add new tag" style="color:black;">
-            <a href="/question/create_new_tag"><input type="button" value="Create new tag" style="color:black;"></a>
         </selec>
     </form>
     <p id='search'>

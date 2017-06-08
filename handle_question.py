@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect
 import data_manager
 import datetime
+import common
 
 
 def new_question_route():
@@ -8,7 +9,9 @@ def new_question_route():
     title = "Add new question"
     action = "/newpost"
     data = {}
-    return render_template("new-question.html", action=action, title=title, data=data)
+    tags = common.show_tags_type()
+    return render_template("new-question.html", action=action, title=title, data=data,
+                           tags=tags)
 
 
 def add_new_question():
@@ -21,6 +24,21 @@ def add_new_question():
     data_manager.run_query(query)
     query = "SELECT id FROM question WHERE title='{0}';".format(title)
     question_id = data_manager.run_query(query)
+
+    selected_tag_name = []
+    tag_names = common.tag_names()
+    lit_of_tag_names = [i[0] for i in tag_names]
+    for request_string in request.form:
+        if request_string in lit_of_tag_names:
+            selected_tag_name.append(request_string)
+
+    ids = []
+    for name in selected_tag_name:
+        ids.append(common.id_of_tag_where_name_is(name)[0][0])
+
+    for tag_id in ids:
+        common.update_tag(tag_id, question_id[0][0])
+
     return redirect("/question/" + str(question_id[0][0]))
 
 
@@ -42,7 +60,7 @@ def edit_question(question_id):
     print(title, message, question_id)
     query = "UPDATE question SET title = '{0}', message = '{1}' WHERE id = '{2}';".format(title, message, question_id)
     data_manager.run_query(query)
-    return redirect("/question/"+question_id)
+    return redirect("/question/" + question_id)
 
 
 def delete_question(question_id):
@@ -53,7 +71,8 @@ def delete_question(question_id):
 
 
 def main():
-    pass
+    new_question_route()
+
 
 if __name__ == '__main__':
     main()
