@@ -150,8 +150,8 @@ def insert_answer(record):
     INSERT INTO answer (vote_number, question_id, message) VALUES ({values});
     @record: dictionary keys = column name, values = values
     """
-    columns = ["vote_number", "question_id", "message", "submission_time"]
-    values = [record["vote_number"], record["question_id"], record["message"], record["submission_time"]]
+    columns = ["vote_number", "question_id", "message", "users_id"]
+    values = [record["vote_number"], record["question_id"], record["message"], record["user_id"]]
     data_manager.safe_insert("answer", columns, values)
     return
 

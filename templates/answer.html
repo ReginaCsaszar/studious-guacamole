@@ -32,7 +32,7 @@
             {% endif %}
         <p>
             {% if mode == "Send new" %}
-            <select class="user" >
+            <select name="user_id" class="user" >
             {% for user in user_list %}
                 <option value="{{ user['id'] }}">{{ user['name'] }}</option>
             {% endfor%}
