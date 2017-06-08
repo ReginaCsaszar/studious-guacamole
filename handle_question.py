@@ -50,16 +50,43 @@ def edit_question_route(question_id):
     table = data_manager.run_query(query)
     titles = "title", "message",
     data = data_manager.build_dict(table, titles)[0]
-    return render_template("new-question.html", title=title, data=data, action=action)
+    tags = common.show_tags_type()
+    tag_query = """SELECT tag.name
+            FROM tag
+            LEFT JOIN question_tag
+            ON tag.id=question_tag.tag_id
+            WHERE question_id = {0};""".format(question_id)
+    selected_tag = [i[0] for i in data_manager.run_query(tag_query)]
+    return render_template("new-question.html",
+                           question_id=question_id,
+                           title=title, data=data,
+                           action=action, tags=tags,
+                           selected_tag=selected_tag)
 
 
 def edit_question(question_id):
     """Update question in the database, then go back to question's page"""
     title = request.form["title"]
     message = request.form["message"]
-    print(title, message, question_id)
     query = "UPDATE question SET title = '{0}', message = '{1}' WHERE id = '{2}';".format(title, message, question_id)
     data_manager.run_query(query)
+    selected_tag_name = []
+    tag_names = common.tag_names()
+    lit_of_tag_names = [i[0] for i in tag_names]
+
+    for request_string in request.form:
+        if request_string in lit_of_tag_names:
+            selected_tag_name.append(request_string)
+
+    ids = []
+    for name in selected_tag_name:
+        ids.append(common.id_of_tag_where_name_is(name)[0][0])
+
+    for tag_id in ids:
+        common.delete_edit_tag(question_id[0][0])
+
+    for tag_id in ids:
+        common.update_tag(tag_id, question_id[0][0])
     return redirect("/question/" + question_id)
 
 

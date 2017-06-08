@@ -27,9 +27,14 @@
 
                 
             {% for tag in tags %}
-                <input type="checkbox" name="{{ tag['name'] }}" value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
+                {% if tag['name'] in selected_tag%}
+                    <input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
+                {% else %}
+                    <input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
+                {% endif %}
                 
             {% endfor %}
+            <a href="/question/{{ question_id }}/create_new_tag"><input type="button" value="Create new tag"></a>
         <p>
         
             <input class ="button_atti button" type="submit"  id="send" value="Send"> 

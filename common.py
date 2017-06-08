@@ -1,4 +1,5 @@
 import data_manager
+import random
 
 
 def random_color():
@@ -21,6 +22,11 @@ def insert_tag(color, new_tag_name):
     query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
     return
+
+
+def delete_edit_tag(question_id):
+    delete_tag = """DELETE FROM question_tag WHERE question_id='{0}'""".format(question_id)
+    data_manager.run_query(delete_tag)
 
 
 def update_tag(tag_id, question_id):
@@ -88,7 +94,8 @@ def get_question(id):
     Return a single question (dict) by its ID
     """
     question = data_manager.run_query("SELECT * FROM question WHERE id={};".format(id))
-    question = data_manager.build_dict(question, ["question_id", "submission_time", "view_number", "vote_number", "title", "message", "image"])
+    question = data_manager.build_dict(
+        question, ["question_id", "submission_time", "view_number", "vote_number", "title", "message", "image"])
     return question[0]
 
 
@@ -97,7 +104,8 @@ def get_answer(id):
     Return a single answer (dict) by its ID
     """
     answer = data_manager.run_query("SELECT * FROM answer WHERE id={};".format(id))
-    answer = data_manager.build_dict(answer, ["answer_id", "submission_time", "vote_number", "question_id", "message", "image"])
+    answer = data_manager.build_dict(answer, ["answer_id", "submission_time",
+                                              "vote_number", "question_id", "message", "image"])
     return answer[0]
 
 
