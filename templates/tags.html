@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Ask Mate</title>
+    <link rel="stylesheet" href="/static/display_a_question.css">
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
 </head>
 <body>
@@ -24,7 +22,7 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="/create_new_tag"><input type="button" value="Create new tag"></a>
-    <a href="/"><input type="button" value="Back"> </a>
+    <a href="/create_new_tag"><input type="button" class="button" value="Create new tag"></a>
+    <a href='/list'><input type='button' class="button" value='Return to Questions'></a>
 </body>
 </html>
