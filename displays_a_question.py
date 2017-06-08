@@ -6,9 +6,25 @@ app = Flask(__name__)
 
 
 def get_answers_for_question(question_id, sort_by, direction):
-    query = "SELECT * FROM answer WHERE question_id={0} ORDER BY {1} {2};".format(question_id, sort_by, direction)
+    query = """
+        SELECT answer.*, users.name
+        FROM answer
+        LEFT JOIN users ON answer.users_id = users.id
+        WHERE question_id={0}
+        ORDER BY {1} {2};
+        """.format(question_id, sort_by, direction)
     rows = data_manager.run_query(query)
-    list_of_names = ["id", "submission_time", "vote_number", "question_id", "message"]
+    list_of_names = [
+        "answer_id",
+        "submission_time",
+        "vote_number",
+        "question_id",
+        "message",
+        "image",
+        "accepted",
+        "user_id",
+        "user_name"
+    ]
     answers = data_manager.build_dict(rows, list_of_names)
     return answers
 
@@ -60,8 +76,8 @@ def displays_a_single_question(question_id):
     title_of_question = ["ID", "Submisson time", "View number", "Vote number", "Title", "Message"]
     list_of_key_and_title_of_question = list(zip(list_of_key_of_question, title_of_question))
 
-    list_of_key_of_answer = ["id", "submission_time", "vote_number", "question_id", "message"]
-    title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message"]
+    list_of_key_of_answer = ["id", "submission_time", "vote_number", "question_id", "message", "user_name"]
+    title_of_answer = ["ID", "Submisson time", "Vote number", "Question id", "Message", "Author"]
     list_of_key_and_title_of_answers = list(zip(list_of_key_of_answer, title_of_answer))
 
     query = "SELECT * FROM question"
