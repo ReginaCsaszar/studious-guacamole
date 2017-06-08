@@ -10,16 +10,17 @@
 </head>
 <body>
     <h1>Create new tag</h1>
-    <form action="/question/save_new_tag/<{{ rgb_color }}>" method='POST'>
+    <form action="/question/save_new_tag/{{ rgb_color }}/{{ question_id }}" method='POST'>
         <h3>Name of new tag</h3>
         <input type="text" name="new_tag_name" style="color:black">
-        <a href="/question/create_new_tag"><input type="button" value="Creat random Color" style="color:black"></a>
+        <a href="/question/{{ question_id }}/create_new_tag"><input type="button" value="Creat random Color" style="color:black"></a>
         <i class="fa fa-square" aria-hidden="true" style="color:{{ rgb_color }};font-size:40px"></i><br><br>
         <h3>Choose color</h3>
         <input class="text-box" type="number" name="red_color" maxlength="3" max="255" min="0" step="1"> Red 
         <input class="text-box" type="number" name="green_color" maxlength="3" max="255" min="0" step="1"> Green
         <input class="text-box" type="number" name="blue_color" maxlength="3" max="255" min="0" step="1">  Blue 
         <input type="submit" value="Create new tag" style="color:black">
+        <a href="/question/{{ question_id }}/edit"><input type="button" value="Back to question" style="color:black"></a>
     </form>
 
 </body>
