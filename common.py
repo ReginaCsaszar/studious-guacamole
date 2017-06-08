@@ -12,6 +12,17 @@ def get_users():
     return simple_list
 
 
+def get_users_with_id():
+    """
+    Return the list of users with their id from database
+    in the format of dictinoary (keywords: id, name)
+    """
+    query = """SELECT id, name FROM users;"""
+    user_list = data_manager.run_query(query)
+    user_list = data_manager.build_dict(user_list, ["id", "name"])
+    return user_list
+
+
 def random_color():
     list_of_number = list(range(0, 256))
     red = random.choice(list_of_number)
@@ -117,12 +128,28 @@ def get_question(id):
 
 def get_answer(id):
     """
-    Return a single answer (dict) by its ID
+    Return a single answer (dict) by its ID with authors name
     """
-    answer = data_manager.run_query("SELECT * FROM answer WHERE id={};".format(id))
-    answer = data_manager.build_dict(answer, ["answer_id", "submission_time",
-                                              "vote_number", "question_id", "message", "image"])
-    return answer[0]
+    print(id)
+    answer = data_manager.run_query(
+        """
+        SELECT answer.*, users.name
+        FROM answer
+        LEFT JOIN users ON answer.users_id = users.id
+        WHERE answer.id={};
+        """.format(id))
+    answer = data_manager.build_dict(answer, [
+        "answer_id",
+        "submission_time",
+        "vote_number",
+        "question_id",
+        "message",
+        "image",
+        "accepted",
+        "user_id",
+        "user_name"
+        ])
+   return answer[0]
 
 
 def update(table, id, column, value):
@@ -153,8 +180,8 @@ def insert_answer(record):
     INSERT INTO answer (vote_number, question_id, message) VALUES ({values});
     @record: dictionary keys = column name, values = values
     """
-    columns = ["vote_number", "question_id", "message", "submission_time"]
-    values = [record["vote_number"], record["question_id"], record["message"], record["submission_time"]]
+    columns = ["vote_number", "question_id", "message", "users_id"]
+    values = [record["vote_number"], record["question_id"], record["message"], record["user_id"]]
     data_manager.safe_insert("answer", columns, values)
     return
 
