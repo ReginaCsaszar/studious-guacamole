@@ -115,10 +115,27 @@ def get_question(id):
 
 def get_answer(id):
     """
-    Return a single answer (dict) by its ID
+    Return a single answer (dict) by its ID with authors name
     """
-    answer = data_manager.run_query("SELECT * FROM answer WHERE id={};".format(id))
-    answer = data_manager.build_dict(answer, ["answer_id", "submission_time", "vote_number", "question_id", "message", "image"])
+    print(id)
+    answer = data_manager.run_query(
+        """
+        SELECT answer.*, users.name
+        FROM answer
+        LEFT JOIN users ON answer.users_id = users.id
+        WHERE answer.id={};
+        """.format(id))
+    answer = data_manager.build_dict(answer, [
+        "answer_id",
+        "submission_time",
+        "vote_number",
+        "question_id",
+        "message",
+        "image",
+        "accepted",
+        "user_id",
+        "user_name"
+        ])
     return answer[0]
 
 
