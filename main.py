@@ -21,6 +21,22 @@ def index():
     return redirect("/list")
 
 
+@app.route('/registration')
+def register_user():
+    return render_template('register.html')
+
+
+@app.route('/registration/save_user', methods=['POST'])
+def save_user_registration():
+    username = request.form['username']
+    return handle_users.save_user_registration(username)
+
+
+@app.route('/list-users')
+def list_users():
+    return handle_users.list_users()
+
+
 @app.route('/extendurl/<col_idx>')
 def extend_url(col_idx):
     return listpage.extend_url(col_idx)
@@ -97,12 +113,13 @@ def displays_a_single_question_A(question_id):
     question_with_answers["direction"] = direction
     q_comments = common.get_comments("question", question_id)  # comments for the question
     a_comments = common.get_comments("answer", question_id)  # comments for the question's answers
+    print(question_with_answers)
     return render_template(
-                            "display_a_question.html",
-                            question_with_answers=question_with_answers,
-                            q_comments=q_comments,
-                            a_comments=a_comments
-                            )
+        "display_a_question.html",
+        question_with_answers=question_with_answers,
+        q_comments=q_comments,
+        a_comments=a_comments
+    )
 
 
 @app.route("/answer/<answer_id>/edit")
@@ -134,24 +151,25 @@ def delete_answer(answer_id):
 
 @app.route("/answer/<answer_id>/delete", methods=["POST"])
 def delete_answer_post(answer_id):
-        answer = common.get_answer(answer_id)
-        common.delete("answer", answer_id)
-        return redirect("/question/{}".format(answer["question_id"]), code=302)
+    answer = common.get_answer(answer_id)
+    common.delete("answer", answer_id)
+    return redirect("/question/{}".format(answer["question_id"]), code=302)
 
 
 @app.route("/question/<question_id>/new-answer")
 def new_answer(question_id):
     question = common.get_question(question_id)
-    return render_template("answer.html", question=question, mode="Send new", error="")
+    user_list = common.get_users_with_id()
+    return render_template("answer.html", question=question, mode="Send new", user_list=user_list, error="")
 
 
 @app.route("/question/<question_id>/new-answer", methods=["POST"])
 def new_answer_post(question_id):
     answer = {}
-    answer["submission_time"] = str(datetime.datetime.now())[:16]
     answer["vote_number"] = 0
     answer["question_id"] = question_id
     answer["message"] = request.form["answer"]
+    answer["user_id"] = request.form["user_id"]
     common.insert_answer(answer)
     return redirect("/", code=302)
 
@@ -199,41 +217,39 @@ def search_questions_route():
     return search.search_questions(search_phrase)
 
 
-@app.route("/question/add_new_tag", methods=['POST'])
-def add_new_tag():
-    question_ids = []
-    selected = request.form["selected_tag"]
-    for id in request.form:
-        try:
-            question_ids.append(int(id))
-        except ValueError:
-            pass
-    all_tag = common.show_tags_type()
-    tag_id = 1
-    for tag in all_tag:
-        if tag['name'] == selected:
-            tag_id = tag["id"]
-            break
-    for question_id in question_ids:
-        common.update_tag(tag_id, question_id)
-    return redirect("/")
+@app.route("/create_new_tag")
+def create_new_on_tag_page():
+    tag_page = "true"
+    rgb_color = common.random_color()
+    return render_template("create_new_tag.html", tag_page=tag_page, rgb_color=rgb_color)
 
 
-@app.route("/question/create_new_tag")
-def create_new_tag():
-    rgb_color = random_color()
-    return render_template("create_new_tag.html", rgb_color=rgb_color)
+@app.route("/question/<int:question_id>/create_new_tag")
+def create_new_tag(question_id):
+    rgb_color = common.random_color()
+    return render_template("create_new_tag.html", rgb_color=rgb_color, question_id=question_id)
+
+
+@app.route("/question/<int:question_id>/tag/<int:tag_id>/delete")
+def delete_tag(question_id, tag_id):
+    common.delete_tag(tag_id, question_id)
+    return displays_a_single_question_A(question_id)
+
+
+@app.route("/question/<question_id>/create_new_tag/delete_tag/<int:tag_id>")
+def delete_tag_from_database(question_id, tag_id):
+    common.delete_tag_from_database(tag_id)
+    return edit_question_route(question_id)
 
 
 @app.route("/question/save_new_tag/<random_color>", methods=['POST'])
-def save_new_tag_and_color(random_color):
+@app.route("/question/save_new_tag/<random_color>/<question_id>", methods=['POST'])
+def save_new_tag_and_color(random_color, question_id=None):
     new_tag_name = request.form["new_tag_name"]
     red_color = request.form["red_color"]
     green_color = request.form["green_color"]
     blue_color = request.form["blue_color"]
     rgb_color = "rgb({0},{1},{2})".format(red_color, green_color, blue_color)
-    random_color = random_color.replace("<", "")
-    random_color = random_color.replace(">", "")
     color = ""
     if rgb_color == "rgb(,,)":
         color = random_color
@@ -243,16 +259,16 @@ def save_new_tag_and_color(random_color):
         common.insert_tag(new_tag_name, color)
     else:
         pass
-    return redirect("/")
+    if question_id:
+        return edit_question_route(question_id)
+    else:
+        return tags()
 
 
-def random_color():
-    list_of_number = list(range(0, 256))
-    red = random.choice(list_of_number)
-    green = random.choice(list_of_number)
-    blue = random.choice(list_of_number)
-    rgb_color = "rgb({0},{1},{2})".format(red, green, blue)
-    return rgb_color
+@app.route("/tags")
+def tags():
+    number_of_question_with_tags = common.group_by_question_with_tags()
+    return render_template("tags.html", number_of_question_with_tags=number_of_question_with_tags)
 
 
 def main():

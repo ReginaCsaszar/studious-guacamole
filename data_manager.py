@@ -51,7 +51,7 @@ def run_query(query):
 
         cursor.execute(query)
 
-        if query.upper().startswith("SELECT"):
+        if query.upper().find("SELECT") > -1:
             rows = cursor.fetchall()
         else:
             rows = "Done :)"

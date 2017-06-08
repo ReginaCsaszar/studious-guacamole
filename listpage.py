@@ -29,17 +29,15 @@ def print_table():
     pairs = {
         'ID': 'id', 'Question': 'title', 'Date': 'submission_time',
         'Number of Views': 'view_number', 'Votes': 'vote_number'
-        }
+    }
     sortingcols = request.args
     order = ','.join([pairs[col] + ' ' + sortingcols[col] for col in sortingcols][::-1])
-    sql_query = """SELECT id, title, submission_time, view_number, vote_number, image FROM question"""
+    sql_query = """SELECT q.id, q.title, q.submission_time, q.view_number, q.vote_number, q.image, u.name
+    FROM question q JOIN users u ON (q.users_id = u.id)"""
     if order:
-        sql_query += '\nORDER BY ' + order + ';'
+        sql_query += '\nORDER BY q.' + order + ';'
     questions = data_manager.run_query(sql_query)
-    headers = ['question_id', 'title', 'submission_time', 'view_number', 'vote_number', 'image']
+    headers = ['question_id', 'title', 'submission_time', 'view_number', 'vote_number', 'image', 'user_name']
     questions = data_manager.build_dict(questions, headers)
     url = '&'.join([key + '=' + sortingcols[key] for key in sortingcols])
-    tags = common.read_tags()
-    tags_type = common.show_tags_type()
-    return render_template('list.html', questions=questions, url=url,
-                           tags=tags, tags_type=tags_type)
+    return render_template('list.html', questions=questions, url=url)

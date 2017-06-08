@@ -35,7 +35,9 @@ def add_comment_to_db(q_or_a, id, comment):
     Routed to url: /add_comment_to_db/<q_or_a>/<id>
     Saves to new entry in the database
     """
-    curr_time = str(datetime.datetime.now())[:16]
+    sql_query = ("""SELECT id FROM users WHERE name='{}';""".format(user))
+    user_id = data_manager.run_query(sql_query)[0][0]
+
     if q_or_a == 'question':
         sql_query = (
             """INSERT INTO comment (question_id, message, submission_time)
