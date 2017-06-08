@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS public.question;
 DROP SEQUENCE IF EXISTS public.question_id_seq;
 CREATE TABLE question (
     id serial NOT NULL,
-    submission_time timestamp without time zone DEFAULT NOW(),
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI')
     view_number integer DEFAULT 0, 
     vote_number integer DEFAULT 0,
     title text,
@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS public.answer;
 DROP SEQUENCE IF EXISTS public.answer_id_seq;
 CREATE TABLE answer (
     id serial NOT NULL,
-    submission_time timestamp without time zone DEFAULT NOW(),
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI')
     vote_number integer DEFAULT 0,
     question_id integer,
     message text,
@@ -49,7 +49,7 @@ CREATE TABLE comment (
     question_id integer,
     answer_id integer,
     message text,
-    submission_time timestamp without time zone DEFAULT NOW(),
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI')
     edited_count integer DEFAULT 0,
     users_id integer
 );
@@ -61,7 +61,7 @@ CREATE TABLE users (
     name text NOT NULL UNIQUE,
     password text default '123456',
     rank integer default 0,
-    submission_time timestamp without time zone DEFAULT NOW()
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI')
 );
 
 
@@ -137,8 +137,8 @@ INSERT INTO users (name) VALUES ('Bruce');
 SELECT pg_catalog.setval('users_id_seq', 3, true);
 
 
-INSERT INTO question VALUES (0, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL, 2);
-INSERT INTO question VALUES (1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
+INSERT INTO question VALUES (0, '2017-04-28 08:29', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL, 2);
+INSERT INTO question VALUES (1, '2017-04-29 09:19', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -147,16 +147,23 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png', 1);
-INSERT INTO question VALUES (2, '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', NULL, 3);
-SELECT pg_catalog.setval('question_id_seq', 2, true);
+INSERT INTO question VALUES (2, '2017-05-01 16:24', 4, 0, 'PostgreSQL: Difference between text and varchar (character varying)
+', 'What''s the difference between the text data type and the character varying (varchar) data types?
 
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 0, 'You need to use brackets: my_list = []', NULL, FALSE, 1);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 0, 'Look it up in the Python docs', 'images/image2.jpg', FALSE, 3);
+According to the documentation: If character varying is used without length specifier, the type accepts strings of any size. The latter is a PostgreSQL extension.
+and in addition, PostgreSQL provides the text type, which stores strings of any length. Although the type text is not in the SQL standard, several other SQL database management systems have it as well.
+So what's the difference?', NULL, 2);
+INSERT INTO question VALUES (3, '2017-05-01 1:01', 36, 0, '', '', NULL, 1);
+INSERT INTO question VALUES (4, '2017-05-01 04:34', 14, 0, '', '', NULL, 3);
+
+SELECT pg_catalog.setval('question_id_seq', 4, true);
+
+INSERT INTO answer VALUES (1, '2017-04-28 16:49', 4, 0, 'You need to use brackets: my_list = []', NULL, FALSE, 1);
+INSERT INTO answer VALUES (2, '2017-04-25 14:42', 35, 0, 'Look it up in the Python docs', 'images/image2.jpg', FALSE, 3);
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
-INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00', 1, 2);
-INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00', 3, 2);
+INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49', 1, 2);
+INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55', 3, 2);
 SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
 INSERT INTO tag VALUES (1, 'python', 'rgb(0, 128, 255)');
