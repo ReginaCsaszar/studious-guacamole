@@ -25,16 +25,25 @@
                 <input type="file" name="file">
             </p>
 
-                
+            <table border="1">
             {% for tag in tags %}
-                {% if tag['name'] in selected_tag%}
-                    <input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
-                {% else %}
-                    <input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}"> {{ tag['name'] }} <br>
-                {% endif %}
+            <tr>  
                 
+                {% if tag['name'] in selected_tag%}
+                    <td><input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}"></td> <td>{{ tag['name'] }}</td> 
+                {% else %}
+                    <td><input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}"></td><td> {{ tag['name'] }}</td> 
+                {% endif %} 
+                <td>
+                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}"><input type="button" value="DElete"></a>
+                </td>
+            </tr>
             {% endfor %}
+            </table>
+
+            {% if question_id  %}
             <a href="/question/{{ question_id }}/create_new_tag"><input type="button" value="Create new tag"></a>
+            {% endif %}
         <p>
         
             <input class ="button_atti button" type="submit"  id="send" value="Send"> 

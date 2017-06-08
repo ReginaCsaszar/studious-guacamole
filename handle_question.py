@@ -83,10 +83,10 @@ def edit_question(question_id):
         ids.append(common.id_of_tag_where_name_is(name)[0][0])
 
     for tag_id in ids:
-        common.delete_edit_tag(question_id[0][0])
+        common.delete_edit_tag(question_id)
 
     for tag_id in ids:
-        common.update_tag(tag_id, question_id[0][0])
+        common.update_tag(tag_id, question_id)
     return redirect("/question/" + question_id)
 
 

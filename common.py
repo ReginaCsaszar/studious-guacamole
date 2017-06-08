@@ -29,6 +29,12 @@ def delete_edit_tag(question_id):
     data_manager.run_query(delete_tag)
 
 
+def delete_tag_from_database(tag_id):
+    delete_tag = """DELETE FROM tag WHERE id='{0}'""".format(tag_id)
+    data_manager.run_query(delete_tag)
+
+
+
 def update_tag(tag_id, question_id):
     query_tag = "INSERT INTO question_tag (tag_id,question_id) VALUES ({0},{1})".format(tag_id, question_id)
     data_manager.run_query(query_tag)

@@ -211,8 +211,14 @@ def delete_tag(question_id, tag_id):
     return displays_a_single_question_A(question_id)
 
 
+@app.route("/question/<question_id>/create_new_tag/delete_tag/<int:tag_id>")
+def delete_tag_from_database(question_id, tag_id):
+    common.delete_tag_from_database(tag_id)
+    return edit_question_route(question_id)
+
+
 @app.route("/question/save_new_tag/<random_color>/<question_id>", methods=['POST'])
-def save_new_tag_and_color(random_color,question_id):
+def save_new_tag_and_color(random_color, question_id):
     new_tag_name = request.form["new_tag_name"]
     red_color = request.form["red_color"]
     green_color = request.form["green_color"]
