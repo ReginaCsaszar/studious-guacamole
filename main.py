@@ -114,6 +114,7 @@ def displays_a_single_question_A(question_id):
     question_with_answers["direction"] = direction
     q_comments = common.get_comments("question", question_id)  # comments for the question
     a_comments = common.get_comments("answer", question_id)  # comments for the question's answers
+    print(question_with_answers)
     return render_template(
         "display_a_question.html",
         question_with_answers=question_with_answers,
