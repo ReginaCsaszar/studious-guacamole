@@ -22,6 +22,14 @@
                 <textarea class="text_box" id="message" name="message" type="text" rows="6" cols="30" minlength="10" required>{{ data['message'] }}</textarea>
             </p>
             <p>
+                <label for='username'>Author</label>
+                <select name='username' id='username'>
+                    {% for user in users %}
+                        <option>{{user}}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
                 <input type="file" name="file">
             </p>
 

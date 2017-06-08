@@ -9,9 +9,10 @@ def new_question_route():
     title = "Add new question"
     action = "/newpost"
     data = {}
+    users = common.get_users()
     tags = common.show_tags_type()
     return render_template("new-question.html", action=action, title=title, data=data,
-                           tags=tags)
+                           tags=tags, users=users)
 
 
 def add_new_question():
