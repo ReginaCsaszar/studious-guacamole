@@ -4,6 +4,9 @@ import datetime
 import common
 
 
+# this is only for testing git
+
+
 def new_question_route():
     """Show new question page"""
     title = "Add new question"
