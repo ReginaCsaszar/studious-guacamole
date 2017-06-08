@@ -218,13 +218,20 @@ def search_questions_route():
     return search.search_questions(search_phrase)
 
 
+@app.route("/create_new_tag")
+def create_new_on_tag_page():
+    tag_page = "true"
+    rgb_color = common.random_color()
+    return render_template("create_new_tag.html", tag_page=tag_page, rgb_color=rgb_color)
+
+
 @app.route("/question/<int:question_id>/create_new_tag")
 def create_new_tag(question_id):
     rgb_color = common.random_color()
     return render_template("create_new_tag.html", rgb_color=rgb_color, question_id=question_id)
 
 
-@app.route("/question/<int:question_id>/<int:tag_id>/delete")
+@app.route("/question/<int:question_id>/tag/<int:tag_id>/delete")
 def delete_tag(question_id, tag_id):
     common.delete_tag(tag_id, question_id)
     return displays_a_single_question_A(question_id)
@@ -236,8 +243,9 @@ def delete_tag_from_database(question_id, tag_id):
     return edit_question_route(question_id)
 
 
+@app.route("/question/save_new_tag/<random_color>", methods=['POST'])
 @app.route("/question/save_new_tag/<random_color>/<question_id>", methods=['POST'])
-def save_new_tag_and_color(random_color, question_id):
+def save_new_tag_and_color(random_color, question_id=None):
     new_tag_name = request.form["new_tag_name"]
     red_color = request.form["red_color"]
     green_color = request.form["green_color"]
@@ -252,7 +260,16 @@ def save_new_tag_and_color(random_color, question_id):
         common.insert_tag(new_tag_name, color)
     else:
         pass
-    return edit_question_route(question_id)
+    if question_id:
+        return edit_question_route(question_id)
+    else:
+        return tags()
+
+
+@app.route("/tags")
+def tags():
+    number_of_question_with_tags = common.group_by_question_with_tags()
+    return render_template("tags.html", number_of_question_with_tags=number_of_question_with_tags)
 
 
 def main():

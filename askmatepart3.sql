@@ -20,9 +20,9 @@ DROP TABLE IF EXISTS public.question;
 DROP SEQUENCE IF EXISTS public.question_id_seq;
 CREATE TABLE question (
     id serial NOT NULL,
-    submission_time timestamp without time zone DEFAULT NOW(),
-    view_number integer,
-    vote_number integer,
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI'),
+    view_number integer DEFAULT 0, 
+    vote_number integer DEFAULT 0,
     title text,
     message text,
     image text,
@@ -33,8 +33,8 @@ DROP TABLE IF EXISTS public.answer;
 DROP SEQUENCE IF EXISTS public.answer_id_seq;
 CREATE TABLE answer (
     id serial NOT NULL,
-    submission_time timestamp without time zone DEFAULT NOW(),
-    vote_number integer,
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI'),
+    vote_number integer DEFAULT 0,
     question_id integer,
     message text,
     image text,
@@ -49,8 +49,8 @@ CREATE TABLE comment (
     question_id integer,
     answer_id integer,
     message text,
-    submission_time timestamp without time zone DEFAULT NOW(),
-    edited_count integer,
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI'),
+    edited_count integer DEFAULT 0,
     users_id integer
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE users (
     name text NOT NULL UNIQUE,
     password text default '123456',
     rank integer default 0,
-    submission_time timestamp without time zone DEFAULT NOW()
+    submission_time char(16) default to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI')
 );
 
 
@@ -131,14 +131,17 @@ ALTER TABLE ONLY question_tag
     ON DELETE CASCADE;
 
 
-INSERT INTO users (name) VALUES ('Jane');
-INSERT INTO users (name) VALUES ('John');
-INSERT INTO users (name) VALUES ('Bruce');
-SELECT pg_catalog.setval('users_id_seq', 3, true);
+INSERT INTO users (name) VALUES ('Jeannie');
+INSERT INTO users (name) VALUES ('Greg');
+INSERT INTO users (name) VALUES ('Peter');
+INSERT INTO users (name) VALUES ('Attila');
+INSERT INTO users (name) VALUES ('Helga');
+INSERT INTO users (name) VALUES ('Barna');
+SELECT pg_catalog.setval('users_id_seq', 6, true);
 
 
-INSERT INTO question VALUES (0, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL, 2);
-INSERT INTO question VALUES (1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
+INSERT INTO question VALUES (0, '2017-04-28 08:29', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL, 2);
+INSERT INTO question VALUES (1, '2017-04-29 09:19', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -147,21 +150,54 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png', 1);
-INSERT INTO question VALUES (2, '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', NULL, 3);
-SELECT pg_catalog.setval('question_id_seq', 2, true);
+INSERT INTO question VALUES (2, '2017-05-01 16:24', 4, 0, 'PostgreSQL: Difference between text and varchar (character varying)
+', 'What''s the difference between the text data type and the character varying (varchar) data types?
 
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 0, 'You need to use brackets: my_list = []', NULL, FALSE, 1);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 0, 'Look it up in the Python docs', 'images/image2.jpg', FALSE, 3);
-SELECT pg_catalog.setval('answer_id_seq', 2, true);
+According to the documentation: If character varying is used without length specifier, the type accepts strings of any size. The latter is a PostgreSQL extension.
+and in addition, PostgreSQL provides the text type, which stores strings of any length. Although the type text is not in the SQL standard, several other SQL database management systems have it as well.
+So what''s the difference?', NULL, 2);
+INSERT INTO question VALUES (3, '2017-05-01 1:01', 36, 0, 'PostgreSQL digit matching regex strange behavior
 
-INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00', 1, 2);
-INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00', 3, 2);
-SELECT pg_catalog.setval('comment_id_seq', 2, true);
+', 'So I''m having this problem where a PostgreSQL regular expression doesn''t behave the same way in two different contexts - as a CONSTRAINT and with a regex_matches() function.
 
-INSERT INTO tag VALUES (1, 'python');
-INSERT INTO tag VALUES (2, 'sql');
-INSERT INTO tag VALUES (3, 'css');
+I want the regex to work as it does demonstrated with SELECT statements below but as a table CONSTRAINT, which for some reason it doesn''t.
+
+Has anyone else experienced this kind of behavior or does anyone have any insight on this?
+
+Thanks!', NULL, 1);
+INSERT INTO question VALUES (4, '2017-05-01 04:34', 14, 0, 'Show tables in PostgreSQL
+
+', 'From the psql command line interface:
+
+\dt
+Programmatically (or from the psql interface too, of course):
+
+SELECT * FROM pg_catalog.pg_tables
+The system tables live in the pg_catalog database.', NULL, 3);
+
+SELECT pg_catalog.setval('question_id_seq', 4, true);
+
+INSERT INTO answer VALUES (1, '2017-04-28 16:49', 4, 0, 'You need to use brackets: my_list = []', NULL, FALSE, 1);
+INSERT INTO answer VALUES (2, '2017-04-27 14:42', 35, 0, 'Look it up in the Python docs', 'images/image2.jpg', FALSE, 3);
+INSERT INTO answer VALUES (3, '2017-04-21 12:25', 0, 0, 'Notice how I am creating an empty array (list500steps) each time in the first for loop? Then, after creating all the steps I append that array (Which is now NOT empty) to the array of walks.', NULL, FALSE, 2);
+INSERT INTO answer VALUES (4, '2017-04-25 19:05', 0, 1, 'Do you really need to use multiple versions of jQuery? Doing that normally creates more problems than it solves', NULL, FALSE, 2);
+INSERT INTO answer VALUES (5, '2017-04-24 16:21', 0, 1, 'no, no, no exactly BECAUSE i have multiple versions (wordpress loads jquery and my theme loads jquery) it causes problems', NULL, FALSE, 2);
+INSERT INTO answer VALUES (6, '2017-04-23 08:56', 0, 2, 'There is no difference, under the hood it''s all varlena', NULL, FALSE, 2);
+INSERT INTO answer VALUES (7, '2017-04-26 02:48', 0, 3, 'varchar(5) is better, note however that you''ve already limited the length of string using check. On a side note I''m using solely text. In the quoted post you can find some benchmarks as well.', NULL, FALSE, 2);
+INSERT INTO answer VALUES (8, '2017-04-22 10:19', 0, 4, 'Login as superuser: sudo -u postgres psql. You can list all databases and users by \l command, (list other commands by \?). Now if you want to see other databases you can change user/database by \c command like \c template1, \c postgres postgres and use \d, \dt or \dS to see tables/views/etc.', NULL, FALSE, 2);
+SELECT pg_catalog.setval('answer_id_seq', 8, true);
+
+INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49', 1, 2);
+INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55', 3, 2);
+INSERT INTO comment VALUES (3, 2, NULL, 'That makes sense. Thanks a lot', '2017-05-21 08:24', 1, 2);
+INSERT INTO comment VALUES (4, NULL, 8, 'Can you use the in operator?', '2017-05-24 12:15', 3, 2);
+INSERT INTO comment VALUES (5, NULL, 2, 'Thanks, Captain Obvious', '2017-05-26 13:15', 3, 2);
+INSERT INTO comment VALUES (6, NULL, 3, 'Yep you are right. I forgot empty lists.', '2017-05-26 15:14', 3, 2);
+SELECT pg_catalog.setval('comment_id_seq', 4, true);
+
+INSERT INTO tag VALUES (1, 'python', 'rgb(0, 128, 255)');
+INSERT INTO tag VALUES (2, 'sql', 'rgb(0, 255, 64)');
+INSERT INTO tag VALUES (3, 'css', 'rgb(255, 128, 0)');
 SELECT pg_catalog.setval('tag_id_seq', 3, true);
 
 INSERT INTO question_tag VALUES (0, 1);

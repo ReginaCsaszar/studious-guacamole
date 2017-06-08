@@ -44,12 +44,24 @@
             <tr>  
                 
                 {% if tag['name'] in selected_tag%}
-                    <td><input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}"></td> <td>{{ tag['name'] }}</td> 
+                    <td>
+                        <input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}">
+                    </td> 
+                    <td>
+                        <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
+                        {{ tag['name'] }}
+                    </td> 
                 {% else %}
-                    <td><input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}"></td><td> {{ tag['name'] }}</td> 
+                    <td>
+                        <input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}" >
+                    </td>
+                    <td> 
+                         <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
+                        {{ tag['name'] }}
+                    </td> 
                 {% endif %} 
                 <td>
-                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}"><input type="button" value="DElete"></a>
+                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}"><input type="button" value="Delete"></a>
                 </td>
             </tr>
             {% endfor %}
@@ -60,8 +72,12 @@
             {% endif %}
         <p>
         
-            <input class ="button_atti button" type="submit"  id="send" value="Send"> 
+            <input class ="button_atti button" type="submit"  id="send" value="Send">
+            {% if question_id %}
             <a href="/question/{{ question_id }}"><input class ="button_atti button" type="button" id="back" value="Back"></a>
+            {% else %}
+            <a href="/"><input class ="button_atti button" type="button" id="back" value="Back"></a>
+            {% endif %}
         </p>
     </form>
     </div>
