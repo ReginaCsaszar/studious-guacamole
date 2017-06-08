@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://use.fontawesome.com/51dda53a19.js"></script>
+</head>
+<body>
+    <h1>Tags</h1>
+    <table border="1">
+        {% for tag in number_of_question_with_tags%}
+        <tr>
+            <td>
+                <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};font-size:40px">
+            </td>
+            <td>
+                {{ tag.name}}
+            </td>
+            <td>
+                {{ tag.question_number }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/create_new_tag"><input type="button" value="Create new tag"></a>
+    <a href="/"><input type="button" value="Back"> </a>
+</body>
+</html>

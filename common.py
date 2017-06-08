@@ -12,6 +12,19 @@ def get_users():
     return simple_list
 
 
+def group_by_question_with_tags():
+    query = """SELECT tag.name, COUNT(question_tag.tag_id), tag.color
+                FROM tag
+                LEFT JOIN question_tag
+                ON tag.id=question_tag.tag_id
+                GROUP BY tag.id
+                ORDER BY COUNT(question_tag.tag_id) DESC;"""
+    tags_number_of_question = data_manager.run_query(query)
+    list_of_tag_number_key=["name", "question_number", "color"]
+    dict_of_tags = data_manager.build_dict(tags_number_of_question,list_of_tag_number_key)
+    return dict_of_tags
+
+
 def random_color():
     list_of_number = list(range(0, 256))
     red = random.choice(list_of_number)
@@ -42,7 +55,6 @@ def delete_edit_tag(question_id):
 def delete_tag_from_database(tag_id):
     delete_tag = """DELETE FROM tag WHERE id='{0}'""".format(tag_id)
     data_manager.run_query(delete_tag)
-
 
 
 def update_tag(tag_id, question_id):

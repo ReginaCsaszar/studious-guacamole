@@ -38,10 +38,10 @@
                             {% for key in question_with_answers.list_of_key_of_question %}
                             <td>
                                 {% if key == "vote_number" %}
-                                <a href="/question/{{ question_with_answers.question_id }}/vote-up">
+                                <a href="/question/{{ question_with_answers.question_id }}/vote-up" style="text-decoration:none;">
                                 <i class="fa fa-angle-up" aria-hidden="true"></i>
                             </a> {{ question_with_answers.question[key] }}
-                                <a href="/question/{{ question_with_answers.question_id }}/vote-down">
+                                <a href="/question/{{ question_with_answers.question_id }}/vote-down" style="text-decoration:none;">
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </a> {% elif key == "image" %}
                                 <img src="{{ question_with_answers.question[key] }}" width="40" </img> {% else %} {{ question_with_answers.question[key]
@@ -55,7 +55,9 @@
                     <tr>
                         <td colspan="6">
                             {% for tag in question_with_answers.tags %}
-                            <a href="/question/{{ question_with_answers.question_id }}/{{tag.tag_id}}/delete" style="background-color:{{ tag.color }};text-decoration:none;">X</a>{{ tag.name }} {% endfor%}
+                            <a href="/question/{{ question_with_answers.question_id }}/tag/{{tag.tag_id}}/delete" style="text-decoration:none;">
+                                <i class="fa fa-times" aria-hidden="true" style="background-color:{{ tag.color }};color:black;"></i>
+                            </a>{{ tag.name }} {% endfor%}
 
                         </td>
                     </tr>
@@ -126,10 +128,10 @@
                                         {% for name in question_with_answers.list_of_key_of_answer %}
                                         <td>
                                             {% if name == "vote_number" %}
-                                            <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-up">
+                                            <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-up" style="text-decoration:none;">
                                     <i class="fa fa-angle-up" aria-hidden="true"></i>
                                 </a> {{ row[name] }}
-                                            <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-down">
+                                            <a href="/question/{{ question_with_answers.question_id }}/{{ row[question_with_answers.list_of_key_of_answer[0]] }}/vote-down" style="text-decoration:none;">
                                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                                 </a> {% elif name == "image" %}
                                             <img src="{{ name }}" width="40" </img> {% else %} {{ row[name] }} {% endif %}
