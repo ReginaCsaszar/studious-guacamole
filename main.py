@@ -5,7 +5,6 @@ import listpage
 import random
 import handle_question
 import handle_comments
-import handle_users
 import search
 from flask import Flask, request, render_template, redirect
 from displays_a_question import question_up
@@ -188,8 +187,7 @@ def add_new_answer_comment(answer_id):
 @app.route('/add_comment_to_db/<q_or_a>/<id>')
 def add_comment_to_db(q_or_a, id):
     commit = request.args['comment']
-    name = request.args['names']
-    return handle_comments.add_comment_to_db(q_or_a, id, commit, name)
+    return handle_comments.add_comment_to_db(q_or_a, id, commit)
 
 
 @app.route('/comments/<comment_id>/edit')

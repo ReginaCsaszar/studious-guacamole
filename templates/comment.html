@@ -23,18 +23,8 @@
     {%endif%}
 
         <label for="comment"><h3>Your comment:</h3></label>
-        <textarea class="text-box" name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
-        <p>Author: 
-        {% if mode == 'Add_new' %}
-            <select name="names">
-                {% for name in users %}
-                <option value="{{ name }}">{{ name }}</option>
-                {% endfor %}
-            </select>
-        {%else%}
-            {{ name }}
-        {%endif%}
-        </p>
+        <textarea class="text-box"" name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
+        
         <p>
             <input class="button" type="submit" value="{{button}}">
             <a href="/question/{{question_id}}"><input class="button" type="button" value="Back to question" ></a>
