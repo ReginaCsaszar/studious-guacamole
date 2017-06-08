@@ -3,17 +3,18 @@
 
     <head>
         <link rel="stylesheet" href="/static/display_a_question.css">
+        <script src="https://use.fontawesome.com/51dda53a19.js"></script>
     </head>
 
     <body>
-        <h1>Quesion with Answers</h1>
+
         <!-- this displays the question -->
         <p>
-            <h2>Quesion</h2>
+            <h2>Question</h2>
             <p>
                 <table border="1">
                     <tr>
-                        <th colspan="2" class="title">Quesion</th>
+                        <th colspan="2" class="title">Question</th>
                         <th colspan="5" class="title class">Programing Languages</th>
                     </tr>
                     <tr>
@@ -23,7 +24,12 @@
                         </th>
                         {% endfor %}
                         <td class="action_button">
-                            <a href="/question/{{ question_with_answers.question_id }}/delete"> <input class="btn" type="button" value="delete"></a>
+                            <a href="/question/{{ question_with_answers.question_id }}/delete"> 
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                            <a href="/question/{{ question_with_answers.question_id }}/edit">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
 
@@ -45,6 +51,7 @@
 
                         </tr>
                     </tr>
+                    {% if question_with_answers.tags%}
                     <tr>
                         <td colspan="6">
                             {% for tag in question_with_answers.tags %}
@@ -52,6 +59,7 @@
 
                         </td>
                     </tr>
+                    {% endif %}
                 </table>
 
                 <!-- this displays the comments for the question -->
