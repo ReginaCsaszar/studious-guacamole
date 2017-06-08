@@ -15,12 +15,6 @@
 
 <form action="/new-question"><input class="button" type="submit" name="addnew" id ="addnew" value="Ask new Question"/></form>
 </div>
-    
-    <p>
-        <a href='/registration'>Register</a>
-        
-    </p>
-    
     <form action="/question/add_new_tag" method="POST">
         <table border="1">
             {% for col in ['Select','ID', 'Question', 'Date', 'Number of Views','Votes'] %}
