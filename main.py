@@ -5,6 +5,7 @@ import listpage
 import random
 import handle_question
 import handle_comments
+import handle_users
 import search
 from flask import Flask, request, render_template, redirect
 from displays_a_question import question_up
@@ -19,6 +20,17 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return redirect("/list")
+
+
+@app.route('/registration')
+def register_user():
+    return render_template('register.html')
+
+
+@app.route('/registration/save_user', methods=['POST'])
+def save_user_registration():
+    username = request.form['username']
+    return handle_users.save_user_registration(username)
 
 
 @app.route('/extendurl/<col_idx>')
@@ -169,7 +181,8 @@ def add_new_answer_comment(answer_id):
 @app.route('/add_comment_to_db/<q_or_a>/<id>')
 def add_comment_to_db(q_or_a, id):
     commit = request.args['comment']
-    return handle_comments.add_comment_to_db(q_or_a, id, commit)
+    name = request.args['names']
+    return handle_comments.add_comment_to_db(q_or_a, id, commit, name)
 
 
 @app.route('/comments/<comment_id>/edit')

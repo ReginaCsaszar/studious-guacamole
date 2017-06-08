@@ -1,6 +1,16 @@
 import data_manager
 
 
+def get_users():
+    """
+    Return the list of users from database
+    """
+    query = """SELECT name FROM users;"""
+    users = data_manager.run_query(query)
+    simple_list = [x[0] for x in users]
+    return simple_list
+
+
 def insert_tag(color, new_tag_name):
     query = """INSERT INTO tag ("name",color) VALUES ('{0}','{1}');""".format(color, new_tag_name)
     data_manager.run_query(query)
