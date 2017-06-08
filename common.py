@@ -11,6 +11,17 @@ def get_users():
     return simple_list
 
 
+def get_users_with_id():
+    """
+    Return the list of users with their id from database
+    in the format of dictinoary (keywords: id, name)
+    """
+    query = """SELECT id, name FROM users;"""
+    user_list = data_manager.run_query(query)
+    user_list = data_manager.build_dict(user_list, ["id", "name"])
+    return user_list
+
+
 def random_color():
     list_of_number = list(range(0, 256))
     red = random.choice(list_of_number)
