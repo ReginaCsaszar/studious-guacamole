@@ -159,16 +159,17 @@ def delete_answer_post(answer_id):
 @app.route("/question/<question_id>/new-answer")
 def new_answer(question_id):
     question = common.get_question(question_id)
-    return render_template("answer.html", question=question, mode="Send new", error="")
+    user_list = common.get_users_with_id()
+    return render_template("answer.html", question=question, mode="Send new", user_list=user_list, error="")
 
 
 @app.route("/question/<question_id>/new-answer", methods=["POST"])
 def new_answer_post(question_id):
     answer = {}
-    answer["submission_time"] = str(datetime.datetime.now())[:16]
     answer["vote_number"] = 0
     answer["question_id"] = question_id
     answer["message"] = request.form["answer"]
+    answer["user_id"] = request.form["user_id"]
     common.insert_answer(answer)
     return redirect("/", code=302)
 

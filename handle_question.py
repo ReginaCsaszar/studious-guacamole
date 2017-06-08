@@ -9,19 +9,22 @@ def new_question_route():
     title = "Add new question"
     action = "/newpost"
     data = {}
+    users = common.get_users()
     tags = common.show_tags_type()
     return render_template("new-question.html", action=action, title=title, data=data,
-                           tags=tags)
+                           tags=tags, users=users)
 
 
 def add_new_question():
     """Add new story to list, then redirect to /list page"""
-    time = str(datetime.datetime.now())[:16]
     title = request.form["title"]
     message = request.form["message"]
-    query = """INSERT INTO question (submission_time, view_number, vote_number, title, message) 
-        VALUES ('{0}', 0, 0, '{1}', '{2}');""".format(time, title, message)
-    data_manager.run_query(query)
+    username = request.form["username"]
+    query = """SELECT id From users WHERE name='{}';""".format(username,)
+    users_id = data_manager.run_query(query)[0][0]
+    columns = ('title', 'message', 'users_id')
+    values = (title, message, users_id)
+    data_manager.safe_insert('question', columns, values)
     query = "SELECT id FROM question WHERE title='{0}';".format(title)
     question_id = data_manager.run_query(query)
 
@@ -46,9 +49,11 @@ def edit_question_route(question_id):
     """Find question details from id and redirect with the data to /new_question page"""
     title = "Modify question"
     action = "/modify/" + question_id
-    query = "SELECT title, message FROM question WHERE id = '{0}';".format(question_id)
+    query = """SELECT q.title, q.message, u.name FROM question q JOIN users u
+    ON (q.users_id = u.id)
+    WHERE q.id = '{}';""".format(question_id)
     table = data_manager.run_query(query)
-    titles = "title", "message",
+    titles = "title", "message", "username"
     data = data_manager.build_dict(table, titles)[0]
     tags = common.show_tags_type()
     tag_query = """SELECT tag.name
