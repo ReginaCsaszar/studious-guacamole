@@ -2,7 +2,7 @@
 
 <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/question.css">
+    <link rel="stylesheet" href="/static/display_a_question.css">
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
     <!-- New question template -->
 </head>
@@ -52,19 +52,19 @@
                     <td><input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}"></td><td> {{ tag['name'] }}</td> 
                 {% endif %} 
                 <td>
-                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}"><input type="button" value="DElete"></a>
+                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}">Delete</a>
                 </td>
             </tr>
             {% endfor %}
             </table>
 
             {% if question_id  %}
-            <a href="/question/{{ question_id }}/create_new_tag"><input type="button" value="Create new tag"></a>
+            <a href="/question/{{ question_id }}/create_new_tag"><input type="button" class ="button_atti button" value="Create new tag"></a>
             {% endif %}
         <p>
         
             <input class ="button_atti button" type="submit"  id="send" value="Send"> 
-            <a href="/question/{{ question_id }}"><input class ="button_atti button" type="button" id="back" value="Back"></a>
+            <a href="/list"><input class ="button_atti button" type="button" id="back" value="Back"></a>
         </p>
     </form>
     </div>
