@@ -21,8 +21,8 @@ DROP SEQUENCE IF EXISTS public.question_id_seq;
 CREATE TABLE question (
     id serial NOT NULL,
     submission_time timestamp without time zone DEFAULT NOW(),
-    view_number integer,
-    vote_number integer,
+    view_number integer DEFAULT 0, 
+    vote_number integer DEFAULT 0,
     title text,
     message text,
     image text,
@@ -34,7 +34,7 @@ DROP SEQUENCE IF EXISTS public.answer_id_seq;
 CREATE TABLE answer (
     id serial NOT NULL,
     submission_time timestamp without time zone DEFAULT NOW(),
-    vote_number integer,
+    vote_number integer DEFAULT 0,
     question_id integer,
     message text,
     image text,
@@ -50,7 +50,7 @@ CREATE TABLE comment (
     answer_id integer,
     message text,
     submission_time timestamp without time zone DEFAULT NOW(),
-    edited_count integer,
+    edited_count integer DEFAULT 0,
     users_id integer
 );
 
@@ -159,9 +159,9 @@ INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is to
 INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00', 3, 2);
 SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
-INSERT INTO tag VALUES (1, 'python');
-INSERT INTO tag VALUES (2, 'sql');
-INSERT INTO tag VALUES (3, 'css');
+INSERT INTO tag VALUES (1, 'python', 'rgb(0, 128, 255)');
+INSERT INTO tag VALUES (2, 'sql', 'rgb(0, 255, 64)');
+INSERT INTO tag VALUES (3, 'css', 'rgb(255, 128, 0)');
 SELECT pg_catalog.setval('tag_id_seq', 3, true);
 
 INSERT INTO question_tag VALUES (0, 1);
