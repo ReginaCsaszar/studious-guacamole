@@ -26,9 +26,10 @@ h2, h3 {
     -moz-box-shadow: 26px 12px 37px 1px rgba(0,0,0,0.75);
     box-shadow: 26px 12px 37px 1px rgba(0,0,0,0.75);
     width: 20%;
-    margin: 0% 0% 0% 40%;
+    margin: 0% 0% 2% 40%;
     text-align: center;
 }
+
 select {
     color: black
 }
@@ -47,9 +48,8 @@ select {
 -webkit-box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
 -moz-box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
 box-shadow: inset 0px -4px 300px -96px rgba(0,0,0,0.75);
-    border-width: 30px;
-  text-decoration: none;
-  font-size: 120%;
+border-width: 30px;
+text-decoration: none;
 }
 
 h1 {
