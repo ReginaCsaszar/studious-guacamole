@@ -2,48 +2,59 @@
 <html>
 <head>
     <title>{{mode}} answer</title>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Question</h1>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>{{question["title"]}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{question["message"]}}
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {% if mode == "Edit" %}
+                    <h2>{{ answer["user_name"] }}'s answer:</h2>
+                    {% elif mode == "Send new" %}
+                    <h2>Your answer:</h2>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    {% if mode == "Edit" %}
+                    <form method="POST" action='/answer/{{ answer["answer_id"] }}/edit'>
+                    {% elif mode == "Send new" %}
+                    <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
+                    {% endif %}
 
-    <h1>Question</h1>
-    <div>
-    <h2>{{question["title"]}}:</h2>
-    <table border="1"><tr><td>{{question["message"]}}<td></tr></table>
-    {% if mode == "Edit" %}>
-    <form method="POST" action='/answer/{{ answer["answer_id"] }}/edit'>
-    {% elif mode == "Send new" %}
-    <form method="POST" action='/question/{{ question["question_id"] }}/new-answer'>
-    {% endif %}
-        <p>
-            <h2>
-                {% if mode == "Edit" %}
-                <label for="answer">{{ answer["user_name"] }}'s answer:</label>
-                {% elif mode == "Send new" %}
-                <label for="answer">Your answer:</label>
-                {% endif %}
-            </h2>
-        </p>
-            {% if mode == "Send new" %}
-            <textarea name="answer" id="answer" rows="4" cols="46" minlength="10" placeholder="Although 42 is the aswer to life, the Universe and everything, you can be a bit more specific, and write at least 10 characters long answer." autofocus></textarea>
-            {% elif mode == "Edit"%}
-            <textarea name="answer" id="answer" rows="4" cols="46" minlength="10" autofocus>{{ answer["message"] }}</textarea>
-            {% endif %}
-        <p>
-            {% if mode == "Send new" %}
-            <select name="user_id" class="user" >
-            {% for user in user_list %}
-                <option value="{{ user['id'] }}">{{ user['name'] }}</option>
-            {% endfor%}
-            </select>
-            {% endif %}
-        </p>
-        <p>
-            <input class="button" type="submit" value="{{ mode }}">
-            <a href="/question/{{ question["question_id"] }}"><input class="button" type="button" value="Back to question" ></a>
-        </p>
-    </form>
+                    {% if mode == "Send new" %}
+                    <textarea class="form-control" name="answer" minlength="10" placeholder="write at least 10 characters long answer" autofocus></textarea>
+                    {% elif mode == "Edit"%}
+                    <textarea class="form-control" name="answer">{{ answer["message"] }}</textarea>
+                    {% endif %}
+
+                    {% if mode == "Send new" %}
+                    <select name="user_id" class="user">
+                    {% for user in user_list %}
+                    <option value="{{ user['id'] }}">{{ user['name'] }}</option>
+                    {% endfor%}
+                    </select>
+                    {% endif %}
+                    <br>
+                    <input class="btn btn-warning" type="submit" value="{{ mode }}">
+                    <a href="/question/{{ question["question_id"] }}"><input class="btn btn-primary" type="button" value="Back" ></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>

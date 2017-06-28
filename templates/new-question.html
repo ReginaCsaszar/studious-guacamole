@@ -2,91 +2,72 @@
 
 <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- New question template -->
 </head>
 
 <body>
-    <p>
-        <h1>{{ title }}</h1>
-    </p>
-    
-    <div id=question_table>
-        <form action="{{ action }}" method="POST" enctype="multipart/form-data">
-            <p>
-                <label for="title"><h3>Question Title</h3></label><br>
-                <input type="text" class="text_box" id="title" name="title" value="{{ data['title'] }}" required>
-            </p>
-            <p>
-                <label for="message"><h3>Question</h3></label><br>
-                <textarea class="text_box" id="message" name="message" type="text" rows="6" cols="30" minlength="10" required>{{ data['message'] }}</textarea>
-            </p>
-            
-        {% if action == '/newpost' %}
-            <p>
-                <label for='username'>Author</label>
-                <select name='username' id='username'>
-                    {% for user in users %}
-                        <option>{{user}}</option>
-                    {% endfor %}
-                </select>
-            </p>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask new question</h1>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>{{ title }}</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <form action="{{ action }}" method="POST" enctype="multipart/form-data">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ data['title'] }}" required>
+                            <br><label for="message">Question:</label>
+                            <textarea class="form-control" id="message" name="message" type="text" rows="6" minlength="10" required>{{ data['message'] }}</textarea>
+                            {% if action == '/newpost' %}
+                                <label for='username'>Author: </label>
+                                <select name='username' id='username' class="form-control">
+                                    {% for user in users %}
+                                        <option>{{user}}</option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <p><br><strong>Author:</strong> {{data.username}}</p>
+                            {% endif %}
+                            <div id="demo" class="collapse"><br>
+                            {% for tag in tags %}
+                                {% if tag['name'] in selected_tag%}
+                                    <input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}">
+                                    <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
+                                    {{ tag['name'] }}
+                                {% else %}
+                                    <input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}" >
+                                    <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
+                                    {{ tag['name'] }}
+                                {% endif %}                        
+                                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}"><span class="glyphicon glyphicon-trash"></span></a>
+                            {% endfor %}
+                            </div>
+                            <br>
+                            {% if question_id  %}
+                            <a href="/question/{{ question_id }}/create_new_tag"><input type="button" class ="btn btn-primary" value="Create new tag"></a>
+                            {% endif %}
+                        <button data-toggle="collapse" data-target="#demo" class ="btn btn-primary">Tags</button>
+                        <input class ="btn btn-success" type="submit"  id="send" value="Send">
+                        {% if question_id %}
+                        <a href="/question/{{ question_id }}"><input class ="btn btn-primary" type="button" id="back" value="Back"></a>
+                        {% else %}
+                        <a href="/list"><input class="btn btn-primary" type="button" id="back" value="Back"></a>
+                        {% endif %}
+                        </form>
+                    </div>
 
-        {% else %}
-            <p>
-                Question author: {{data.username}}
-            </p>
-        {% endif %}
-
-            <table border="1">
-            {% for tag in tags %}
-            <tr>  
                 
-                {% if tag['name'] in selected_tag%}
-                    <td>
-                        <input type="checkbox" name="{{ tag['name'] }}" checked value="{{ tag['name'] }}">
-                    </td> 
-                    <td>
-                        <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
-                        {{ tag['name'] }}
-                    </td> 
-                {% else %}
-                    <td>
-                        <input type="checkbox" name="{{ tag['name'] }}"  value="{{ tag['name'] }}" >
-                    </td>
-                    <td> 
-                         <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};"></i>
-                        {{ tag['name'] }}
-                    </td> 
-                {% endif %} 
-                <td>
-
-               
-                <a href="/question/{{ question_id }}/create_new_tag/delete_tag/{{tag['id']}}">Delete</a>
-
-                </td>
-            </tr>
-            {% endfor %}
-            </table>
-
-            {% if question_id  %}
-            <a href="/question/{{ question_id }}/create_new_tag"><input type="button" class ="button_atti button" value="Create new tag"></a>
-            {% endif %}
-        <p>
-        
-
-            <input class ="button_atti button" type="submit"  id="send" value="Send">
-            {% if question_id %}
-            <a href="/question/{{ question_id }}"><input class ="button_atti button" type="button" id="back" value="Back"></a>
-            {% else %}
-            <a href="/list"><input class ="button_atti button" type="button" id="back" value="Back"></a>
-            {% endif %}
-
-        </p>
-    </form>
+            </div>
+        </div>
     </div>
-
 </body>
-
 </html>

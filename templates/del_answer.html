@@ -2,38 +2,46 @@
 <html lang="en">
 <head>
     <title>Delete answer</title>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-    <h1>Question</h1>
-    <h2>{{question["title"]}}:</h2>
-    <p>{{question["message"]}}</p>
-    <table>
-        <tr>
-            <th>Answer:</th>
-            <th>Details:</th>
-        </tr>
-        <tr>
-            <td rowspan="3">{{answer["message"]}}</td>
-            <td>Answer's id: {{ answer["answer_id"] }}</td>
-        </tr>
-        <tr>
-            <td>Author: {{ answer["user_name"] }}</td>
-        </tr>
-        <tr>
-            <td>Date/time added: {{ date_time }}</td>
-        </tr>
-        <tr>
-            <td>Number of votes: {{ answer[vote_number] }}</td>
-        </tr>
-    </table>
-    <p>Are you sure you want to delete this answer?</p>
-    <form method="POST" action="/answer/{{answer['answer_id']}}/delete">
-        <input class="button" type="submit" value="To the hell with it!">
-        <a href="/">
-            <input class="button" type="button" value="Ooops, not yet">
-        </a>
-    </form>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask Mate</h1>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>{{question["title"]}}</h2>
+                </div>
+                <div class="panel-body">
+                    {{question["message"]}}
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Answer details</h2>
+                </div>
+                <div class="panel-body">
+                    {{answer["message"]}}
+                    <br><br>by {{ answer["user_name"] }} @{{ date_time }}, votes: {{ answer[vote_number] }}
+                </div>
+            </div>
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    Are you sure you want to delete this answer?
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="/answer/{{answer['answer_id']}}/delete">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                        <a href="/"><input class="btn btn-primary" type="button" value="Back"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

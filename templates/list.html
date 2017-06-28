@@ -4,67 +4,84 @@
 <head>
     <title>Ask Mate</title>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask Mate</h1>
+        </div>
 
-<h1>Ask Mate</h1>
-<div class="ask_new_question">
-<h3>Questions</h3>
+        <div class="panel-group">
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Users</h2>
+                </div>
+                <div class="panel-body">
+                    <a href='/registration'><input class="btn btn-success" type="button" name="addnew" value="Register"></a>
+                    <a href='/list-users'><input class="btn btn-info" type="button" name="listall" value="List all User"></a>
+                </div>
+            </div>
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Questions</h2>
+                </div>
+                <div class="panel-body">
+                    <form action="/question/add_new_tag" method="POST">
+                        <table class="table table-striped">
+                            {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
+                                <th>
+                                    {{col}} 
+                                    <a href="/extendurl/{{col}}?{{url}}">
+                                        {% if col + '=asc' in url %}
+                                            <img src="/static/up.png" width="20"></img>
+                                        {% elif col + '=desc' in url %}
+                                            <img src="/static/down.png" width="20"></img>
+                                        {% else %}
+                                            <img src="/static/sort.png" width="20"></img>
+                                        {% endif %}
+                                    </a>
+                                </th>
+                            {% endfor %}
+                                <th>Author</th>
+                            </tr>
+                            {% for question in questions%}
+                                <tr>
+                                    <td>{{question.question_id}}.</td>
+                                    <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
+                                    <td>{{question.submission_time}}</td>
+                                    <td>{{question.view_number}}</td>
+                                    <td>{{question.vote_number}}</td>
+                                    <td>{{question.user_name}}</td>
+                                </tr>
+                            {% endfor %}
 
-<form action="/new-question"><input class="button" type="submit" name="addnew" id ="addnew" value="Ask new Question"></form>
-</div>
-    
-  
-    <p><h3>Users</h3>
-        <a href='/registration'><input class="button" type="button" name="addnew" value="Register"></a>
-        <a href='/list-users'><input class="button" type="button" name="listall" value="List all User"></a>
-        <a href='/tags'><input class="button" type="button" name="tags" value="List of tags"></a>
-
-    </p>
-    
-    <form action="/question/add_new_tag" method="POST">
-        <table border="1">
-            {% for col in ['ID', 'Question', 'Date', 'Number of Views','Votes'] %}
-                <th>
-                    {{col}} 
-                    <a href="/extendurl/{{col}}?{{url}}">
-                        {% if col + '=asc' in url %}
-                            <img src="/static/up.png" width="20"></img>
-                        {% elif col + '=desc' in url %}
-                            <img src="/static/down.png" width="20"></img>
-                        {% else %}
-                            <img src="/static/sort.png" width="20"></img>
-                        {% endif %}
-                    </a>
-                </th>
-            {% endfor %}
-                <th>Author</th>
-            </tr>
-            {% for question in questions%}
-                <tr>
-                    <td>{{question.question_id}}.</td>
-                    <td><a href="/question/{{question.question_id}}">{{question.title}}</a></td>
-                    <td>{{question.submission_time}}</td>
-                    <td>{{question.view_number}}</td>
-                    <td>{{question.vote_number}}</td>
-                    <td>{{question.user_name}}</td>
-                </tr>
-            {% endfor %}
-
-            </tr>
-        </table>
-
-        </selec>
-    </form>
-    <p id='search'>
-        <form action='/handlesearch'>
-            <label for='search'><h3>Search questions</h3></label>
-            <input type='text' class='text_box' id='search' name='search'>
-            <input class='button' type='submit' value='Search'>
-        </form>
-    </p>
+                            </tr>
+                        </table>
+                    </select>
+                    </form>
+                    <a href="/new-question"><input class="btn btn-success" type="button" name="addnew" value="Ask new Question"></a>
+                    <a href='/tags'><input class="btn btn-info" type="button" name="tags" value="List of tags"></a>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <form action='/handlesearch'>
+                            
+                            <div class="input-group-btn">
+                                <input type="text" class="form-control" placeholder="Search" name='search'>
+                                <button class="btn btn-default" type="submit">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

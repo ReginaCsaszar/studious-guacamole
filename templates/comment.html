@@ -4,43 +4,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}} Comment</title>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>{{title}} Comment</h1>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>{{title}} Comment</h1>
+        </div>
+        <div class="panel-group">
+            {% if mode == 'Add_new' %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>The {{basis}} you write to comment upon:</h2>
+                </div>
+                <div class="panel-body">
+                    {{content}}
+                </div>
+            </div>
+            {%endif%}
 
-    {% if mode == 'Add_new' %}
-        <h2>The {{basis}} you write to comment upon:</h2>
-        <table border='1'><tr><td>{{content}}<td></tr></table>
-    {%endif%}
+            <div class="panel panel-primary">
     
-    {%if basis=='question' %}
-        <form action='/add_comment_to_db/question/{{question_id}}'>
-    {%elif basis=='answer' %}
-        <form action='/add_comment_to_db/answer/{{answer_id}}'>
-    {%elif basis=='comment' %}
-        <form action=/update_comment/{{comment_id}}>
-    {%endif%}
+                <div class="panel-heading">
+                    <h2>Your comment:</h2>
+                </div>
+                <div class="panel-body">
+                    
+                    {%if basis=='question' %}
+                        <form action='/add_comment_to_db/question/{{question_id}}'>
+                    {%elif basis=='answer' %}
+                        <form action='/add_comment_to_db/answer/{{answer_id}}'>
+                    {%elif basis=='comment' %}
+                        <form action=/update_comment/{{comment_id}}>
+                    {%endif%}
 
-        <label for="comment"><h3>Your comment:</h3></label>
-        <textarea class="text-box" name="comment" id="comment" rows="4" cols="46" minlength="10" autofocus>{{comment}}</textarea>
-        <p>Author: 
-        {% if mode == 'Add_new' %}
-            <select name="names">
-                {% for name in users %}
-                <option value="{{ name }}">{{ name }}</option>
-                {% endfor %}
-            </select>
-        {%else%}
-            {{ name }}
-        {%endif%}
-        </p>
-        <p>
-            <input class="button" type="submit" value="{{button}}">
-            <a href="/question/{{question_id}}"><input class="button" type="button" value="Back to question" ></a>
-        </p>
+                    <textarea class="form-control" name="comment" minlength="10" autofocus>{{comment}}</textarea>
+                    <br><p>Author: 
+                    {% if mode == 'Add_new' %}
+                        <select name="names">
+                            {% for name in users %}
+                            <option value="{{ name }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    {%else%}
+                        {{ name }}
+                    {%endif%}
+                    </p>
+                    <input class="btn btn-warning" type="submit" value="{{button}}">
+                    <a href="/question/{{question_id}}"><input class="btn btn-primary" type="button" value="Back" ></a>
+                    </form>
+                </div>
+            
+            </div>
+        </div>
     
-    </form>
-        
+    </div>    
 </body>
 </html>

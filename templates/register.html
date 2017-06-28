@@ -2,22 +2,35 @@
 <html lang="en">
 
 <head>
-    <title>Register user</title>
+    <title>Ask Mate</title>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-    <h1>Ask Mate</h1>
-    <form action='/registration/save_user' method='POST'>
-        
-        <label for='username'><h3>Name</h3></label>
-        <p><input type='text' name='username' id='username' required></p>
-        
-        <p><input type='submit' class="button" value='Register'>
-        <a href='/list' name='returnbutton'><input type='button' class="button" value='Return to Questions'></a></p>
-    </form>
+     <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask Mate</h1>
+        </div>
 
+        <div class="panel-group">
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>New user</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                    <form action='/registration/save_user' method='POST'>
+                        <label for='username'>Name</label>
+                        <input type='text' name='username' class="form-control" id='username' required><br><br>
+                    <input type='submit' class="btn btn-success" value='Register'>
+                    <a href='/list'><input class="btn btn-primary" type="button" name="back" value="Back"></a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
 </body>
-
 </html>

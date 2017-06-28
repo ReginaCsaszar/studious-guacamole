@@ -4,31 +4,42 @@
 <head>
     <head>
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>{{title}}</title>
 </head>
 
 <body>
-    <h1>{{title}}</h1>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask Mate</h1>
+        </div>
 
-    <table border='2'>
-            <tr>
-                {% for h in header %}
-                    <th>{{h}}</th>
-                {% endfor %}
-            </tr>
-        {% for row in table %}
-            <tr>
-                {% for datacell in row %}
-                    <td>{{datacell}}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
-
-    
-    <a href='/list' name='returnbutton'><input type='button' class="button" value='Return to Questions'></a>
-    
+        <div class="panel-group">
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>{{title}}</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tr>
+                            {% for h in header %}
+                                <th>{{h}}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in table %}
+                            <tr>
+                                {% for datacell in row %}
+                                    <td>{{datacell}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <a href='/registration'><input class="btn btn-success" type="button" name="addnew" value="New"></a>
+                    <a href='/list'><input class="btn btn-primary" type="button" name="back" value="Back"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

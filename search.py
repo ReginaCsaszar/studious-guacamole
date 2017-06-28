@@ -9,7 +9,6 @@ def make_fancy(term, table, key):
     """insert html tag into string for jinja formatting"""
     searchterm = term.lower()
     for row in table:
-        row[key] = row[key].replace(term, "<mark>" + term + "</mark>")
         row[key] = row[key].replace(searchterm, "<mark>" + searchterm + "</mark>")
     return table
 

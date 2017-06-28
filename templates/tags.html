@@ -2,27 +2,42 @@
 <html lang="en">
 <head>
     <title>Ask Mate</title>
-    <link rel="stylesheet" href="/static/display_a_question.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://use.fontawesome.com/51dda53a19.js"></script>
 </head>
 <body>
-    <h1>Tags</h1>
-    <table border="1">
-        {% for tag in number_of_question_with_tags%}
-        <tr>
-            <td>
-                <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};font-size:40px">
-            </td>
-            <td>
-                {{ tag.name}}
-            </td>
-            <td>
-                {{ tag.question_number }}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="/create_new_tag"><input type="button" class="button" value="Create new tag"></a>
-    <a href='/list'><input type='button' class="button" value='Return to Questions'></a>
+    <div class="container">
+        <div class="jumbotron" style="background-color:#337ab7; color:white">
+            <h1>Ask Mate</h1>
+        </div>
+
+        <div class="panel-group">
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Tags</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        {% for tag in number_of_question_with_tags%}
+                        <tr>
+                            <td>
+                                <i class="fa fa-square" aria-hidden="true" style="color:{{ tag.color }};font-size:40px">
+                            </td>
+                            <td>
+                                {{ tag.name}}
+                            </td>
+                            <td>
+                                {{ tag.question_number }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <a href="/create_new_tag"><input type="button" class="btn btn-info" value="New tag"></a>
+                    <a href='/list'><input type='button' class="btn btn-info" value='Back'></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

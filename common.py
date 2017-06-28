@@ -20,8 +20,8 @@ def group_by_question_with_tags():
                 GROUP BY tag.id
                 ORDER BY COUNT(question_tag.tag_id) DESC;"""
     tags_number_of_question = data_manager.run_query(query)
-    list_of_tag_number_key=["name", "question_number", "color"]
-    dict_of_tags = data_manager.build_dict(tags_number_of_question,list_of_tag_number_key)
+    list_of_tag_number_key = ["name", "question_number", "color"]
+    dict_of_tags = data_manager.build_dict(tags_number_of_question, list_of_tag_number_key)
     return dict_of_tags
 
 
